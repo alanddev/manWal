@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.alanddev.manwal.R;
 
-public class ManWalActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
