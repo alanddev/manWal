@@ -1,6 +1,7 @@
 package com.alanddev.manwal.ui;
 
-import android.support.v4.app.DialogFragment;
+//import android.support.v4.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -36,7 +37,9 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                showDatePickerDialog(view);
+
+                //showDatePickerDialog(view);
+                changeActivity();
             }
         });
 
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void showDatePickerDialog(View v){
+    public void showDatePickerDialog(View v) {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 MainActivity.this,
@@ -59,6 +62,12 @@ public class MainActivity extends AppCompatActivity
                 now.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getFragmentManager(), "Datepickerdialog");
+
+    }
+
+    public void changeActivity(){
+        Intent intent = new Intent(this, WalletAddActivity.class);
+        startActivity(intent);
 
     }
 
@@ -125,7 +134,9 @@ public class MainActivity extends AppCompatActivity
         // Do something with the date chosen by the user
         String date = "You picked the following date: "+day+"/"+(month+1)+"/"+year;
         //dateTextView.setText(date);
-        Snackbar.make(view.getView(), "Date is:" + date, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        //Snackbar.make(view.getView(), "Date is:" + date, Snackbar.LENGTH_LONG)
+        //               .setAction("Action", null).show();
     }
+
+
 }
