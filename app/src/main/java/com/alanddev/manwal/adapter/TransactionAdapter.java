@@ -77,7 +77,7 @@ public class TransactionAdapter extends AmazingAdapter {
 	public View getAmazingView(int position, View convertView, ViewGroup parent) {
 		View res = convertView;
 		if (res == null){
-			res = inflate.inflate(R.layout.item_composer, null);
+			res = inflate.inflate(R.layout.list_transaction, null);
 		}
 
 		TextView txttype = (TextView) res.findViewById(R.id.txttitle);

@@ -5,13 +5,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.alanddev.manwal.fragment.TransactionFragment;
+import com.alanddev.manwal.model.Transaction;
+
+import java.util.List;
 
 /**
  * Created by ANLD on 18/11/2015.
  */
 public class TransSectionPagerAdapter extends FragmentPagerAdapter {
-    public TransSectionPagerAdapter(FragmentManager fm) {
+    private List<Transaction> datas;
+    public TransSectionPagerAdapter(FragmentManager fm,List<Transaction> datas) {
         super(fm);
+        this.datas = datas;
     }
 
     @Override
@@ -24,19 +29,19 @@ public class TransSectionPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return 3;
+        if(datas!=null&&datas.size()>0) {
+            return datas.size();
+        }else{
+            return 0;
+        }
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "SECTION 1";
-            case 1:
-                return "SECTION 2";
-            case 2:
-                return "SECTION 3";
+        if(datas!=null){
+            return datas.get(position).getDate();
+        }else{
+            return null;
         }
-        return null;
     }
 }

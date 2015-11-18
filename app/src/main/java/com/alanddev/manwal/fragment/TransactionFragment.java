@@ -50,10 +50,12 @@ public class TransactionFragment extends Fragment {
         // lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.item_composer_header,
         // lsComposer, false));
         List<Transaction> datas = getData();
+        TextView txtheader = (TextView)rootView.findViewById(R.id.txtheadtitle);
+        txtheader.setText("Today");
         lsComposer.setAdapter(adapter = new TransactionAdapter(inflater, datas));
+
         return rootView;
     }
-
     private List<Transaction> getData() {
         List<Transaction> lstItemDt = new ArrayList<Transaction>();
         Transaction itemDt = new Transaction();
@@ -97,6 +99,8 @@ public class TransactionFragment extends Fragment {
         }
         return lstItems;
     }
+
+
 }
 
 
