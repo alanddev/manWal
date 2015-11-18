@@ -47,12 +47,14 @@ public class TransactionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.trans_fragment_tabbed, container, false);
         TransactionAdapter adapter;
         AmazingListView lsComposer = (AmazingListView) rootView.findViewById(R.id.lsttransaction);
-        // lsComposer.setPinnedHeaderView(LayoutInflater.from(this).inflate(R.layout.item_composer_header,
-        // lsComposer, false));
+        View header = inflater.inflate(R.layout.trans_header_list, container, false);
+
         List<Transaction> datas = getData();
         TextView txtheader = (TextView)rootView.findViewById(R.id.txtheadtitle);
         txtheader.setText("Today");
         lsComposer.setAdapter(adapter = new TransactionAdapter(inflater, datas));
+        lsComposer.addHeaderView(header);
+
 
         return rootView;
     }

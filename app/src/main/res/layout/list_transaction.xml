@@ -7,9 +7,6 @@
         android:layout_height="wrap_content"
         layout="@layout/item_composer_header"
         android:padding="6dp" />
-
-   
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
