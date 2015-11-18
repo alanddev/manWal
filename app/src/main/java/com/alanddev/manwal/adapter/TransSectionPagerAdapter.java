@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.alanddev.manwal.fragment.TransactionFragment;
+
 /**
  * Created by ANLD on 18/11/2015.
  */

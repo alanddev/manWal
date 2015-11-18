@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/item_composer_header"
+        android:padding="6dp" />
+
+   
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+"
+
+        <ImageView
+            android:id="@+id/imgicon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/txttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/imgicon"
+            android:text="Shopping"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtdes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txttitle"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/imgicon"
+            android:text="MRT Hotel - Airpot"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/txtamout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="300.000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</LinearLayout>
