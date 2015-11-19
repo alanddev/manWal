@@ -3,8 +3,5 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".WalletAddActivity">
 
     <item android:id="@+id/save" android:title="@string/action_save"
-        android:orderInCategory="100" app:showAsAction="always"
-        android:onClick="saveWallet"
-
-        />
+        android:orderInCategory="100" app:showAsAction="always" />
 </menu>

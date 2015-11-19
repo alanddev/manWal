@@ -5,7 +5,7 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
 
-@SuppressLint("NewApi")
+
 public abstract class AmazingAdapter extends BaseAdapter implements SectionIndexer, OnScrollListener {
 	public static final String TAG = AmazingAdapter.class.getSimpleName();
 
