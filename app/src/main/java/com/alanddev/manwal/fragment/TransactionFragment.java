@@ -47,7 +47,7 @@ public class TransactionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.trans_fragment_tabbed, container, false);
         TransactionAdapter adapter;
         AmazingListView lsComposer = (AmazingListView) rootView.findViewById(R.id.lsttransaction);
-        View header = inflater.inflate(R.layout.trans_header_list, container, false);
+        View header = inflater.inflate(R.layout.trans_header_list, null, false);
 
         List<Transaction> datas = getData();
         TextView txtheader = (TextView)rootView.findViewById(R.id.txtheadtitle);
