@@ -1,4 +1,4 @@
-package com.alanddev.manwal.data;
+package com.alanddev.manwal.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,20 +8,20 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 
 		  public static final String TABLE_WALLET = "wallet";
 		  //public static final String COLUMN_ID = "id";
-		  public static final String COLUMN_NAME = "name";
-		  public static final String COLUMN_AMOUNT= "amount";
-	      public static final String COLUMN_CURRENCY= "currency";
+		  public static final String COLUMN_WALLET_NAME = "name";
+		  public static final String COLUMN_WALLET_AMOUNT = "amount";
+	      public static final String COLUMN_WALLET_CURRENCY = "currency";
 		  public static final String DATABASE_NAME = "manwal.db";
 		  private static final int DATABASE_VERSION = 1;
 
 		  // 20 fields
 		  // Database creation sql statement
-		  private static final String DATABASE_CREATE = "CREATE TABLE "
+		  private static final String WALLET_CREATE = "CREATE TABLE "
 		      + TABLE_WALLET + "("
-		      + COLUMN_NAME + " text not null, "
-		      + COLUMN_AMOUNT + " real not null, "
-			  + COLUMN_CURRENCY + " text not null, "
-		      + "PRIMARY KEY (" + COLUMN_NAME + ") "
+		      + COLUMN_WALLET_NAME + " text not null, "
+		      + COLUMN_WALLET_AMOUNT + " real not null, "
+			  + COLUMN_WALLET_CURRENCY + " text not null, "
+		      + "PRIMARY KEY (" + COLUMN_WALLET_NAME + ") "
 		      + ");";
 		
 
@@ -31,7 +31,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 
 		  @Override
 		  public void onCreate(SQLiteDatabase database) {
-		    database.execSQL(DATABASE_CREATE);
+		    database.execSQL(WALLET_CREATE);
 		  }
 
 		  @Override

@@ -1,4 +1,4 @@
-package com.alanddev.manwal.data;
+package com.alanddev.manwal.helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,20 +10,22 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.alanddev.manwal.model.Wallet;
 
 
 public class MwDataSource {
 	private SQLiteDatabase database;
 	private MwSQLiteHelper dbHelper;
-	private String [] allColumns = { 
+	private String [] allColumns = {
 			//MwSQLiteHelper.COLUMN_ID,
-			MwSQLiteHelper.COLUMN_NAME,
-			MwSQLiteHelper.COLUMN_AMOUNT,
-			MwSQLiteHelper.COLUMN_CURRENCY
+			MwSQLiteHelper.COLUMN_WALLET_NAME,
+			MwSQLiteHelper.COLUMN_WALLET_AMOUNT,
+			MwSQLiteHelper.COLUMN_WALLET_CURRENCY
 	};
 	
 	public MwDataSource(Context context) {
 		dbHelper = new MwSQLiteHelper(context);
+		open();
 	}
 
 	public void open() throws SQLException {
@@ -38,11 +40,11 @@ public class MwDataSource {
 	public Wallet createWallet(String name, double amount, String currency) {
 		ContentValues values = new ContentValues();
 		//values.put(MwSQLiteHelper.COLUMN_ID, id);
-		values.put(MwSQLiteHelper.COLUMN_NAME, name);
-		values.put(MwSQLiteHelper.COLUMN_AMOUNT, amount);
-		values.put(MwSQLiteHelper.COLUMN_CURRENCY, currency);
+		values.put(MwSQLiteHelper.COLUMN_WALLET_NAME, name);
+		values.put(MwSQLiteHelper.COLUMN_WALLET_AMOUNT, amount);
+		values.put(MwSQLiteHelper.COLUMN_WALLET_CURRENCY, currency);
 
-	    String selectQuery = MwSQLiteHelper.COLUMN_NAME + " = \"" + name + "\"";
+	    String selectQuery = MwSQLiteHelper.COLUMN_WALLET_NAME + " = \"" + name + "\"";
 	    Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
 	        allColumns, selectQuery, null,
 	        null, null, null);
@@ -65,8 +67,21 @@ public class MwDataSource {
 		Wallet newWallet= createWallet(wallet.getName(),wallet.getAmount(),wallet.getCurrency());
 		return newWallet;
 	}
-	
-	
+
+	public int updateWallet(Wallet wallet) {
+		//SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(MwSQLiteHelper.COLUMN_WALLET_CURRENCY, wallet.getCurrency());
+		values.put(MwSQLiteHelper.COLUMN_WALLET_AMOUNT, wallet.getAmount());
+
+		// updating row
+		return database.update(MwSQLiteHelper.TABLE_WALLET, values, MwSQLiteHelper.COLUMN_WALLET_NAME + " = ?",
+				new String[] { String.valueOf(wallet.getName()) });
+	}
+
+
+
 	// don't do it
 	public void deleteWallet(Wallet wallet) {
 		//long id = wallet.getId();
@@ -92,6 +107,18 @@ public class MwDataSource {
 		cursor.close();
 		return wallets;
 	}
+
+
+	public int getWalletCount() {
+		String countQuery = "SELECT  * FROM " + MwSQLiteHelper.TABLE_WALLET;
+		Cursor cursor = database.rawQuery(countQuery, null);
+		cursor.close();
+		// return count
+		return cursor.getCount();
+
+
+	}
+
 
 	private Wallet cursorToWallet(Cursor cursor) {
 		Wallet wallet = new Wallet();

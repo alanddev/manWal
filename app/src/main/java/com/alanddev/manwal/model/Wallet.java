@@ -1,19 +1,20 @@
-package com.alanddev.manwal.data;
+package com.alanddev.manwal.model;
 
 
-public class Wallet {
+import com.alanddev.manwal.model.Model;
+
+public class Wallet extends Model {
 	
 	private String name;
-	private long id;
 	private double amount;
 	private String currency;
-	
+	private long id;
+
 	public Wallet(){
 
 	}
 	
-	public Wallet(long id, String name, double amount,String currency){
-		this.id = id;
+	public Wallet(String name, double amount,String currency){
 		this.name = name;
 		this. amount = amount;
 		this.currency = currency;
