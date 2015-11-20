@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.controller.WalletController;
+import com.alanddev.manwal.helper.Constants;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Wallet;
 
@@ -26,7 +27,7 @@ public class WalletAddActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        dbHelper = new MwSQLiteHelper(getApplicationContext());
+        //dbHelper = new MwSQLiteHelper(getApplicationContext());
         //db = new MwDataSource(getApplicationContext());
 
 
@@ -73,7 +74,7 @@ public class WalletAddActivity extends AppCompatActivity {
         Wallet newWallet = new Wallet(nameEdit.getText().toString(), Double.parseDouble(amountEdit.getText().toString()), currEdit.getText().toString());
         //db.createWallet();
         WalletController walletController = new WalletController();
-        walletController.create(dbHelper, newWallet);
+        walletController.create(Constants.dbHelper, newWallet);
         //returnMainActivity();
         finish();
     }
