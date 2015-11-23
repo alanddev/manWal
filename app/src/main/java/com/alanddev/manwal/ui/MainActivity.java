@@ -54,15 +54,17 @@ public class MainActivity extends AppCompatActivity {
             currController = new CurrencyController(getApplicationContext());
             currController.open();
             currController.init();
+            currController.close();
             //init category
             categoryController = new CategoryController(getApplicationContext());
             categoryController.open();
-            categoryController.init();
+            categoryController.init(getApplicationContext());
+            categoryController.close();
         }
 
-        Intent intent = new Intent(this, TransactionActivity.class);
-        startActivity(intent);
-        finish();
+        //Intent intent = new Intent(this, TransactionActivity.class);
+        //startActivity(intent);
+        //finish();
     }
 
     public void onDateSet(DatePickerDialog view, int year, int month, int day) {

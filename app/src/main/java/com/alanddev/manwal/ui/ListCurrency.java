@@ -13,7 +13,6 @@ import android.widget.ListView;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.CurrencyAdapter;
 import com.alanddev.manwal.controller.CurrencyController;
-import com.alanddev.manwal.helper.Constants;
 import com.alanddev.manwal.model.Currency;
 
 import java.util.List;

@@ -15,6 +15,55 @@
     <string name="title_activity_transaction_add">Add Transaction</string>
     <string name="title_activity_wallet_add">Add Wallet</string>
     <string name="title_activity_list_currency">Currency</string>
+    <string name="title_activity_category">Select Category</string>
+
+
+    <string-array name="exp_category_names">
+        <item>Loan</item>
+        <item>Shopping</item>
+        <item>Food - Drink</item>
+        <item>Transport</item>
+        <item>Education</item>
+        <item>Entertainment</item>
+        <item>Family</item>
+        <item>Friends - Lover</item>
+        <item>Invest</item>
+        <item>Medical</item>
+        <item>Travel</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="exp_category_image">
+        <item>loan</item>
+        <item>shopping</item>
+        <item>foodndrink</item>
+        <item>transport</item>
+        <item>education</item>
+        <item>entertaiment</item>
+        <item>family</item>
+        <item>friendnlover</item>
+        <item>invest</item>
+        <item>medical</item>
+        <item>travel</item>
+        <item>other_expense</item>
+    </string-array>
+    <string-array name="inc_category_names">
+        <item>Debt</item>
+        <item>Give</item>
+        <item>Award</item>
+        <item>Interest Money</item>
+        <item>Salary</item>
+        <item>Selling</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="inc_category_image">
+        <item>debt</item>
+        <item>give</item>
+        <item>award</item>
+        <item>interestmoney</item>
+        <item>salary</item>
+        <item>selling</item>
+        <item>other_income</item>
+    </string-array>
 
 
 

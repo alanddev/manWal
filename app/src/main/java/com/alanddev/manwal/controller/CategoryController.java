@@ -5,11 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.IDataSource;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.Currency;
 import com.alanddev.manwal.model.Model;
+import com.alanddev.manwal.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,6 @@ public class CategoryController  implements IDataSource {
         values.put(MwSQLiteHelper.COLUMN_CATE_TYPE, category.getType());
         database.insert(MwSQLiteHelper.TABLE_CATEGORY, null,
                 values);
-        dbHelper.close();
         return category;
     }
 
@@ -98,7 +99,32 @@ public class CategoryController  implements IDataSource {
         return category;
     }
 
-    public void init(){
+    public void init(Context context){
+        String[] arrayExCateName = context.getResources().getStringArray(R.array.exp_category_names);
+        String[] arrayExCateImg = context.getResources().getStringArray(R.array.exp_category_image);
+        int i = Math.min(arrayExCateName.length, arrayExCateImg.length);
+        List<Category> lstCategories = new ArrayList<Category>();
+        for(int j=0;j<i;j++){
+            Category category = new Category();
+            category.setName(arrayExCateName[j]);
+            category.setImage(arrayExCateImg[j]);
+            category.setType(Constant.EXPENSE_TYPE);
+            lstCategories.add(category);
+        }
+        String[] arrayInCateName = context.getResources().getStringArray(R.array.inc_category_names);
+        String[] arrayInCateImg = context.getResources().getStringArray(R.array.inc_category_image);
+        i = Math.min(arrayInCateName.length,arrayInCateImg.length);
+        for(int j=0;j<i;j++){
+            Category category = new Category();
+            category.setName(arrayInCateName[j]);
+            category.setImage(arrayInCateImg[j]);
+            category.setType(Constant.INCOME_TYPE);
+            lstCategories.add(category);
+        }
 
+        //add data
+        for(int j=0;j<lstCategories.size();j++){
+            create(lstCategories.get(j));
+        }
     }
 }
