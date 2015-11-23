@@ -1,6 +1,7 @@
 package com.alanddev.manwal.controller;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -18,6 +19,9 @@ import java.util.List;
  */
 public class CurrencyController implements IDataSource {
 
+    private SQLiteDatabase database;
+    private MwSQLiteHelper dbHelper;
+
     private String [] allColumns = {
             MwSQLiteHelper.COLUMN_CUR_ID,
             MwSQLiteHelper.COLUMN_CUR_CODE,
@@ -26,12 +30,24 @@ public class CurrencyController implements IDataSource {
             MwSQLiteHelper.COLUMN_CUR_DISPLAY,
     };
 
+    public CurrencyController(Context context){
+        dbHelper = new MwSQLiteHelper(context);
+    }
 
 
     @Override
-    public Currency create(MwSQLiteHelper dbHelper, Model data) {
+    public void open() {
+        database = dbHelper.getWritableDatabase();
+    }
+
+    @Override
+    public void close() {
+        dbHelper.close();
+    }
+
+    @Override
+    public Currency create(Model data) {
         ContentValues values = new ContentValues();
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         //values.put(MwSQLiteHelper.COLUMN_ID, id);
         Currency currency  = (Currency)data;
         //values.put(MwSQLiteHelper.COLUMN_CUR_ID, currency.getId());
@@ -43,15 +59,14 @@ public class CurrencyController implements IDataSource {
         String selectQuery = MwSQLiteHelper.COLUMN_CUR_CODE + " = \"" + currency.getCode() + "\"";
         database.insert(MwSQLiteHelper.TABLE_CUR, null,
                 values);
-        Currency newCurrency = (Currency)get(dbHelper,selectQuery);
+        Currency newCurrency = (Currency)get(selectQuery);
         dbHelper.close();
         return newCurrency;
     }
 
     @Override
-    public void update(MwSQLiteHelper dbHelper,Model data) {
+    public void update(Model data) {
         Currency currency  = (Currency)data;
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(MwSQLiteHelper.COLUMN_CUR_CODE, currency.getCode());
         values.put(MwSQLiteHelper.COLUMN_CUR_NAME, currency.getName());
@@ -64,8 +79,7 @@ public class CurrencyController implements IDataSource {
     }
 
     @Override
-    public int getCount(MwSQLiteHelper dbHelper) {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+    public int getCount() {
         String countQuery = "SELECT  * FROM " + MwSQLiteHelper.TABLE_CUR;
         Cursor cursor = database.rawQuery(countQuery, null);
         cursor.close();
@@ -75,9 +89,8 @@ public class CurrencyController implements IDataSource {
     }
 
     @Override
-    public List<Model> getAll(MwSQLiteHelper dbHelper) {
+    public List<Model> getAll() {
         List<Model> currencies = new ArrayList<Model>();
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
                 allColumns, null, null, null, null, null);
 
@@ -94,7 +107,7 @@ public class CurrencyController implements IDataSource {
     }
 
     @Override
-    public Model get(MwSQLiteHelper dbHelper,String query) {
+    public Model get(String query) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
                 allColumns, query, null,
@@ -118,10 +131,10 @@ public class CurrencyController implements IDataSource {
         return currency;
     }
 
-    public void init(MwSQLiteHelper dbHelper){
+    public void init(){
         Currency currency_vnd  = new Currency("VND","Viet Nam Dong","đ",1);
         Currency currency_usd  = new Currency("USD","Dollar","$",0);
-        create(dbHelper,currency_vnd);
-        create(dbHelper,currency_usd);
+        create(currency_vnd);
+        create(currency_usd);
     }
 }

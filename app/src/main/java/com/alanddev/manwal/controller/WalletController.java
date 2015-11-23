@@ -1,6 +1,7 @@
 package com.alanddev.manwal.controller;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -17,18 +18,33 @@ import java.util.List;
  */
 public class WalletController implements IDataSource {
 
+    private SQLiteDatabase database;
+    private MwSQLiteHelper dbHelper;
+
     private String [] allColumns = {
             MwSQLiteHelper.COLUMN_WALLET_NAME,
             MwSQLiteHelper.COLUMN_WALLET_AMOUNT,
             MwSQLiteHelper.COLUMN_WALLET_CURRENCY
     };
 
+    public WalletController(Context context){
+        dbHelper = new MwSQLiteHelper(context);
+    }
 
 
     @Override
-    public Model create(MwSQLiteHelper dbHelper, Model data) {
+    public void open() {
+        database = dbHelper.getWritableDatabase();
+    }
+
+    @Override
+    public void close() {
+        dbHelper.close();
+    }
+
+    @Override
+    public Model create(Model data) {
         ContentValues values = new ContentValues();
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         //values.put(MwSQLiteHelper.COLUMN_ID, id);
         Wallet wallet  = (Wallet)data;
         values.put(MwSQLiteHelper.COLUMN_WALLET_NAME, wallet.getName());
@@ -38,15 +54,14 @@ public class WalletController implements IDataSource {
         String selectQuery = MwSQLiteHelper.COLUMN_WALLET_NAME + " = \"" + wallet.getName() + "\"";
         database.insert(MwSQLiteHelper.TABLE_WALLET, null,
                 values);
-        Wallet newWallet = (Wallet)get(dbHelper,selectQuery);
+        Wallet newWallet = (Wallet)get(selectQuery);
         dbHelper.close();
         return newWallet;
     }
 
     @Override
-    public void update(MwSQLiteHelper dbHelper,Model data) {
+    public void update(Model data) {
         Wallet wallet  = (Wallet)data;
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(MwSQLiteHelper.COLUMN_WALLET_CURRENCY, wallet.getCurrency());
         values.put(MwSQLiteHelper.COLUMN_WALLET_AMOUNT, wallet.getAmount());
@@ -57,8 +72,7 @@ public class WalletController implements IDataSource {
     }
 
     @Override
-    public int getCount(MwSQLiteHelper dbHelper) {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+    public int getCount() {
         String countQuery = "SELECT  * FROM " + MwSQLiteHelper.TABLE_WALLET;
         Cursor cursor = database.rawQuery(countQuery, null);
         cursor.close();
@@ -69,9 +83,8 @@ public class WalletController implements IDataSource {
     }
 
     @Override
-    public List<Model> getAll(MwSQLiteHelper dbHelper) {
+    public List<Model> getAll() {
         List<Model> wallets = new ArrayList<Model>();
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
                 allColumns, null, null, null, null, null);
 
@@ -88,8 +101,7 @@ public class WalletController implements IDataSource {
     }
 
     @Override
-    public Model get(MwSQLiteHelper dbHelper,String query) {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+    public Model get(String query) {
         Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
                 allColumns, query, null,
                 null, null, null);
@@ -109,4 +121,5 @@ public class WalletController implements IDataSource {
         wallet.setCurrency(cursor.getString(2));
         return wallet;
     }
+
 }

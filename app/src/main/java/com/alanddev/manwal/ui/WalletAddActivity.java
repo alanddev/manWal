@@ -17,8 +17,8 @@ import com.alanddev.manwal.model.Wallet;
 
 public class WalletAddActivity extends AppCompatActivity {
 
-    //MwDataSource db;
-    MwSQLiteHelper dbHelper;
+    WalletController walletController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +73,23 @@ public class WalletAddActivity extends AppCompatActivity {
         EditText amountEdit   = (EditText)findViewById(R.id.txtAmount);
         Wallet newWallet = new Wallet(nameEdit.getText().toString(), Double.parseDouble(amountEdit.getText().toString()), currEdit.getText().toString());
         //db.createWallet();
-        WalletController walletController = new WalletController();
-        walletController.create(Constants.dbHelper, newWallet);
+        walletController = new WalletController(getApplicationContext());
+        walletController.open();
+        walletController.create(newWallet);
         //returnMainActivity();
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        walletController.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        walletController.close();
+        super.onPause();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.alanddev.manwal.ui;
 
 //import android.support.v4.app.DialogFragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -28,18 +29,16 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.io.File;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity
-        {
+public class MainActivity extends AppCompatActivity {
+
+    CurrencyController currController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_wal);
-        Constants.dbHelper = new MwSQLiteHelper(this);
-        Constants.db = new MwDataSource(this);
         checkDb();
     }
-
 
 
 //    public void showDatePickerDialog(View v) {
@@ -59,15 +58,16 @@ public class MainActivity extends AppCompatActivity
 //        startActivity(intent);
 //    }
 
-    public void checkDb(){
-        File dbtest =new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
-        if (dbtest.exists()){
-            Toast.makeText(this,"OK",Toast.LENGTH_LONG).show();
+    public void checkDb() {
+        File dbtest = new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
+        if (dbtest.exists()) {
+            Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
             //Constants.dbHelper.createTable();
-        }else{
+        } else {
             //Constants.dbHelper.createTable();
-            CurrencyController currController = new CurrencyController();
-            currController.init(Constants.dbHelper);
+            currController = new CurrencyController(getApplicationContext());
+            currController.open();
+            currController.init();
             //Toast.makeText(this,"FAIL",Toast.LENGTH_LONG).show();
         }
 
@@ -78,10 +78,22 @@ public class MainActivity extends AppCompatActivity
 
     public void onDateSet(DatePickerDialog view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        String date = "You picked the following date: "+day+"/"+(month+1)+"/"+year;
+        String date = "You picked the following date: " + day + "/" + (month + 1) + "/" + year;
         //dateTextView.setText(date);
         //Snackbar.make(view.getView(), "Date is:" + date, Snackbar.LENGTH_LONG)
         //               .setAction("Action", null).show();
+    }
+
+    @Override
+    protected void onResume() {
+        currController.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        currController.close();
+        super.onPause();
     }
 
 
