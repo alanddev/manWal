@@ -24,7 +24,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 		public static final String DATABASE_NAME = "manwal.db";
 		private static final int DATABASE_VERSION = 1;
 
-		public SQLiteDatabase sqLiteDatabase;
+		//public SQLiteDatabase sqLiteDatabase;
 		  // 20 fields
 		  // Database creation sql statement
 		private static final String WALLET_CREATE = "CREATE TABLE "
@@ -51,15 +51,11 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 
 		@Override
 		public void onCreate(SQLiteDatabase database) {
-			sqLiteDatabase = database;
+			//sqLiteDatabase = database;
 			database.execSQL(WALLET_CREATE);
 			database.execSQL(CUR_CREATE);
 		}
 
-		public void createTable(){
-			sqLiteDatabase.execSQL(WALLET_CREATE);
-			sqLiteDatabase.execSQL(CUR_CREATE);
-		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
