@@ -91,7 +91,7 @@ public class CurrencyController implements IDataSource {
     @Override
     public List<Model> getAll() {
         List<Model> currencies = new ArrayList<Model>();
-        Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
+        Cursor cursor = database.query(MwSQLiteHelper.TABLE_CUR,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();

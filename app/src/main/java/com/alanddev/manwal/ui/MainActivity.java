@@ -4,34 +4,21 @@ package com.alanddev.manwal.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.controller.CategoryController;
 import com.alanddev.manwal.controller.CurrencyController;
-import com.alanddev.manwal.controller.WalletController;
-import com.alanddev.manwal.helper.Constants;
-import com.alanddev.manwal.helper.MwDataSource;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
     CurrencyController currController;
+    CategoryController categoryController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +49,15 @@ public class MainActivity extends AppCompatActivity {
         File dbtest = new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
         if (dbtest.exists()) {
             Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-            //Constants.dbHelper.createTable();
         } else {
-            //Constants.dbHelper.createTable();
+            //init currency
             currController = new CurrencyController(getApplicationContext());
             currController.open();
             currController.init();
-            //Toast.makeText(this,"FAIL",Toast.LENGTH_LONG).show();
+            //init category
+            categoryController = new CategoryController(getApplicationContext());
+            categoryController.open();
+            categoryController.init();
         }
 
         Intent intent = new Intent(this, TransactionActivity.class);
@@ -86,13 +75,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        currController.open();
+        if(currController!=null) {
+            currController.open();
+        }
+        if(categoryController!=null){
+            categoryController.open();
+        }
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        currController.close();
+        if(currController!=null) {
+            currController.close();
+        }
+        if(categoryController!=null) {
+            categoryController.close();
+        }
         super.onPause();
     }
 

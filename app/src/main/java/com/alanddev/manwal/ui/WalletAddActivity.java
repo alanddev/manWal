@@ -6,13 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.controller.WalletController;
-import com.alanddev.manwal.helper.Constants;
-import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Wallet;
 
 public class WalletAddActivity extends AppCompatActivity {
@@ -82,13 +79,17 @@ public class WalletAddActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        walletController.open();
+        if(walletController!=null) {
+            walletController.open();
+        }
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        walletController.close();
+        if(walletController!=null) {
+            walletController.close();
+        }
         super.onPause();
     }
 
