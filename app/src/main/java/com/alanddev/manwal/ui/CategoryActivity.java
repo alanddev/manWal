@@ -1,6 +1,9 @@
 package com.alanddev.manwal.ui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.DataSetObserver;
+import android.os.MessageQueue;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,8 +26,10 @@ import android.widget.ListView;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.CategoryAdapter;
 import com.alanddev.manwal.controller.CategoryController;
+import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.Model;
+import com.alanddev.manwal.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +138,7 @@ public class CategoryActivity extends AppCompatActivity {
             ListView lstCategory = (ListView)rootView.findViewById(R.id.lstcategory);
             final Integer sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
             CategoryAdapter adapter;
-            if(sectionNumber==1){
+            if(sectionNumber== Constant.EXPENSE_TYPE+1){
                 adapter = new CategoryAdapter(mContext,cateExs);
             }else{
                 adapter = new CategoryAdapter(mContext,cateIns);
@@ -142,7 +147,18 @@ public class CategoryActivity extends AppCompatActivity {
             lstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                   //nothing
+                    Category category;
+                    if(sectionNumber==Constant.EXPENSE_TYPE+1){
+                        category = cateExs.get(position);
+                    }else{
+                        category = cateIns.get(position);
+                    }
+                    Intent intent=new Intent();
+                    intent.putExtra(MwSQLiteHelper.COLUMN_CATE_ID, category.getId());
+                    intent.putExtra(MwSQLiteHelper.COLUMN_CATE_NAME, category.getName());
+                    intent.putExtra(MwSQLiteHelper.COLUMN_CATE_TYPE, category.getType());
+                    getActivity().setResult(TransactionAddActivity.PICK_CATEGORY, intent);
+                    getActivity().finish();//finishing activity
                 }
             });
             return rootView;
@@ -168,7 +184,6 @@ public class CategoryActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-
             return PlaceholderFragment.newInstance(position + 1,getApplicationContext(),lstExCates,lstInCates);
         }
 
@@ -188,6 +203,7 @@ public class CategoryActivity extends AppCompatActivity {
             }
             return null;
         }
+
     }
 
     private List<Category> getExCategory(List<Model> categories){

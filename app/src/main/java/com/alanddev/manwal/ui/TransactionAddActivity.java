@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
+import com.alanddev.manwal.model.Category;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -19,7 +21,8 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
 
     private TextView edtDate;
     private TextView edtCate;
-    private static final int PICK_CATEGORY = 1;
+    public static final int PICK_CATEGORY = 1;
+    private Category category;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -50,8 +53,14 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         // check if the request code is same as what is passed  here it is 2
         if(requestCode==PICK_CATEGORY)
         {
-            String message=data.getStringExtra(MwSQLiteHelper.COLUMN_CATE_NAME);
-            edtCate.setText(message);
+            if(data!=null) {
+                category = new Category();
+                String cateName = data.getStringExtra(MwSQLiteHelper.COLUMN_CATE_NAME);
+                category.setName(cateName);
+                category.setId(data.getIntExtra(MwSQLiteHelper.COLUMN_CATE_ID, 0));
+                category.setType(data.getIntExtra(MwSQLiteHelper.COLUMN_CATE_TYPE,0));
+                edtCate.setText(cateName);
+            }
         }
     }
 
