@@ -3,25 +3,30 @@ package com.alanddev.manwal.adapter;
 import java.util.List;
 
 import com.alanddev.manwal.R;
-import com.alanddev.manwal.model.Transaction;
+import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.foound.widget.AmazingAdapter;
 
 
+import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TransactionAdapter extends AmazingAdapter {
 
-	private List<Transaction> datas;
+	private List<Transactions> datas;
 	private LayoutInflater inflate;
+	private Context mContext;
 	
-	public  TransactionAdapter(LayoutInflater inflate,List<Transaction> datas) {
+	public  TransactionAdapter(Context context,LayoutInflater inflate,List<Transactions> datas) {
 		// TODO Auto-generated constructor stub
 		this.datas = datas;
 		this.inflate = inflate;
+		this.mContext = context;
 	}
 	
 	@Override
@@ -59,7 +64,7 @@ public class TransactionAdapter extends AmazingAdapter {
 		View header = view.findViewById(R.id.header);
 		if (displaySectionHeader) {
 			header.setVisibility(View.VISIBLE);
-			Transaction itemDt = datas.get(getSectionForPosition(position));
+			Transactions itemDt = datas.get(getSectionForPosition(position));
 			TextView txtDate = (TextView) header.findViewById(R.id.txtdate);
 			txtDate.setText(itemDt.getDate());
 			TextView txtDay = (TextView) header.findViewById(R.id.txtday);
@@ -83,11 +88,13 @@ public class TransactionAdapter extends AmazingAdapter {
 		TextView txttype = (TextView) res.findViewById(R.id.txttitle);
 		TextView txtdes = (TextView) res.findViewById(R.id.txtdes);
 		TextView txtamout = (TextView) res.findViewById(R.id.txtamout);
+		ImageView imgicon = (ImageView) res.findViewById(R.id.imgicon);
 
 		TransactionDetail composer = (TransactionDetail) getItem(position);
-		txttype.setText(composer.getType());
-		txtdes.setText(composer.getDes());
-		txtamout.setText(composer.getAmount());
+		txttype.setText(composer.getCate_name());
+		txtdes.setText(composer.getNote());
+		txtamout.setText(composer.getAmountt()+"");
+		imgicon.setImageResource(mContext.getResources().getIdentifier("ic_category_"+composer.getCate_img(),"mipmap",mContext.getPackageName()));
 
 		return res;
 	}

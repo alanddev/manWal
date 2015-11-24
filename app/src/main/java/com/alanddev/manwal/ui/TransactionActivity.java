@@ -16,7 +16,7 @@ import android.view.View;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransSectionPagerAdapter;
-import com.alanddev.manwal.model.Transaction;
+import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
 
 import java.util.ArrayList;
@@ -123,9 +123,9 @@ public class TransactionActivity extends AppCompatActivity
         return true;
     }
 
-    private List<Transaction> getData() {
-        List<Transaction> lstItemDt = new ArrayList<Transaction>();
-        Transaction itemDt = new Transaction();
+    private List<Transactions> getData() {
+        List<Transactions> lstItemDt = new ArrayList<Transactions>();
+        Transactions itemDt = new Transactions();
         itemDt.setDay("Today");
         itemDt.setDate("16");
         itemDt.setMonth("November");
@@ -134,7 +134,7 @@ public class TransactionActivity extends AppCompatActivity
         itemDt.setItems(getItems());
         lstItemDt.add(itemDt);
 
-        itemDt = new Transaction();
+        itemDt = new Transactions();
         itemDt.setDay("Yesterday");
         itemDt.setDate("15");
         itemDt.setMonth("November");
@@ -143,7 +143,7 @@ public class TransactionActivity extends AppCompatActivity
         itemDt.setItems(getItems());
         lstItemDt.add(itemDt);
 
-        itemDt = new Transaction();
+        itemDt = new Transactions();
         itemDt.setDay("Saturday");
         itemDt.setDate("14");
         itemDt.setMonth("November");
@@ -159,9 +159,9 @@ public class TransactionActivity extends AppCompatActivity
         List<TransactionDetail> lstItems = new ArrayList<TransactionDetail>();
         for (int i = 0; i < 5; i++) {
             TransactionDetail item = new TransactionDetail();
-            item.setAmount("20000");
-            item.setDes("Buy clothers in the market");
-            item.setType("Shopping");
+            item.setAmountt(20000);
+            item.setNote("Buy clothers in the market");
+            item.setCate_name("Shopping");
             lstItems.add(item);
         }
         return lstItems;

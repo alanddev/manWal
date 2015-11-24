@@ -65,6 +65,7 @@ public class CategoryActivity extends AppCompatActivity {
         categoryController = new CategoryController(getApplicationContext());
         categoryController.open();
         List<Model> categories = categoryController.getAll();
+        categoryController.close();
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),getExCategory(categories),getInCategory(categories));
 
         // Set up the ViewPager with the sections adapter.
@@ -109,7 +110,6 @@ public class CategoryActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private static Context mContext;
         private static List<Category> cateExs;
         private static List<Category> cateIns;
 
@@ -120,13 +120,12 @@ public class CategoryActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber,Context context,List<Category> lstExCates,List<Category> lstInCates) {
+        public static PlaceholderFragment newInstance(int sectionNumber,List<Category> lstExCates,List<Category> lstInCates) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             cateExs = lstExCates;
             cateIns = lstInCates;
-            mContext = context;
             fragment.setArguments(args);
             return fragment;
         }
@@ -139,9 +138,9 @@ public class CategoryActivity extends AppCompatActivity {
             final Integer sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
             CategoryAdapter adapter;
             if(sectionNumber== Constant.EXPENSE_TYPE+1){
-                adapter = new CategoryAdapter(mContext,cateExs);
+                adapter = new CategoryAdapter(getActivity().getApplicationContext(),cateExs);
             }else{
-                adapter = new CategoryAdapter(mContext,cateIns);
+                adapter = new CategoryAdapter(getActivity().getApplicationContext(),cateIns);
             }
             lstCategory.setAdapter(adapter);
             lstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -156,7 +155,6 @@ public class CategoryActivity extends AppCompatActivity {
                     Intent intent=new Intent();
                     intent.putExtra(MwSQLiteHelper.COLUMN_CATE_ID, category.getId());
                     intent.putExtra(MwSQLiteHelper.COLUMN_CATE_NAME, category.getName());
-                    intent.putExtra(MwSQLiteHelper.COLUMN_CATE_TYPE, category.getType());
                     getActivity().setResult(TransactionAddActivity.PICK_CATEGORY, intent);
                     getActivity().finish();//finishing activity
                 }
@@ -184,7 +182,7 @@ public class CategoryActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1,getApplicationContext(),lstExCates,lstInCates);
+            return PlaceholderFragment.newInstance(position + 1,lstExCates,lstInCates);
         }
 
         @Override
@@ -226,4 +224,5 @@ public class CategoryActivity extends AppCompatActivity {
         }
         return lstCategories;
     }
+
 }

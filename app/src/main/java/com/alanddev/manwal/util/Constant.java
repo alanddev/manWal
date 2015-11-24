@@ -7,4 +7,6 @@ public class Constant {
 
     public static final Integer EXPENSE_TYPE=0;
     public static final Integer INCOME_TYPE=1;
+    public static final String DATE_FORMAT_PICKER = "dd/MM/YYYY";
+    public static final String DATE_FORMAT_DB = "yyyy-MM-dd HH:mm:ss";
 }

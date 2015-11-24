@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.alanddev.manwal.fragment.TransactionFragment;
-import com.alanddev.manwal.model.Transaction;
+import com.alanddev.manwal.model.Transactions;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import java.util.List;
  * Created by ANLD on 18/11/2015.
  */
 public class TransSectionPagerAdapter extends FragmentPagerAdapter {
-    private List<Transaction> datas;
-    public TransSectionPagerAdapter(FragmentManager fm,List<Transaction> datas) {
+    private List<Transactions> datas;
+    public TransSectionPagerAdapter(FragmentManager fm,List<Transactions> datas) {
         super(fm);
         this.datas = datas;
     }

@@ -86,7 +86,24 @@ public class CategoryController  implements IDataSource {
 
     @Override
     public Model get(String query) {
-        return null;
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        Cursor cursor = database.query(MwSQLiteHelper.TABLE_CATEGORY,
+                allColumns, query, null,
+                null, null, null);
+        cursor.moveToFirst();
+        Category category = (Category)cursorTo(cursor);
+        cursor.close();
+        return category;
+    }
+
+    public Category getbyId(int id){
+        StringBuffer sql = new StringBuffer("SELECT * FROM ").
+                append(MwSQLiteHelper.TABLE_CATEGORY).append(" WHERE ID = ").append(id);
+        Cursor cursor = database.rawQuery(sql.toString(),null);
+        cursor.moveToFirst();
+        Category category = (Category)cursorTo(cursor);
+        cursor.close();
+        return category;
     }
 
     @Override

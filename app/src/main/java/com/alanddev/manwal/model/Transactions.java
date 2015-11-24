@@ -2,7 +2,7 @@ package com.alanddev.manwal.model;
 
 import java.util.List;
 
-public class Transaction {
+public class Transactions {
 	private String date;
 	private String day;
 	private String month;

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransactionAdapter;
-import com.alanddev.manwal.model.Transaction;
+import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.foound.widget.AmazingListView;
 
@@ -49,18 +49,18 @@ public class TransactionFragment extends Fragment {
         AmazingListView lsComposer = (AmazingListView) rootView.findViewById(R.id.lsttransaction);
         View header = inflater.inflate(R.layout.trans_header_list, null, false);
 
-        List<Transaction> datas = getData();
+        List<Transactions> datas = new ArrayList<Transactions>();
         TextView txtheader = (TextView)rootView.findViewById(R.id.txtheadtitle);
         txtheader.setText("Today");
-        lsComposer.setAdapter(adapter = new TransactionAdapter(inflater, datas));
+        lsComposer.setAdapter(adapter = new TransactionAdapter(getActivity().getApplicationContext(),inflater, datas));
         lsComposer.addHeaderView(header);
 
 
         return rootView;
     }
-    private List<Transaction> getData() {
-        List<Transaction> lstItemDt = new ArrayList<Transaction>();
-        Transaction itemDt = new Transaction();
+    /*private List<Transactions> getData() {
+        List<Transactions> lstItemDt = new ArrayList<Transactions>();
+        Transactions itemDt = new Transactions();
         itemDt.setDay("Today");
         itemDt.setDate("16");
         itemDt.setMonth("November");
@@ -69,7 +69,7 @@ public class TransactionFragment extends Fragment {
         itemDt.setItems(getItems());
         lstItemDt.add(itemDt);
 
-        itemDt = new Transaction();
+        itemDt = new Transactions();
         itemDt.setDay("Yesterday");
         itemDt.setDate("15");
         itemDt.setMonth("November");
@@ -78,7 +78,7 @@ public class TransactionFragment extends Fragment {
         itemDt.setItems(getItems());
         lstItemDt.add(itemDt);
 
-        itemDt = new Transaction();
+        itemDt = new Transactions();
         itemDt.setDay("Saturday");
         itemDt.setDate("14");
         itemDt.setMonth("November");
@@ -101,7 +101,7 @@ public class TransactionFragment extends Fragment {
         }
         return lstItems;
     }
-
+*/
 
 }
 

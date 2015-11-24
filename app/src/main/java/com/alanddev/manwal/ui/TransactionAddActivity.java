@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
+import com.alanddev.manwal.model.TransactionDetail;
+import com.alanddev.manwal.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -21,8 +24,11 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
 
     private TextView edtDate;
     private TextView edtCate;
+    private EditText edtAmout;
+    private EditText edtDes;
     public static final int PICK_CATEGORY = 1;
     private Category category;
+    private TransactionController transController;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -39,11 +45,11 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         edtDate = (TextView) findViewById(R.id.edtdate);
         edtDate.setOnClickListener(this);
-
         edtCate = (TextView)findViewById(R.id.edtcate);
         edtCate.setOnClickListener(this);
-
-        //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        edtAmout = (EditText)findViewById(R.id.edtamount);
+        edtDes = (EditText)findViewById(R.id.edtdes);
+        transController = new TransactionController(getApplicationContext());
     }
 
     @Override
@@ -58,7 +64,6 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
                 String cateName = data.getStringExtra(MwSQLiteHelper.COLUMN_CATE_NAME);
                 category.setName(cateName);
                 category.setId(data.getIntExtra(MwSQLiteHelper.COLUMN_CATE_ID, 0));
-                category.setType(data.getIntExtra(MwSQLiteHelper.COLUMN_CATE_TYPE,0));
                 edtCate.setText(cateName);
             }
         }
@@ -91,6 +96,14 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     }
 
     private void saveTransaction() {
+        transController.open();
+        TransactionDetail transaction = new TransactionDetail();
+        transaction.setAmountt(Float.valueOf(edtAmout.getText().toString()));
+        transaction.setNote(edtDes.getText().toString());
+        transaction.setCat_id(category.getId());
+        transaction.setDisplay_date(Utils.getDateTime(edtDate.getText().toString()));
+        transController.create(transaction);
+        transController.close();
         finish();
     }
 
