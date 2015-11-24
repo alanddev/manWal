@@ -14,6 +14,7 @@
     <string name="action_save">Save</string>
     <string name="title_activity_transaction_add">Add Transaction</string>
     <string name="title_activity_wallet_add">Add Wallet</string>
+
     <string name="title_activity_list_currency">Currency</string>
     <string name="title_activity_category">Select Category</string>
 
@@ -64,7 +65,5 @@
         <item>selling</item>
         <item>other_income</item>
     </string-array>
-
-
 
 </resources>

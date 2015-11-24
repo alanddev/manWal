@@ -6,11 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Wallet;
+import android.view.View.OnClickListener;
 
 public class WalletAddActivity extends AppCompatActivity {
 
@@ -23,9 +26,21 @@ public class WalletAddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        walletController = new WalletController(this);
+        walletController.open();
         //dbHelper = new MwSQLiteHelper(getApplicationContext());
         //db = new MwDataSource(getApplicationContext());
+        LinearLayout app_layer = (LinearLayout) findViewById (R.id.lvCurrency);
+        app_layer.setClickable(true);
+        app_layer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ListCurrencyActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
 
     }
