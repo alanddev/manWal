@@ -55,7 +55,6 @@ public class WalletController implements IDataSource {
         database.insert(MwSQLiteHelper.TABLE_WALLET, null,
                 values);
         Wallet newWallet = (Wallet)get(selectQuery);
-        dbHelper.close();
         return newWallet;
     }
 
@@ -68,7 +67,6 @@ public class WalletController implements IDataSource {
         // updating row
         database.update(MwSQLiteHelper.TABLE_WALLET, values, MwSQLiteHelper.COLUMN_WALLET_NAME + " = ?",
                 new String[]{String.valueOf(wallet.getName())});
-        dbHelper.close();
     }
 
     @Override
@@ -77,7 +75,6 @@ public class WalletController implements IDataSource {
         Cursor cursor = database.rawQuery(countQuery, null);
         cursor.close();
         // return count
-        dbHelper.close();
         return cursor.getCount();
 
     }
@@ -96,7 +93,6 @@ public class WalletController implements IDataSource {
         }
         // make sure to close the cursor
         cursor.close();
-        dbHelper.close();
         return wallets;
     }
 
@@ -108,7 +104,6 @@ public class WalletController implements IDataSource {
         cursor.moveToFirst();
         Wallet wallet = (Wallet)cursorTo(cursor);
         cursor.close();
-        dbHelper.close();
         return wallet;
 
     }

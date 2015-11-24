@@ -56,12 +56,12 @@ public class CurrencyController implements IDataSource {
         values.put(MwSQLiteHelper.COLUMN_CUR_SYMBOL, currency.getSymbol());
         values.put(MwSQLiteHelper.COLUMN_CUR_DISPLAY, currency.getDisplay());
 
-        String selectQuery = MwSQLiteHelper.COLUMN_CUR_CODE + " = \"" + currency.getCode() + "\"";
+        //String selectQuery = MwSQLiteHelper.COLUMN_CUR_CODE + " = \"" + currency.getCode() + "\"";
         database.insert(MwSQLiteHelper.TABLE_CUR, null,
                 values);
-        Currency newCurrency = (Currency)get(selectQuery);
-        dbHelper.close();
-        return newCurrency;
+        //Currency newCurrency = (Currency)get(selectQuery);
+        //dbHelper.close();
+        return currency;
     }
 
     @Override
@@ -75,7 +75,6 @@ public class CurrencyController implements IDataSource {
         // updating row
         database.update(MwSQLiteHelper.TABLE_WALLET, values, MwSQLiteHelper.COLUMN_CUR_CODE + " = ?",
                 new String[]{String.valueOf(currency.getCode())});
-        dbHelper.close();
     }
 
     @Override
@@ -84,7 +83,6 @@ public class CurrencyController implements IDataSource {
         Cursor cursor = database.rawQuery(countQuery, null);
         cursor.close();
         // return count
-        dbHelper.close();
         return cursor.getCount();
     }
 
@@ -102,7 +100,6 @@ public class CurrencyController implements IDataSource {
         }
         // make sure to close the cursor
         cursor.close();
-        dbHelper.close();
         return currencies;
     }
 
@@ -115,7 +112,6 @@ public class CurrencyController implements IDataSource {
         cursor.moveToFirst();
         Currency currency = (Currency)cursorTo(cursor);
         cursor.close();
-        dbHelper.close();
         return currency;
 
     }

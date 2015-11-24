@@ -1,33 +1,31 @@
 package com.alanddev.manwal.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alanddev.manwal.R;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 
 public class TransactionAddActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    private EditText edtDate;
-    private EditText edtCate;
+    private TextView edtDate;
+    private TextView edtCate;
     private static final int PICK_CATEGORY = 1;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
+    //private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +34,25 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        edtDate = (EditText) findViewById(R.id.edtdate);
+        edtDate = (TextView) findViewById(R.id.edtdate);
         edtDate.setOnClickListener(this);
-        edtCate = (EditText)findViewById(R.id.edtcate);
+
+        edtCate = (TextView)findViewById(R.id.edtcate);
         edtCate.setOnClickListener(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==PICK_CATEGORY)
+        {
+            String message=data.getStringExtra(MwSQLiteHelper.COLUMN_CATE_NAME);
+            edtCate.setText(message);
+        }
     }
 
 
@@ -92,16 +102,15 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
 
     }
 
+
     @Override
     public void onClick(View v) {
+        if(v.getId()==R.id.edtcate){
+            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+            startActivityForResult(intent, PICK_CATEGORY);
+        }
         if(v.getId()==R.id.edtdate){
             showDatePickerDialog(v);
         }
-        if(v.getId()==R.id.edtcate){
-            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
-            startActivityForResult(intent,PICK_CATEGORY);
-        }
     }
-
-
 }

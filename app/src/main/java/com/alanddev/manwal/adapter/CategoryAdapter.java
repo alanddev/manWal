@@ -2,6 +2,7 @@ package com.alanddev.manwal.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +56,7 @@ public class CategoryAdapter extends BaseAdapter {
         Category category = (Category)this.getItem(position);
         Viewholder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_category,
-                    null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_category,null);
             viewHolder = new Viewholder();
             viewHolder.avatar = ((ImageView) convertView
                     .findViewById(R.id.imgavatar));
@@ -66,7 +66,7 @@ public class CategoryAdapter extends BaseAdapter {
         } else {
             viewHolder = (Viewholder) convertView.getTag();
         }
-        viewHolder.avatar.setImageResource(mContext.getResources().getIdentifier(category.getImage(),"mipmap",mContext.getPackageName()));
+        viewHolder.avatar.setImageResource(mContext.getResources().getIdentifier("ic_category_"+category.getImage(),"mipmap",mContext.getPackageName()));
         viewHolder.title.setText(category.getName());
         return convertView;
     }

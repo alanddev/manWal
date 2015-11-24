@@ -24,13 +24,15 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/imgcate"
-            android:src="@mipmap/ic_launcher"/>
-        <EditText
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"/>
+        <TextView
             android:id="@+id/edtcate"
             android:hint="Select Category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,12 +42,14 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/imgdes"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"/>
         <EditText android:id="@+id/edtdes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:hint="Note"/>
+            android:hint="Note"
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,12 +59,14 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/imgdate"
-            android:src="@mipmap/ic_launcher"/>
-        <EditText android:id="@+id/edtdate"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"/>
+        <TextView android:id="@+id/edtdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Today"/>
+            android:text="Today"
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
 </LinearLayout>

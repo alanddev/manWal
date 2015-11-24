@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.IDataSource;
@@ -80,7 +81,6 @@ public class CategoryController  implements IDataSource {
         }
         // make sure to close the cursor
         cursor.close();
-        dbHelper.close();
         return categories;
     }
 

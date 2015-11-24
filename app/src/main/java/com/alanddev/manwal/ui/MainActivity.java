@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
             categoryController.close();
         }
 
-        //Intent intent = new Intent(this, TransactionActivity.class);
-        //startActivity(intent);
-        //finish();
+        Intent intent = new Intent(this, TransactionActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void onDateSet(DatePickerDialog view, int year, int month, int day) {

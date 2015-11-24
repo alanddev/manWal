@@ -55,7 +55,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_CATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_CATE_NAME + " text not null, "
             + COLUMN_CATE_IMG + " text not null, "
-            + COLUMN_CATE_TYPE + " integer not null, "
+            + COLUMN_CATE_TYPE + " integer not null"
             + ");";
 
 

@@ -10,12 +10,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.alanddev.manwal.R;
@@ -119,6 +121,7 @@ public class CategoryActivity extends AppCompatActivity {
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             cateExs = lstExCates;
             cateIns = lstInCates;
+            mContext = context;
             fragment.setArguments(args);
             return fragment;
         }
@@ -128,14 +131,20 @@ public class CategoryActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_category, container, false);
             ListView lstCategory = (ListView)rootView.findViewById(R.id.lstcategory);
-            Integer sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            CategoryAdapter adapter = new CategoryAdapter(mContext, new ArrayList<Category>());
+            final Integer sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+            CategoryAdapter adapter;
             if(sectionNumber==1){
                 adapter = new CategoryAdapter(mContext,cateExs);
-            }else if(sectionNumber==2){
+            }else{
                 adapter = new CategoryAdapter(mContext,cateIns);
             }
             lstCategory.setAdapter(adapter);
+            lstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                   //nothing
+                }
+            });
             return rootView;
         }
     }
