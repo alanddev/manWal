@@ -113,8 +113,12 @@ public class CurrencyController implements IDataSource {
         Currency currency = (Currency)cursorTo(cursor);
         cursor.close();
         return currency;
+    }
+
+    public void getChecked(){
 
     }
+
 
     @Override
     public Model cursorTo(Cursor cursor) {

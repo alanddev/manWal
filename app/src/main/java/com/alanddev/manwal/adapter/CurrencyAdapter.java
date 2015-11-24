@@ -36,14 +36,19 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
         TextView tvName = (TextView) convertView.findViewById(R.id.code);
         TextView tvHome = (TextView) convertView.findViewById(R.id.symbol);
         ImageView imgIcon = (ImageView)convertView.findViewById(R.id.icon);
+        ImageView imgChecked = (ImageView)convertView.findViewById(R.id.checked);
         // Populate the data into the template view using the data object
-        tvName.setText(currency.getCode());
+        tvName.setText(currency.getName());
         tvHome.setText(currency.getSymbol());
         Resources res = convertView.getResources();
         String srcImg = "ic_currency_" + currency.getCode().toLowerCase();
         int id = res.getIdentifier(srcImg, "mipmap", getContext().getPackageName());
         Drawable image = convertView.getResources().getDrawable(id);
         imgIcon.setImageDrawable(image);
+        if (currency.getDisplay() == 1){
+            imgChecked.setImageResource(R.mipmap.ic_check_green);
+        }
+
         // Return the completed view to render on screen
         return convertView;
     }

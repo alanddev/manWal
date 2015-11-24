@@ -22,6 +22,7 @@ public class WalletController implements IDataSource {
     private MwSQLiteHelper dbHelper;
 
     private String [] allColumns = {
+            MwSQLiteHelper.COLUMN_WALLET_ID,
             MwSQLiteHelper.COLUMN_WALLET_NAME,
             MwSQLiteHelper.COLUMN_WALLET_AMOUNT,
             MwSQLiteHelper.COLUMN_WALLET_CURRENCY
@@ -111,9 +112,10 @@ public class WalletController implements IDataSource {
     @Override
     public Model cursorTo(Cursor cursor) {
         Wallet wallet = new Wallet();
-        wallet.setName(cursor.getString(0));
-        wallet.setAmount(cursor.getDouble(1));
-        wallet.setCurrency(cursor.getString(2));
+        wallet.setId(cursor.getInt(0));
+        wallet.setName(cursor.getString(1));
+        wallet.setAmount(cursor.getDouble(2));
+        wallet.setCurrency(cursor.getString(3));
         return wallet;
     }
 

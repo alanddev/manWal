@@ -9,13 +9,15 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_WALLET = "wallet";
     public static final String TABLE_CUR = "currency";
     public static final String TABLE_CATEGORY = "category";
-    public static final String TABLE_TRANSACTION = "transaction";
+    public static final String TABLE_TRANSACTION = "transactions";
 
+    // table Wallet
+    public static final String COLUMN_WALLET_ID = "id";
     public static final String COLUMN_WALLET_NAME = "name";
     public static final String COLUMN_WALLET_AMOUNT = "amount";
     public static final String COLUMN_WALLET_CURRENCY = "currency";
 
-
+    // table Currency
     public static final String COLUMN_CUR_ID = "id";
     public static final String COLUMN_CUR_CODE = "code";
     public static final String COLUMN_CUR_NAME = "name";
@@ -54,10 +56,10 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     // Database creation sql statement
     private static final String WALLET_CREATE = "CREATE TABLE "
             + TABLE_WALLET + "("
+            + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_WALLET_NAME + " text not null, "
             + COLUMN_WALLET_AMOUNT + " real not null, "
-            + COLUMN_WALLET_CURRENCY + " text not null, "
-            + "PRIMARY KEY (" + COLUMN_WALLET_NAME + ") "
+            + COLUMN_WALLET_CURRENCY + " text not null"
             + ");";
 
     private static final String CUR_CREATE = "CREATE TABLE "
