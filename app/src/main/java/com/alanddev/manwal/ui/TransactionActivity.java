@@ -10,12 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransSectionPagerAdapter;
+import com.alanddev.manwal.controller.TransactionController;
+import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
 
@@ -31,6 +34,8 @@ public class TransactionActivity extends AppCompatActivity
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    private TransactionController transController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,10 @@ public class TransactionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        transController = new TransactionController(getApplicationContext());
+        transController.open();
+
     }
 
     @Override
@@ -88,8 +97,16 @@ public class TransactionActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_view_day) {
+
+        }else if (id == R.id.action_view_week) {
+
+        }else if(id == R.id.action_view_month) {
+
+        }else if (id == R.id.action_view_year) {
+
+        }else if (id == R.id.action_view_trans) {
+
         }
 
         return super.onOptionsItemSelected(item);

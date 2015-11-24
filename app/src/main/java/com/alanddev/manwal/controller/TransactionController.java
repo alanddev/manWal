@@ -12,6 +12,7 @@ import com.alanddev.manwal.model.Currency;
 import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.TransactionDetail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,7 @@ public class TransactionController implements IDataSource {
             MwSQLiteHelper.COLUMN_TRANS_AMOUNT,
             MwSQLiteHelper.COLUMN_TRANS_CREATED_DATE,
             MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE,
+            MwSQLiteHelper.COLUMN_TRANS_CATE_ID,
             MwSQLiteHelper.COLUMN_TRANS_NOTE,
             MwSQLiteHelper.COLUMN_TRANS_LONGITUDE,
             MwSQLiteHelper.COLUMN_TRANS_LATTITUDE,
@@ -53,6 +55,7 @@ public class TransactionController implements IDataSource {
     public Model create(Model data) {
         ContentValues values = new ContentValues();
         TransactionDetail trans  = (TransactionDetail)data;
+        values.put(MwSQLiteHelper.COLUMN_TRANS_AMOUNT, trans.getAmountt());
         values.put(MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE, trans.getDisplay_date());
         values.put(MwSQLiteHelper.COLUMN_TRANS_CATE_ID, trans.getCat_id());
         values.put(MwSQLiteHelper.COLUMN_TRANS_NOTE, trans.getNote());
@@ -80,7 +83,19 @@ public class TransactionController implements IDataSource {
 
     @Override
     public List<Model> getAll() {
-        return null;
+        List<Model> trans = new ArrayList<Model>();
+        Cursor cursor = database.query(MwSQLiteHelper.TABLE_TRANSACTION,
+                allColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            TransactionDetail tran = (TransactionDetail)cursorTo(cursor);
+            trans.add(tran);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return trans;
     }
 
     @Override

@@ -3,13 +3,14 @@ package com.alanddev.manwal.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class MwSQLiteHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_WALLET = "wallet";
     public static final String TABLE_CUR = "currency";
     public static final String TABLE_CATEGORY = "category";
-    public static final String TABLE_TRANSACTION = "transaction";
+    public static final String TABLE_TRANSACTION = "transactions";
 
     public static final String COLUMN_WALLET_NAME = "name";
     public static final String COLUMN_WALLET_AMOUNT = "amount";
@@ -79,9 +80,9 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String TRANS_CREATE = "CREATE TABLE "
             + TABLE_TRANSACTION + "("
-            + COLUMN_TRANS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_TRANS_AMOUNT + " float not null, "
-            + COLUMN_TRANS_CREATED_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP, "
+            + COLUMN_TRANS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_TRANS_AMOUNT + " float not null,"
+            + COLUMN_TRANS_CREATED_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
             + COLUMN_TRANS_DISPLAY_DATE + " DATETIME not null,"
             + COLUMN_TRANS_CATE_ID + " integer not null,"
             + COLUMN_TRANS_NOTE + " text,"

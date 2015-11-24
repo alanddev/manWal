@@ -17,7 +17,11 @@
 
     <string name="title_activity_list_currency">Currency</string>
     <string name="title_activity_category">Select Category</string>
-
+    <string name="action_view_day">Xem theo ngày</string>
+    <string name="action_view_week">Xem theo tuần</string>
+    <string name="action_view_month">Xem theo tháng</string>
+    <string name="action_view_year">Xem theo năm</string>
+    <string name="action_view_trans">Xem theo giao dịch</string>
 
     <string-array name="exp_category_names">
         <item>Loan</item>
