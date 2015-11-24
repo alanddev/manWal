@@ -29,15 +29,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtName"
-            android:text="@string/name_wallet" />
+            android:hint="@string/name_wallet" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/lvCurrency"
+        android:background="?android:attr/selectableItemBackground"
+        >
 
         <ImageButton
             android:layout_width="53dp"
@@ -49,7 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtCurrency"
-            android:text="@string/currency" />
+            android:hint="@string/currency"
+            android:editable="false"/>
 
     </LinearLayout>
 

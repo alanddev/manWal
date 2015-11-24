@@ -102,7 +102,9 @@ public class TransactionActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_wallet) {
-            changeActivity();
+            Intent intent = new Intent(this, WalletAddActivity.class);
+            startActivity(intent);
+            finish();
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
