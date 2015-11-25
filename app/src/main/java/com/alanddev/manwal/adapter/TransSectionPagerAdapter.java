@@ -23,7 +23,7 @@ public class TransSectionPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return TransactionFragment.newInstance(position + 1);
+        return TransactionFragment.newInstance(position + 1,datas);
     }
 
     @Override
@@ -39,9 +39,13 @@ public class TransSectionPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if(datas!=null){
-            return datas.get(position).getDate();
+            return datas.get(position).getDisplay_date().toString();
         }else{
             return null;
         }
+    }
+
+    public void setData(List<Transactions> datas){
+        this.datas = datas;
     }
 }

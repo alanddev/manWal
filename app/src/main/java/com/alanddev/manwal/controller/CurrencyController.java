@@ -115,6 +115,11 @@ public class CurrencyController implements IDataSource {
         return currency;
     }
 
+    @Override
+    public List<Model> getAll(String query) {
+        return null;
+    }
+
     public void getChecked(){
 
     }

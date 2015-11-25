@@ -16,6 +16,7 @@ public class TransactionDetail extends Model{
 	private int bill_id;
 	private String cate_name;
 	private String cate_img;
+	private int cate_type;
 
 	public long getId() {
 		return id;
@@ -135,5 +136,13 @@ public class TransactionDetail extends Model{
 
 	public void setCate_img(String cate_img) {
 		this.cate_img = cate_img;
+	}
+
+	public int getCate_type() {
+		return cate_type;
+	}
+
+	public void setCate_type(int cate_type) {
+		this.cate_type = cate_type;
 	}
 }

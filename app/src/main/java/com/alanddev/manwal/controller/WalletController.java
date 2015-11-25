@@ -112,6 +112,11 @@ public class WalletController implements IDataSource {
     }
 
     @Override
+    public List<Model> getAll(String query) {
+        return null;
+    }
+
+    @Override
     public Model cursorTo(Cursor cursor) {
         Wallet wallet = new Wallet();
         wallet.setId(cursor.getInt(0));

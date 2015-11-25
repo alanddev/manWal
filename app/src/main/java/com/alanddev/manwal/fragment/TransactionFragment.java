@@ -11,6 +11,7 @@ import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransactionAdapter;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
+import com.alanddev.manwal.util.Utils;
 import com.foound.widget.AmazingListView;
 
 import java.util.ArrayList;
@@ -25,13 +26,15 @@ public class TransactionFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static  List<Transactions> transactionses;
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static TransactionFragment newInstance(int sectionNumber) {
+    public static TransactionFragment newInstance(int sectionNumber,List<Transactions> datas) {
         TransactionFragment fragment = new TransactionFragment();
+        transactionses = datas;
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -46,13 +49,15 @@ public class TransactionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.trans_fragment_tabbed, container, false);
         TransactionAdapter adapter;
+        Integer sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
         AmazingListView lsComposer = (AmazingListView) rootView.findViewById(R.id.lsttransaction);
         View header = inflater.inflate(R.layout.trans_header_list, null, false);
 
-        List<Transactions> datas = new ArrayList<Transactions>();
         TextView txtheader = (TextView)rootView.findViewById(R.id.txtheadtitle);
-        txtheader.setText("Today");
-        lsComposer.setAdapter(adapter = new TransactionAdapter(getActivity().getApplicationContext(),inflater, datas));
+        txtheader.setText(Utils.changeDate2Str(transactionses.get(sectionNumber - 1).getDisplay_date()));
+        List<Transactions> datas = new ArrayList<Transactions>();
+        datas.add(transactionses.get(sectionNumber-1));
+        lsComposer.setAdapter(adapter = new TransactionAdapter(getActivity().getApplicationContext(), inflater,datas));
         lsComposer.addHeaderView(header);
 
 

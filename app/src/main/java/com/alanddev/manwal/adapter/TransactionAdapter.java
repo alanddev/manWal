@@ -66,13 +66,13 @@ public class TransactionAdapter extends AmazingAdapter {
 			header.setVisibility(View.VISIBLE);
 			Transactions itemDt = datas.get(getSectionForPosition(position));
 			TextView txtDate = (TextView) header.findViewById(R.id.txtdate);
-			txtDate.setText(itemDt.getDate());
+
 			TextView txtDay = (TextView) header.findViewById(R.id.txtday);
-			txtDay.setText(itemDt.getDay());
+
 			TextView txtAmount = (TextView) header.findViewById(R.id.txtheadamout);
-			txtAmount.setText(itemDt.getAmount());
+
 			TextView txtyear = (TextView) header.findViewById(R.id.txtyear);
-			txtyear.setText(itemDt.getMonth() + " " + itemDt.getYear());
+
 		} else {
 			header.setVisibility(View.GONE);
 		}

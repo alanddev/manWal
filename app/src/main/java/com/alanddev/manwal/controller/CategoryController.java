@@ -96,6 +96,11 @@ public class CategoryController  implements IDataSource {
         return category;
     }
 
+    @Override
+    public List<Model> getAll(String query) {
+        return null;
+    }
+
     public Category getbyId(int id){
         StringBuffer sql = new StringBuffer("SELECT * FROM ").
                 append(MwSQLiteHelper.TABLE_CATEGORY).append(" WHERE ID = ").append(id);

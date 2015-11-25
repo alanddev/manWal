@@ -101,7 +101,8 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         transaction.setAmountt(Float.valueOf(edtAmout.getText().toString()));
         transaction.setNote(edtDes.getText().toString());
         transaction.setCat_id(category.getId());
-        transaction.setDisplay_date(Utils.getDateTime(edtDate.getText().toString()));
+        transaction.setDisplay_date(Utils.changeDateStr2Str(edtDate.getText().toString()));
+        transaction.setWallet_id(Utils.getWallet_id());
         transController.create(transaction);
         transController.close();
         finish();

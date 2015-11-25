@@ -1,6 +1,7 @@
 package com.alanddev.manwal.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -21,7 +22,10 @@ import java.util.Locale;
  * Created by ANLD on 24/11/2015.
  */
 public class Utils {
-    public static String getDateTime(String dateStr){
+
+    private static int wallet_id;
+
+    public static String changeDateStr2Str(String dateStr){
         DateFormat fromFormat = new SimpleDateFormat(Constant.DATE_FORMAT_PICKER);
         fromFormat.setLenient(false);
         DateFormat toFormat = new SimpleDateFormat(Constant.DATE_FORMAT_DB);
@@ -87,6 +91,37 @@ public class Utils {
             cursor.close();
         }
         return result;
+    }
+
+    public static String changeDate2Str(Date date){
+        DateFormat toFormat = new SimpleDateFormat(Constant.DATE_FORMAT_DB);
+        toFormat.setLenient(false);
+        return toFormat.format(date);
+    }
+
+    public static Date changeStr2Date(String dateStr,String dateformat){
+        DateFormat fromFormat = new SimpleDateFormat(dateformat);
+        fromFormat.setLenient(false);
+        try {
+            return fromFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
+    public static SharedPreferences getSharedPreferences(Context context){
+        return context.getSharedPreferences(Constant.SHAREDPREFERENCES_NAME,context.MODE_PRIVATE);
+    }
+
+
+    public static int getWallet_id() {
+        //return wallet_id;
+        return 1;
+    }
+
+    public static void setWallet_id(int wallet_id) {
+        Utils.wallet_id = wallet_id;
     }
 
 }

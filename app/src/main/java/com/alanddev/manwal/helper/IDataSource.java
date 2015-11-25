@@ -18,6 +18,7 @@ public interface IDataSource {
     public int getCount();
     public List<Model> getAll();
     public Model get(String query);
+    public List<Model> getAll(String query);
     public Model cursorTo(Cursor cursor);
 
 }

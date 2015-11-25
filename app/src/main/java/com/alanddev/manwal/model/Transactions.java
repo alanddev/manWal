@@ -1,49 +1,52 @@
 package com.alanddev.manwal.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class Transactions {
-	private String date;
-	private String day;
-	private String month;
-	private String year;
-	private String amount;
+	private Date display_date;
+	private float examount;
+	private float inamount;
+	private float netamount;
 	private List<TransactionDetail> items;
-	public String getDate() {
-		return date;
+
+	public Date getDisplay_date() {
+		return display_date;
 	}
-	public void setDate(String date) {
-		this.date = date;
+
+	public void setDisplay_date(Date display_date) {
+		this.display_date = display_date;
 	}
-	public String getDay() {
-		return day;
+
+	public float getExamount() {
+		return examount;
 	}
-	public void setDay(String day) {
-		this.day = day;
+
+	public void setExamount(float examount) {
+		this.examount = examount;
 	}
-	public String getMonth() {
-		return month;
+
+	public float getInamount() {
+		return inamount;
 	}
-	public void setMonth(String month) {
-		this.month = month;
+
+	public void setInamount(float inamount) {
+		this.inamount = inamount;
 	}
-	public String getYear() {
-		return year;
+
+	public float getNetamount() {
+		return netamount;
 	}
-	public void setYear(String year) {
-		this.year = year;
+
+	public void setNetamount(float netamount) {
+		this.netamount = netamount;
 	}
-	public String getAmount() {
-		return amount;
-	}
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
+
 	public List<TransactionDetail> getItems() {
 		return items;
 	}
+
 	public void setItems(List<TransactionDetail> items) {
 		this.items = items;
 	}
-	
 }

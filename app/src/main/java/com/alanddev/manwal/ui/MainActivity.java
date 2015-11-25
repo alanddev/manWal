@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
             categoryController.open();
             categoryController.init(getApplicationContext());
             categoryController.close();
+            //set wallet_id
+            if(Utils.getWallet_id()==0){
+                Utils.setWallet_id(Utils.getSharedPreferences(this).getInt(Constant.WALLET_ID, 0));
+            }
+
         }
 
         utils.createFolder(Constant.PATH_IMG);
