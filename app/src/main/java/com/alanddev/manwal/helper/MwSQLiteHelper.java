@@ -17,6 +17,8 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_WALLET_NAME = "name";
     public static final String COLUMN_WALLET_AMOUNT = "amount";
     public static final String COLUMN_WALLET_CURRENCY = "currency";
+    // only save image Name file.
+    public static final String COLUMN_WALLET_IMG="image";
 
     // table Currency
     public static final String COLUMN_CUR_ID = "id";
@@ -60,7 +62,8 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_WALLET_NAME + " text not null, "
             + COLUMN_WALLET_AMOUNT + " real not null, "
-            + COLUMN_WALLET_CURRENCY + " text not null"
+            + COLUMN_WALLET_CURRENCY + " text not null, "
+            + COLUMN_WALLET_IMG + " text not null"
             + ");";
 
     private static final String CUR_CREATE = "CREATE TABLE "

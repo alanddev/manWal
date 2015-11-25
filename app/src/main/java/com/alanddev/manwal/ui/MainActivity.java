@@ -11,22 +11,28 @@ import com.alanddev.manwal.R;
 import com.alanddev.manwal.controller.CategoryController;
 import com.alanddev.manwal.controller.CurrencyController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
+import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 
 import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
     CurrencyController currController;
     CategoryController categoryController;
+    Utils utils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_wal);
+
         checkDb();
     }
 
     public void checkDb() {
+        utils = new Utils();
         File dbtest = new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
         if (dbtest.exists()) {
             Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             categoryController.close();
         }
 
+        utils.createFolder(Constant.PATH_IMG);
         Intent intent = new Intent(this, TransactionActivity.class);
         startActivity(intent);
         finish();

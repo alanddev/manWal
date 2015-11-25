@@ -64,8 +64,6 @@ public class ListCurrencyActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
     }
 
     @Override

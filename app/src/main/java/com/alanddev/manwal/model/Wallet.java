@@ -10,14 +10,25 @@ public class Wallet extends Model {
 	private String currency;
 	private long id;
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	private String image;
+
 	public Wallet(){
 
 	}
 	
-	public Wallet(String name, double amount,String currency){
+	public Wallet(String name, double amount,String currency,String imagePath){
 		this.name = name;
 		this. amount = amount;
 		this.currency = currency;
+		this.image = imagePath;
 	}
 	
 

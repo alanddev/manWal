@@ -25,7 +25,8 @@ public class WalletController implements IDataSource {
             MwSQLiteHelper.COLUMN_WALLET_ID,
             MwSQLiteHelper.COLUMN_WALLET_NAME,
             MwSQLiteHelper.COLUMN_WALLET_AMOUNT,
-            MwSQLiteHelper.COLUMN_WALLET_CURRENCY
+            MwSQLiteHelper.COLUMN_WALLET_CURRENCY,
+            MwSQLiteHelper.COLUMN_WALLET_IMG
     };
 
     public WalletController(Context context){
@@ -51,6 +52,7 @@ public class WalletController implements IDataSource {
         values.put(MwSQLiteHelper.COLUMN_WALLET_NAME, wallet.getName());
         values.put(MwSQLiteHelper.COLUMN_WALLET_AMOUNT, wallet.getAmount());
         values.put(MwSQLiteHelper.COLUMN_WALLET_CURRENCY, wallet.getCurrency());
+        values.put(MwSQLiteHelper.COLUMN_WALLET_IMG, wallet.getImage());
 
         String selectQuery = MwSQLiteHelper.COLUMN_WALLET_NAME + " = \"" + wallet.getName() + "\"";
         database.insert(MwSQLiteHelper.TABLE_WALLET, null,
@@ -116,6 +118,7 @@ public class WalletController implements IDataSource {
         wallet.setName(cursor.getString(1));
         wallet.setAmount(cursor.getDouble(2));
         wallet.setCurrency(cursor.getString(3));
+        wallet.setImage(cursor.getString(4));
         return wallet;
     }
 

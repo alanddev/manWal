@@ -70,4 +70,15 @@
         <item>other_income</item>
     </string-array>
 
+    <string-array name="currency_code">
+        <item>VND</item>
+        <item>USD</item>
+    </string-array>
+
+    <string-array name="currency_name">
+        <item>Việt Nam Đồng</item>
+        <item>Dollar</item>
+    </string-array>
+
+
 </resources>
