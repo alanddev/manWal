@@ -21,9 +21,16 @@ import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class WalletAddActivity extends AppCompatActivity {
 
@@ -44,6 +51,31 @@ public class WalletAddActivity extends AppCompatActivity {
         utils = new Utils();
 
 
+        // Creating a Data Set;
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(4f, 0));
+        entries.add(new BarEntry(8f, 1));
+        entries.add(new BarEntry(6f, 2));
+        entries.add(new BarEntry(12f, 3));
+        entries.add(new BarEntry(18f, 4));
+        entries.add(new BarEntry(9f, 5));
+        BarDataSet dataset = new BarDataSet(entries, "# of Calls");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        // Defining X Axis;
+        ArrayList<String> labels = new ArrayList<String>();
+        labels.add("January");
+        labels.add("February");
+        labels.add("March");
+        labels.add("April");
+        labels.add("May");
+        labels.add("June");
+        BarChart chart = (BarChart)findViewById(R.id.chart);
+        BarData data = new BarData(labels, dataset);
+        chart.setData(data);
+        chart.setDescription("# of times Alice called Bob");
+        chart.animateY(5000);
+//        LimitLine line = new LimitLine(10f);
+//        data.addLimitLine(line);
 
     }
 
