@@ -3,11 +3,9 @@ package com.alanddev.manwal.adapter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.model.TransactionDay;
-import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
@@ -15,8 +13,6 @@ import com.foound.widget.AmazingAdapter;
 
 
 import android.content.Context;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +89,7 @@ public class TransactionAdapter extends AmazingAdapter {
 	public View getAmazingView(int position, View convertView, ViewGroup parent) {
 		View res = convertView;
 		if (res == null){
-			res = inflate.inflate(R.layout.list_transaction, null);
+			res = inflate.inflate(R.layout.item_list_transaction, null);
 		}
 
 		TextView txttype = (TextView) res.findViewById(R.id.txttitle);
