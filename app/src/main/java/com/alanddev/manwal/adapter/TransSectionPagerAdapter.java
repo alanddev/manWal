@@ -3,6 +3,8 @@ package com.alanddev.manwal.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 
 import com.alanddev.manwal.fragment.TransactionFragment;
@@ -14,7 +16,7 @@ import java.util.List;
 /**
  * Created by ANLD on 18/11/2015.
  */
-public class TransSectionPagerAdapter extends FragmentPagerAdapter {
+public class TransSectionPagerAdapter extends FragmentStatePagerAdapter {
     private List<Transactions> datas;
     public TransSectionPagerAdapter(FragmentManager fm,List<Transactions> datas) {
         super(fm);
@@ -25,8 +27,13 @@ public class TransSectionPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        Fragment fragment = TransactionFragment.newInstance(position + 1,datas);
+        Fragment fragment = TransactionFragment.newInstance(position + 1, datas);
         return fragment;
+    }
+
+    @Override
+    public int getItemPosition(Object object){
+        return POSITION_NONE;
     }
 
 

@@ -170,7 +170,7 @@ public class TransactionController implements IDataSource {
 
     public List<Transactions> getTransbyDay(){
         List<Transactions> transactionses = new ArrayList<Transactions>();
-        for(int i=0;i<7;i++){
+        for(int i=6;i>=0;i--){
             List<TransactionDay> transactionDays = new ArrayList<TransactionDay>();
             TransactionDay transactionDay = new TransactionDay();
             Transactions transactions = new Transactions();
@@ -186,7 +186,7 @@ public class TransactionController implements IDataSource {
                     .append(MwSQLiteHelper.COLUMN_CATE_ID)
                     .append(" WHERE s.").append(MwSQLiteHelper.COLUMN_TRANS_WALLET_ID).append(" = ?")
                     .append(" AND (s.").append(MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE).append(" BETWEEN ").append("Datetime(?) AND (?))");
-
+            Log.d("AAAAAAA",sql.toString());
             String[] atts = new String[]{Utils.getWallet_id()+"",strDate2,strDate1};
             Cursor cursor = database.rawQuery(sql.toString(), atts);
             cursor.moveToFirst();

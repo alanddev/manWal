@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,17 +18,10 @@ import android.view.View;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransSectionPagerAdapter;
 import com.alanddev.manwal.controller.TransactionController;
-import com.alanddev.manwal.helper.MwSQLiteHelper;
-import com.alanddev.manwal.model.Category;
-import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.Transactions;
-import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class TransactionActivity extends AppCompatActivity
@@ -45,6 +37,8 @@ public class TransactionActivity extends AppCompatActivity
     private TransactionController transController;
     //private int viewType=0;
     private SharedPreferences mShaPref;
+
+    List<Transactions> transactionses;
 
 
     @Override
@@ -64,12 +58,14 @@ public class TransactionActivity extends AppCompatActivity
                 startActivityForResult(intent, Constant.ADD_TRANSACTION_SUCCESS);
             }
         });
-
-        List<Transactions> transactionses = getData(viewType);
+        transactionses = getData(viewType);
         // Set up the ViewPager with the sections adapter.
         mSectionsPagerAdapter = new TransSectionPagerAdapter(getSupportFragmentManager(),transactionses);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        if(transactionses.size()>0) {
+            mViewPager.setCurrentItem(transactionses.size() - 1);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -79,11 +75,6 @@ public class TransactionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
-
     }
 
     @Override
@@ -156,22 +147,6 @@ public class TransactionActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
-    private List<TransactionDetail> getItems() {
-        List<TransactionDetail> lstItems = new ArrayList<TransactionDetail>();
-        for (int i = 0; i < 5; i++) {
-            TransactionDetail item = new TransactionDetail();
-            item.setAmountt(20000);
-            item.setNote("Buy clothers in the market");
-            item.setCate_name("Shopping");
-            lstItems.add(item);
-        }
-        return lstItems;
-    }
-
-
     public void changeActivity(){
         Intent intent = new Intent(this, WalletAddActivity.class);
         startActivity(intent);
@@ -181,7 +156,6 @@ public class TransactionActivity extends AppCompatActivity
         TransactionController controller = new TransactionController(this);
         controller.open();
         List<Transactions> lstTrans = controller.getAll(viewType);
-        //Log.d("AAAAAAAA",lstTrans.get(0).getExamount()+"");
         controller.close();
         return lstTrans;
     }
@@ -197,11 +171,13 @@ public class TransactionActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
         if(requestCode==Constant.ADD_TRANSACTION_SUCCESS) {
-            //mSectionsPagerAdapter.setData(getData(mShaPref.getInt(Constant.VIEW_TYPE, 0)));
-            Log.d("AAAAAAAAA", "CCCCCCC");
-            //mSectionsPagerAdapter.notifyDataSetChanged();
-            mSectionsPagerAdapter = new TransSectionPagerAdapter(getSupportFragmentManager(),getData(mShaPref.getInt(Constant.VIEW_TYPE, 0)));
-            mViewPager.setAdapter(mSectionsPagerAdapter);
+            transactionses = getData(mShaPref.getInt(Constant.VIEW_TYPE, 0));
+            mSectionsPagerAdapter.setData(transactionses);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+
+            if(transactionses.size()>0) {
+                mViewPager.setCurrentItem(transactionses.size() - 1);
+            }
         }
     }
 }
