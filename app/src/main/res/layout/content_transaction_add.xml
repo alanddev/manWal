@@ -15,23 +15,24 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:inputType="numberDecimal"
-        android:hint="Amount" />
+        android:hint="@string/amount" />
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="15dp">
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:id="@+id/imgcate"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/transaction"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/edtcate"
-            android:hint="Select Category"
+            android:hint="@string/select_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:textSize="19sp"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
@@ -39,16 +40,16 @@
         android:orientation="horizontal"
         android:layout_marginTop="15dp">
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:id="@+id/imgdes"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/notes"
             android:layout_gravity="center_vertical"/>
         <EditText android:id="@+id/edtdes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:hint="Note"
+            android:hint="@string/note"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
@@ -56,16 +57,16 @@
         android:orientation="horizontal"
         android:layout_marginTop="15dp">
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:id="@+id/imgdate"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/calendar"
             android:layout_gravity="center_vertical"/>
         <TextView android:id="@+id/edtdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Today"
+            android:text="@string/today"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
 

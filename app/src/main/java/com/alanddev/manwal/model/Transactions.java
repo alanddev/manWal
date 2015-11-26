@@ -4,18 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 public class Transactions {
-	private Date display_date;
+	private String title;
 	private float examount;
 	private float inamount;
 	private float netamount;
-	private List<TransactionDetail> items;
+	private List<TransactionDay> items;
 
-	public Date getDisplay_date() {
-		return display_date;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setDisplay_date(Date display_date) {
-		this.display_date = display_date;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public float getExamount() {
@@ -42,11 +42,11 @@ public class Transactions {
 		this.netamount = netamount;
 	}
 
-	public List<TransactionDetail> getItems() {
+	public List<TransactionDay> getItems() {
 		return items;
 	}
 
-	public void setItems(List<TransactionDetail> items) {
+	public void setItems(List<TransactionDay> items) {
 		this.items = items;
 	}
 }

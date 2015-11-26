@@ -4,17 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.TransactionDetail;
+import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -26,6 +30,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     private TextView edtCate;
     private EditText edtAmout;
     private EditText edtDes;
+    private ImageView imgCate;
     public static final int PICK_CATEGORY = 1;
     private Category category;
     private TransactionController transController;
@@ -49,6 +54,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         edtCate.setOnClickListener(this);
         edtAmout = (EditText)findViewById(R.id.edtamount);
         edtDes = (EditText)findViewById(R.id.edtdes);
+        imgCate = (ImageView)findViewById(R.id.imgcate);
         transController = new TransactionController(getApplicationContext());
     }
 
@@ -65,6 +71,8 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
                 category.setName(cateName);
                 category.setId(data.getIntExtra(MwSQLiteHelper.COLUMN_CATE_ID, 0));
                 edtCate.setText(cateName);
+                String cateimg = data.getStringExtra(MwSQLiteHelper.COLUMN_CATE_IMG);
+                imgCate.setImageResource(getResources().getIdentifier("ic_category_"+cateimg,"mipmap",getPackageName()));
             }
         }
     }
@@ -96,21 +104,29 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     }
 
     private void saveTransaction() {
-        transController.open();
-        TransactionDetail transaction = new TransactionDetail();
-        transaction.setAmountt(Float.valueOf(edtAmout.getText().toString()));
-        transaction.setNote(edtDes.getText().toString());
-        transaction.setCat_id(category.getId());
-        transaction.setDisplay_date(Utils.changeDateStr2Str(edtDate.getText().toString()));
-        transaction.setWallet_id(Utils.getWallet_id());
-        transController.create(transaction);
-        transController.close();
-        finish();
+        String amount = edtAmout.getText().toString();
+        if(edtAmout.getText().toString().equals("")){
+            Toast.makeText(this, getResources().getText(R.string.check_amout_exist), Toast.LENGTH_LONG).show();
+        }else if(edtCate.getText().toString().equals("")||category==null){
+            Toast.makeText(this, getResources().getText(R.string.check_category_exist), Toast.LENGTH_LONG).show();
+        }else {
+            transController.open();
+            TransactionDetail transaction = new TransactionDetail();
+            transaction.setAmountt(Float.valueOf(edtAmout.getText().toString()));
+            transaction.setNote(edtDes.getText().toString());
+            transaction.setCat_id(category.getId());
+            transaction.setDisplay_date(Utils.getDatefromDayView(this, edtDate.getText().toString()));
+            transaction.setWallet_id(Utils.getWallet_id());
+            transController.create(transaction);
+            transController.close();
+            setResult(Constant.ADD_TRANSACTION_SUCCESS, new Intent());
+            finish();
+        }
     }
 
     public void onDateSet(DatePickerDialog view, int year, int month, int day) {
-        String date = day + "/" + (month + 1) + "/" + year;
-        edtDate.setText(date);
+        String dateStr = day + "/" + (month + 1) + "/" + year;
+        edtDate.setText(Utils.getDayView(this,Utils.changeStr2Date(dateStr,Constant.DATE_FORMAT_PICKER)));
     }
 
     public void showDatePickerDialog(View v) {

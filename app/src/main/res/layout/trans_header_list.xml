@@ -16,9 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="Overview"
+            android:text="@string/overview"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorTextColor"/>
 
         <TextView
             android:id="@+id/overview_smalltitle"
@@ -26,8 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/overview_title"
             android:layout_marginLeft="15dp"
-            android:text="Tap to view full report"
-            android:textSize="11sp" />
+            android:text="@string/overview_click_me"
+            android:textSize="11sp"
+            android:textColor="@color/colorTextColor"/>
 
         <ImageView
             android:id="@+id/imageView1"
@@ -36,7 +38,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_arrow_right" />
     </RelativeLayout>
 
     <TableRow
@@ -46,7 +48,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#EEEEEE" >
+        android:background="@color/colorDivider" >
     </TableRow>
 
     <RelativeLayout
@@ -61,7 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
-            android:text="Inflow" />
+            android:text="@string/inflow_txt"
+            android:textColor="@color/colorTextColor"/>
 
         <TextView
             android:id="@+id/txtInflowAmt"
@@ -69,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:text="100.000" />
+            android:textColor="@color/colorInflow"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -84,7 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
-            android:text="Outflow" />
+            android:text="@string/outflow_txt"
+            android:textColor="@color/colorTextColor"/>
 
         <TextView
             android:id="@+id/txtOutflowAmt"
@@ -92,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:text="100.000" />
+            android:textColor="@color/colorOutFlow"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -106,7 +110,7 @@
             android:layout_height="1dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:background="#EEEEEE" >
+            android:background="@color/colorDivider" >
         </TableRow>
 
         <TextView
@@ -116,7 +120,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/hr2"
             android:layout_marginRight="10dp"
-            android:text="100.000" >
+            android:textColor="@color/colorNetAmount">
         </TextView>
     </RelativeLayout>
 </LinearLayout>

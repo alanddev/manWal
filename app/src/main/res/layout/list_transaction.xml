@@ -17,8 +17,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_marginTop="15dp" />
 
         <TextView
             android:id="@+id/txttitle"
@@ -28,9 +27,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/imgicon"
-            android:text="Shopping"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorTextColor"/>
 
         <TextView
             android:id="@+id/txtdes"
@@ -39,8 +38,9 @@
             android:layout_below="@id/txttitle"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/imgicon"
-            android:text="MRT Hotel - Airpot"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            android:textColor="@color/colorNote"/>
+
 
         <TextView
             android:id="@+id/txtamout"
@@ -49,7 +49,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:text="300.000"
             android:textSize="15sp"
             android:textStyle="bold" />
     </RelativeLayout>

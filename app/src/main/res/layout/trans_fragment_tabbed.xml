@@ -23,7 +23,7 @@
         <com.foound.widget.AmazingListView
             android:id="@+id/lsttransaction"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:divider="#FFFFFF" >
         </com.foound.widget.AmazingListView>
 

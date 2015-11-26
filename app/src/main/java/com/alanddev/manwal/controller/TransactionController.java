@@ -10,6 +10,7 @@ import com.alanddev.manwal.helper.IDataSource;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.Model;
+import com.alanddev.manwal.model.TransactionDay;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.util.Constant;
@@ -25,9 +26,11 @@ import java.util.List;
 public class TransactionController implements IDataSource {
     private SQLiteDatabase database;
     private MwSQLiteHelper dbHelper;
+    private Context mContext;
 
     public TransactionController(Context context){
         dbHelper = new MwSQLiteHelper(context);
+        this.mContext = context;
     }
     @Override
     public void open() {
@@ -168,8 +171,9 @@ public class TransactionController implements IDataSource {
     public List<Transactions> getTransbyDay(){
         List<Transactions> transactionses = new ArrayList<Transactions>();
         for(int i=0;i<7;i++){
+            List<TransactionDay> transactionDays = new ArrayList<TransactionDay>();
+            TransactionDay transactionDay = new TransactionDay();
             Transactions transactions = new Transactions();
-            List<TransactionDetail> items = new ArrayList<TransactionDetail>();
             Float examount = Float.valueOf(0);
             Float inamount = Float.valueOf(0);
             Calendar cal = Calendar.getInstance();
@@ -192,7 +196,7 @@ public class TransactionController implements IDataSource {
                 trans.add(tran);
                 cursor.moveToNext();
             }
-            transactions.setItems(trans);
+            transactionDay.setItems(trans);
 
             for(int j=0;j<trans.size();j++){
                 TransactionDetail transactionDetail = trans.get(j);
@@ -202,10 +206,19 @@ public class TransactionController implements IDataSource {
                     inamount = inamount+transactionDetail.getAmountt();
                 }
             }
-            transactions.setExamount(examount);
+            transactionDay.setExamount(examount);
+            transactionDay.setInamount(inamount);
+            transactionDay.setNetamount(examount + inamount);
+            cal.add(Calendar.DATE, 1);
+            transactionDay.setDisplay_date(cal.getTime());
+            transactionDays.add(transactionDay);
+
+            //set transactions
             transactions.setInamount(inamount);
-            transactions.setNetamount(examount + inamount);
-            transactions.setDisplay_date(cal.getTime());
+            transactions.setExamount(examount);
+            transactions.setNetamount(inamount+examount);
+            transactions.setItems(transactionDays);
+            transactions.setTitle(Utils.getDayView(mContext, Utils.changeDate2Date(cal.getTime(),Constant.DATE_FORMAT_PICKER)));
             transactionses.add(transactions);
         }
         return transactionses;
@@ -226,18 +239,16 @@ public class TransactionController implements IDataSource {
             List<Model> models = getAll(sql.toString());
             for(int j=0;j<models.size();j++){
                 TransactionDetail transactionDetail = (TransactionDetail)models.get(j);
-
-
                 if(transactionDetail.getCate_type()== Constant.EXPENSE_TYPE){
                     examount = examount-transactionDetail.getAmountt();
                 }else{
                     inamount = inamount+transactionDetail.getAmountt();
                 }
-                transactions.getItems().add(transactionDetail);
+                //transactions.getItems().add(transactionDetail);
             }
-            transactions.setExamount(examount);
+           /* transactions.setExamount(examount);
             transactions.setInamount(inamount);
-            transactions.setDisplay_date(cal.getTime());
+            transactions.setDisplay_date(cal.getTime());*/
             transactionses.add(transactions);
         }
         return transactionses;

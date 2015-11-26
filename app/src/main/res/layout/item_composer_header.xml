@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:background="#FFEEEE" >
+        android:background="@color/colorDivider" >
     </TableRow>
     <RelativeLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -23,7 +23,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
         android:textSize="30sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/colorTextColor"/>
 
     <TextView
         android:id="@+id/txtday"
@@ -33,7 +34,8 @@
         android:layout_toRightOf="@id/txtdate"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:layout_marginTop="13dp" />
+        android:layout_marginTop="13dp"
+        android:textColor="@color/colorTextColor"/>
 
     <TextView
         android:id="@+id/txtyear"
@@ -43,7 +45,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginBottom="13dp"
         android:layout_toRightOf="@id/txtdate"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:textColor="@color/colorNote"/>
 
     <TextView
         android:id="@+id/txtheadamout"
@@ -53,7 +56,8 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorNetAmount"/>
     </RelativeLayout>
     <TableRow
         android:id="@+id/hr4"
@@ -61,7 +65,7 @@
         android:layout_height="8dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:background="#FFEEEE" >
+        android:background="@color/colorDivider" >
     </TableRow>
 
 </LinearLayout>

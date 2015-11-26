@@ -19,6 +19,8 @@ import android.view.View;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransSectionPagerAdapter;
 import com.alanddev.manwal.controller.TransactionController;
+import com.alanddev.manwal.helper.MwSQLiteHelper;
+import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
@@ -26,6 +28,8 @@ import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TransactionActivity extends AppCompatActivity
@@ -57,12 +61,11 @@ public class TransactionActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TransactionAddActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constant.ADD_TRANSACTION_SUCCESS);
             }
         });
 
         List<Transactions> transactionses = getData(viewType);
-
         // Set up the ViewPager with the sections adapter.
         mSectionsPagerAdapter = new TransSectionPagerAdapter(getSupportFragmentManager(),transactionses);
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -178,6 +181,7 @@ public class TransactionActivity extends AppCompatActivity
         TransactionController controller = new TransactionController(this);
         controller.open();
         List<Transactions> lstTrans = controller.getAll(viewType);
+        //Log.d("AAAAAAAA",lstTrans.get(0).getExamount()+"");
         controller.close();
         return lstTrans;
     }
@@ -185,5 +189,19 @@ public class TransactionActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==Constant.ADD_TRANSACTION_SUCCESS) {
+            //mSectionsPagerAdapter.setData(getData(mShaPref.getInt(Constant.VIEW_TYPE, 0)));
+            Log.d("AAAAAAAAA", "CCCCCCC");
+            //mSectionsPagerAdapter.notifyDataSetChanged();
+            mSectionsPagerAdapter = new TransSectionPagerAdapter(getSupportFragmentManager(),getData(mShaPref.getInt(Constant.VIEW_TYPE, 0)));
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        }
     }
 }

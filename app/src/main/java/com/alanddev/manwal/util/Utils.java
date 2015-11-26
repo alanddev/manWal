@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.alanddev.manwal.R;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,8 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -24,6 +28,22 @@ import java.util.Locale;
 public class Utils {
 
     private static int wallet_id;
+
+    private static Locale locale;
+    private static Locale localDefault = new Locale("vi","VI");
+
+    public static Locale getLocale() {
+        if(locale==null){
+            return localDefault;
+        }
+        return locale;
+    }
+
+    public static void setLocale(Locale locale) {
+        Utils.locale = locale;
+    }
+
+
 
     public static String changeDateStr2Str(String dateStr){
         DateFormat fromFormat = new SimpleDateFormat(Constant.DATE_FORMAT_PICKER);
@@ -99,6 +119,12 @@ public class Utils {
         return toFormat.format(date);
     }
 
+    public static String changeDate2Str(Date date,String dateformat){
+        DateFormat toFormat = new SimpleDateFormat(dateformat);
+        toFormat.setLenient(false);
+        return toFormat.format(date);
+    }
+
     public static Date changeStr2Date(String dateStr,String dateformat){
         DateFormat fromFormat = new SimpleDateFormat(dateformat);
         fromFormat.setLenient(false);
@@ -110,8 +136,13 @@ public class Utils {
         return new Date();
     }
 
+    public static Date changeDate2Date(Date date,String datefomat){
+        String strDate = changeDate2Str(date,datefomat);
+        return changeStr2Date(strDate,datefomat);
+    }
+
     public static SharedPreferences getSharedPreferences(Context context){
-        return context.getSharedPreferences(Constant.SHAREDPREFERENCES_NAME,context.MODE_PRIVATE);
+        return context.getSharedPreferences(Constant.SHAREDPREFERENCES_NAME, context.MODE_PRIVATE);
     }
 
 
@@ -123,5 +154,72 @@ public class Utils {
     public static void setWallet_id(int wallet_id) {
         Utils.wallet_id = wallet_id;
     }
+
+    public static Date getYesterday(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,-1);
+        return changeDate2Date(calendar.getTime(), Constant.DATE_FORMAT_DB);
+    }
+
+    public static Date getTomorrow(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,1);
+        return changeDate2Date(calendar.getTime(), Constant.DATE_FORMAT_DB);
+    }
+
+    public static Date getToday(){
+        Calendar calendar = Calendar.getInstance();
+        return changeDate2Date(calendar.getTime(), Constant.DATE_FORMAT_DB);
+    }
+
+    public static String getStrToday(){
+        Calendar calendar = Calendar.getInstance();
+        return changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_DB);
+    }
+
+    public static String getStrYesterday(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,-1);
+        return changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_DB);
+    }
+
+    public static String getStrTomorrow(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,1);
+        return changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_DB);
+    }
+
+    public static String getDayView(Context context, Date date){
+        String[] dayview = context.getResources().getStringArray(R.array.day_view);
+        if(date.compareTo(getToday())==0){
+            return dayview[1];
+        }else if(date.compareTo(getYesterday())==0){
+            return dayview[0];
+        }else if(date.compareTo(getTomorrow())==0){
+            return dayview[2];
+        }else{
+            return changeDate2Str(date,Constant.DATE_FORMAT_PICKER);
+        }
+    }
+
+    public static String getDatefromDayView(Context context,String dateStr){
+        String[] dayview = context.getResources().getStringArray(R.array.day_view);
+        String strRes;
+        if(dateStr.equals(dayview[0])){
+            // Yesterday
+            strRes = getStrYesterday();
+        }else if(dateStr.equals(dayview[1])){
+            //Today
+            strRes = getStrToday();
+        }else if(dateStr.equals(dayview[2])){
+            //Tomorrow
+            strRes = getStrTomorrow();
+        }else{
+            return changeDateStr2Str(dateStr);
+        }
+        return strRes;
+    }
+
+
 
 }

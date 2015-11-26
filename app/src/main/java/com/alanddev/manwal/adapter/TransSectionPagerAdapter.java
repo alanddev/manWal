@@ -3,10 +3,12 @@ package com.alanddev.manwal.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.alanddev.manwal.fragment.TransactionFragment;
 import com.alanddev.manwal.model.Transactions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +25,12 @@ public class TransSectionPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return TransactionFragment.newInstance(position + 1,datas);
+        Fragment fragment = TransactionFragment.newInstance(position + 1,datas);
+        return fragment;
     }
+
+
+
 
     @Override
     public int getCount() {
@@ -38,11 +44,7 @@ public class TransSectionPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if(datas!=null){
-            return datas.get(position).getDisplay_date().toString();
-        }else{
-            return null;
-        }
+        return null;
     }
 
     public void setData(List<Transactions> datas){

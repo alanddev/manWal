@@ -1,15 +1,22 @@
 package com.alanddev.manwal.adapter;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.model.TransactionDay;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
+import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 import com.foound.widget.AmazingAdapter;
 
 
 import android.content.Context;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +25,11 @@ import android.widget.TextView;
 
 public class TransactionAdapter extends AmazingAdapter {
 
-	private List<Transactions> datas;
+	private List<TransactionDay> datas;
 	private LayoutInflater inflate;
 	private Context mContext;
 	
-	public  TransactionAdapter(Context context,LayoutInflater inflate,List<Transactions> datas) {
+	public  TransactionAdapter(Context context,LayoutInflater inflate,List<TransactionDay> datas) {
 		// TODO Auto-generated constructor stub
 		this.datas = datas;
 		this.inflate = inflate;
@@ -64,15 +71,19 @@ public class TransactionAdapter extends AmazingAdapter {
 		View header = view.findViewById(R.id.header);
 		if (displaySectionHeader) {
 			header.setVisibility(View.VISIBLE);
-			Transactions itemDt = datas.get(getSectionForPosition(position));
+			TransactionDay transactionDay = datas.get(getSectionForPosition(position));
+			Date date = transactionDay.getDisplay_date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
 			TextView txtDate = (TextView) header.findViewById(R.id.txtdate);
-
+			txtDate.setText(cal.get(Calendar.DATE)+"");
 			TextView txtDay = (TextView) header.findViewById(R.id.txtday);
-
+			txtDay.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,Utils.getLocale()));
 			TextView txtAmount = (TextView) header.findViewById(R.id.txtheadamout);
-
+			txtAmount.setText(transactionDay.getNetamount()+"");
 			TextView txtyear = (TextView) header.findViewById(R.id.txtyear);
-
+			//txtyear.setText(Utils.getMonthName(cal.getTime()) + " " + cal.get(Calendar.YEAR));
+			txtyear.setText(cal.getDisplayName(Calendar.MONTH,Calendar.LONG,Utils.getLocale()) + " " + cal.get(Calendar.YEAR));
 		} else {
 			header.setVisibility(View.GONE);
 		}
@@ -89,10 +100,14 @@ public class TransactionAdapter extends AmazingAdapter {
 		TextView txtdes = (TextView) res.findViewById(R.id.txtdes);
 		TextView txtamout = (TextView) res.findViewById(R.id.txtamout);
 		ImageView imgicon = (ImageView) res.findViewById(R.id.imgicon);
-
 		TransactionDetail composer = (TransactionDetail) getItem(position);
 		txttype.setText(composer.getCate_name());
 		txtdes.setText(composer.getNote());
+		if(composer.getCate_type()== Constant.EXPENSE_TYPE){
+			txtamout.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
+		}else{
+			txtamout.setTextColor(mContext.getResources().getColor(R.color.colorInflow));
+		}
 		txtamout.setText(composer.getAmountt()+"");
 		imgicon.setImageResource(mContext.getResources().getIdentifier("ic_category_"+composer.getCate_img(),"mipmap",mContext.getPackageName()));
 

@@ -155,6 +155,7 @@ public class CategoryActivity extends AppCompatActivity {
                     Intent intent=new Intent();
                     intent.putExtra(MwSQLiteHelper.COLUMN_CATE_ID, category.getId());
                     intent.putExtra(MwSQLiteHelper.COLUMN_CATE_NAME, category.getName());
+                    intent.putExtra(MwSQLiteHelper.COLUMN_CATE_IMG, category.getImage());
                     getActivity().setResult(TransactionAddActivity.PICK_CATEGORY, intent);
                     getActivity().finish();//finishing activity
                 }

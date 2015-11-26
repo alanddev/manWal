@@ -11,8 +11,8 @@
     <string name="name_wallet">Tên</string>
     <string name="currency">Loại Tiền Tệ</string>
     <string name="amount_wallet">Số tiền</string>
-    <string name="action_save">Save</string>
-    <string name="title_activity_transaction_add">Add Transaction</string>
+    <string name="action_save">Xong</string>
+    <string name="title_activity_transaction_add">Thêm giao dịch</string>
     <string name="title_activity_wallet_add">Add Wallet</string>
 
     <string name="title_activity_list_currency">Currency</string>
@@ -79,6 +79,24 @@
         <item>Việt Nam Đồng</item>
         <item>Dollar</item>
     </string-array>
+
+    <string-array name="day_view">
+        <item>Hôm qua</item>
+        <item>Hôm nay</item>
+        <item>Ngày mai</item>
+    </string-array>
+
+    <string name="today">Hôm nay</string>
+    <string name="check_amout_exist">Bạn phải nhập số tiền</string>
+    <string name="check_category_exist">Bạn phải nhập loại giao dịch</string>
+    <string name="amount">Số tiền</string>
+    <string name="select_category">Chọn loại giao dịch</string>
+    <string name="note">Ghi chú</string>
+    <string name="overview">Tổng hợp</string>
+    <string name="overview_click_me">Chạm vào để xem đầy đủ</string>
+    <string name="inflow_txt">Tiền thu</string>
+    <string name="outflow_txt">Tiền chi</string>
+
 
 
 </resources>
