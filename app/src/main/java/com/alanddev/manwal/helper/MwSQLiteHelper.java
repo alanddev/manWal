@@ -20,6 +20,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     // only save image Name file.
     public static final String COLUMN_WALLET_IMG="image";
 
+
     // table Currency
     public static final String COLUMN_CUR_ID = "id";
     public static final String COLUMN_CUR_CODE = "code";
@@ -63,7 +64,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_WALLET_NAME + " text not null, "
             + COLUMN_WALLET_AMOUNT + " real not null, "
             + COLUMN_WALLET_CURRENCY + " text not null, "
-            + COLUMN_WALLET_IMG + " text not null"
+            + COLUMN_WALLET_IMG + " text not null "
             + ");";
 
     private static final String CUR_CREATE = "CREATE TABLE "

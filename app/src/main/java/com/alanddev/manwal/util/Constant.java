@@ -21,4 +21,5 @@ public class Constant {
     public static final String VIEW_TYPE = "VIEW_TYPE";
     public static final String WALLET_ID = "WALLET_ID";
     public static final int ADD_TRANSACTION_SUCCESS = 1;
+    public static final String CUR_ID = "CUR_ID";
 }

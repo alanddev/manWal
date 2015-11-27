@@ -142,7 +142,28 @@ public class Utils {
     }
 
     public static SharedPreferences getSharedPreferences(Context context){
-        return context.getSharedPreferences(Constant.SHAREDPREFERENCES_NAME, context.MODE_PRIVATE);
+        return context.getSharedPreferences(Constant.SHAREDPREFERENCES_NAME,context.MODE_PRIVATE);
+    }
+
+    public void setSharedPreferencesValue(Context context, String name, int value){
+        SharedPreferences sharedPref = getSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(name, value);
+        editor.commit();
+    }
+
+    public void setSharedPreferencesValue(Context context, String name, String value){
+        SharedPreferences sharedPref = getSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(name, value);
+        editor.commit();
+    }
+
+    public int getSharedPreferencesValue(Context context,String name) {
+        SharedPreferences sharedPref = getSharedPreferences(context);
+        int defaultValue = 0;
+        int getValue = sharedPref.getInt(name, defaultValue);
+        return getValue;
     }
 
 

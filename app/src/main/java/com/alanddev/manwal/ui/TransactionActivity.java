@@ -11,19 +11,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransSectionPagerAdapter;
 import com.alanddev.manwal.controller.TransactionController;
+import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.Transactions;
+import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionActivity extends AppCompatActivity
@@ -151,10 +156,10 @@ public class TransactionActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_wallet) {
-            Intent intent = new Intent(this, WalletAddActivity.class);
+            Intent intent = new Intent(this, WalletsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-
+            //item.getSubMenu().add("list_submenu");
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

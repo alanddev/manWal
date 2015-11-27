@@ -27,6 +27,7 @@ public class WalletController implements IDataSource {
             MwSQLiteHelper.COLUMN_WALLET_AMOUNT,
             MwSQLiteHelper.COLUMN_WALLET_CURRENCY,
             MwSQLiteHelper.COLUMN_WALLET_IMG
+
     };
 
     public WalletController(Context context){
@@ -54,6 +55,7 @@ public class WalletController implements IDataSource {
         values.put(MwSQLiteHelper.COLUMN_WALLET_CURRENCY, wallet.getCurrency());
         values.put(MwSQLiteHelper.COLUMN_WALLET_IMG, wallet.getImage());
 
+
         String selectQuery = MwSQLiteHelper.COLUMN_WALLET_NAME + " = \"" + wallet.getName() + "\"";
         database.insert(MwSQLiteHelper.TABLE_WALLET, null,
                 values);
@@ -65,11 +67,18 @@ public class WalletController implements IDataSource {
     public void update(Model data) {
         Wallet wallet  = (Wallet)data;
         ContentValues values = new ContentValues();
+        values.put(MwSQLiteHelper.COLUMN_WALLET_NAME, wallet.getName());
         values.put(MwSQLiteHelper.COLUMN_WALLET_CURRENCY, wallet.getCurrency());
         values.put(MwSQLiteHelper.COLUMN_WALLET_AMOUNT, wallet.getAmount());
-        // updating row
-        database.update(MwSQLiteHelper.TABLE_WALLET, values, MwSQLiteHelper.COLUMN_WALLET_NAME + " = ?",
-                new String[]{String.valueOf(wallet.getName())});
+        values.put(MwSQLiteHelper.COLUMN_WALLET_IMG, wallet.getImage());
+
+        try {
+            // updating row
+            database.update(MwSQLiteHelper.TABLE_WALLET, values, MwSQLiteHelper.COLUMN_WALLET_ID + " = ?",
+                    new String[]{String.valueOf(wallet.getId())});
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -81,7 +90,6 @@ public class WalletController implements IDataSource {
         return cursor.getCount();
 
     }
-
     @Override
     public List<Model> getAll() {
         List<Model> wallets = new ArrayList<Model>();
@@ -108,8 +116,30 @@ public class WalletController implements IDataSource {
         Wallet wallet = (Wallet)cursorTo(cursor);
         cursor.close();
         return wallet;
-
     }
+
+    public Wallet getName(String name) {
+        String query = MwSQLiteHelper.COLUMN_WALLET_NAME + " = " + name ;
+        Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
+                allColumns, query, null,
+                null, null, null);
+        cursor.moveToFirst();
+        Wallet wallet = (Wallet)cursorTo(cursor);
+        cursor.close();
+        return wallet;
+    }
+
+    public Wallet getId(int id) {
+        String query = MwSQLiteHelper.COLUMN_WALLET_ID + " = " + id ;
+        Cursor cursor = database.query(MwSQLiteHelper.TABLE_WALLET,
+                allColumns, query, null,
+                null, null, null);
+        cursor.moveToFirst();
+        Wallet wallet = (Wallet)cursorTo(cursor);
+        cursor.close();
+        return wallet;
+    }
+
 
     @Override
     public List<Model> getAll(String query) {
@@ -124,6 +154,7 @@ public class WalletController implements IDataSource {
         wallet.setAmount(cursor.getDouble(2));
         wallet.setCurrency(cursor.getString(3));
         wallet.setImage(cursor.getString(4));
+
         return wallet;
     }
 

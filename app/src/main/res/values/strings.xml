@@ -80,6 +80,13 @@
         <item>Dollar</item>
     </string-array>
 
+    <string name="warning_wallet_name">Chưa có tên ví</string>
+    <string name="warning_wallet_cur">Chưa chọn loại đồng tiền</string>
+    <string name="warning_wallet_amount">Chưa nhập số tiền trong ví</string>
+    <string name="choose_wallet">Sử dụng ví này là mặc định</string>
+    <string name="title_activity_wallets">Danh sách ví</string>
+    <string name="title_activity_wallet_edit">Cập nhật ví</string>
+    <string name="action_add">Thêm ví</string>
     <string-array name="day_view">
         <item>Hôm qua</item>
         <item>Hôm nay</item>

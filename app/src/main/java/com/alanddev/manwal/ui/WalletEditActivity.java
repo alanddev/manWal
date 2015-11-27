@@ -23,7 +23,6 @@ import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -33,30 +32,33 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class WalletAddActivity extends AppCompatActivity {
+public class WalletEditActivity extends AppCompatActivity {
 
     WalletController walletController;
     Utils utils;
     // Full path of image
     String imagePath = "";
+    int walletId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wallet_add);
+        setContentView(R.layout.activity_wallet_edit);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         walletController = new WalletController(this);
         walletController.open();
         utils = new Utils();
+        getData();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_wallet, menu);
         return true;
     }
 
@@ -83,7 +85,7 @@ public class WalletAddActivity extends AppCompatActivity {
         EditText amountEdit   = (EditText)findViewById(R.id.txtAmount);
         CheckBox chooseCB = (CheckBox)findViewById(R.id.choose);
 
-        String imageFileName = "";
+
         String nameWallet = nameEdit.getText().toString();
         String currency = currEdit.getText().toString();
         Double amount = 0.0;
@@ -91,15 +93,6 @@ public class WalletAddActivity extends AppCompatActivity {
             amount = Double.parseDouble(amountEdit.getText().toString());
         }
 
-        if (!imagePath.equals("")) {
-            File image = new File(imagePath);
-            imageFileName = image.getName();
-            try {
-                 utils.copyFile(imagePath, Constant.PATH_IMG + "/" + imageFileName);
-                }
-            catch (IOException e){};
-
-        }
 
         if (nameWallet.equals("")){
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_name),Toast.LENGTH_LONG).show();
@@ -108,15 +101,32 @@ public class WalletAddActivity extends AppCompatActivity {
         }else if (amount == 0.0){
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_amount),Toast.LENGTH_LONG).show();
         }else {
-            Wallet newWallet = new Wallet(nameWallet, amount, currency, imageFileName);
+
+
             //db.createWallet();
             walletController = new WalletController(getApplicationContext());
             walletController.open();
-            Wallet walletSaved = (Wallet)walletController.create(newWallet);
-            if (chooseCB.isChecked()){
-                utils.setSharedPreferencesValue(this,Constant.WALLET_ID,walletSaved.getId());
-            }
 
+            Wallet editWallet = walletController.getId(walletId) ;
+            editWallet.setName(nameWallet);
+            editWallet.setAmount(amount);
+            editWallet.setCurrency(currency);
+            String imageFileName = "";
+            if (!imagePath.equals("") && !imagePath.equals(editWallet.getImage())) {
+                File image = new File(imagePath);
+                imageFileName = image.getName();
+                try {
+                    utils.copyFile(imagePath, Constant.PATH_IMG + "/" + imageFileName);
+                }
+                catch (IOException e){};
+
+            }
+            walletController.update(editWallet);
+
+            if (chooseCB.isChecked()){
+                utils.setSharedPreferencesValue(this,Constant.WALLET_ID,walletId);
+            }
+            //returnMainActivity();
             finish();
         }
     }
@@ -136,6 +146,38 @@ public class WalletAddActivity extends AppCompatActivity {
         }
         super.onPause();
     }
+
+    public void getData(){
+        Bundle b = getIntent().getExtras();
+        walletId = b.getInt("wallet_id", 0);
+        String name = b.getString("wallet_name");
+        String currency = b.getString("wallet_currency");
+        String imagePath = b.getString("wallet_image");
+        double amount = b.getDouble("wallet_amount", 0.0);
+        int choose = b.getInt("wallet_choose", 0);
+
+        ImageView imgWallet = (ImageView)findViewById(R.id.imageWallet);
+        imgWallet.setImageBitmap(BitmapFactory.decodeFile( Constant.PATH_IMG + "/" +   imagePath));
+
+        TextView tvCurrency = (TextView) findViewById(R.id.txtCurrency);
+        tvCurrency.setText(currency);
+
+        ImageView imageCurrency = (ImageView) findViewById(R.id.imageCurrency);
+        Resources res = getResources();
+        String srcImg = "ic_currency_" + currency.toLowerCase();
+        int id = res.getIdentifier(srcImg, "mipmap", getPackageName());
+        Drawable image = getResources().getDrawable(id);
+        imageCurrency.setImageDrawable(image);
+
+
+        TextView tvName = (TextView) findViewById(R.id.txtName );
+        tvName.setText(name);
+
+        TextView tvAmount = (TextView) findViewById(R.id.txtAmount );
+        tvAmount.setText(Double.toString(amount));
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
@@ -191,33 +233,8 @@ public class WalletAddActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent , Constant.GALLERY_WALLET_REQUEST );
     }
 
-//    public void createChart(){
-//        // Creating a Data Set;
-//        // Defining Y Axis;
-//        ArrayList<BarEntry> entries = new ArrayList<>();
-//        entries.add(new BarEntry(4f, 0));
-//        entries.add(new BarEntry(8f, 1));
-//        entries.add(new BarEntry(6f, 2));
-//        entries.add(new BarEntry(12f, 3));
-//        entries.add(new BarEntry(18f, 4));
-//        entries.add(new BarEntry(9f, 5));
-//        BarDataSet dataset = new BarDataSet(entries, "# of Calls");
-//        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-//        // Defining X Axis;
-//        ArrayList<String> labels = new ArrayList<String>();
-//        labels.add("January");
-//        labels.add("February");
-//        labels.add("March");
-//        labels.add("April");
-//        labels.add("May");
-//        labels.add("June");
-//        BarChart chart = (BarChart)findViewById(R.id.chart);
-//        BarData data = new BarData(labels, dataset);
-//        chart.setData(data);
-//        chart.setDescription("# of times Alice called Bob");
-//        chart.animateY(5000);
-//    }
-//
+
+
 
 
 }

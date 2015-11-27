@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         File dbtest = new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
         if (dbtest.exists()) {
             Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, TransactionActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             //init currency
             currController = new CurrencyController(getApplicationContext());
@@ -47,17 +50,17 @@ public class MainActivity extends AppCompatActivity {
             categoryController.open();
             categoryController.init(getApplicationContext());
             categoryController.close();
+            utils.createFolder(Constant.PATH_IMG);
             //set wallet_id
             if(Utils.getWallet_id()==0){
                 Utils.setWallet_id(Utils.getSharedPreferences(this).getInt(Constant.WALLET_ID, 0));
             }
-
+            Intent intent = new Intent(this, WalletAddActivity.class);
+            startActivity(intent);
         }
 
-        utils.createFolder(Constant.PATH_IMG);
-        Intent intent = new Intent(this, TransactionActivity.class);
-        startActivity(intent);
-        finish();
+
+
     }
 
     @Override
