@@ -125,6 +125,7 @@ public class WalletEditActivity extends AppCompatActivity {
 
             if (chooseCB.isChecked()){
                 utils.setSharedPreferencesValue(this,Constant.WALLET_ID,walletId);
+                Utils.setWallet_id(walletId);
             }
             //returnMainActivity();
             finish();

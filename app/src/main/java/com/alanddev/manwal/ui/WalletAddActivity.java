@@ -49,6 +49,11 @@ public class WalletAddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         walletController = new WalletController(this);
         walletController.open();
+        if (walletController.getCount() == 0){
+            CheckBox chooseCB = (CheckBox)findViewById(R.id.choose);
+            chooseCB.setChecked(true);
+            chooseCB.setEnabled(false);
+        }
         utils = new Utils();
 
     }
@@ -112,11 +117,17 @@ public class WalletAddActivity extends AppCompatActivity {
             //db.createWallet();
             walletController = new WalletController(getApplicationContext());
             walletController.open();
-            Wallet walletSaved = (Wallet)walletController.create(newWallet);
-            if (chooseCB.isChecked()){
-                utils.setSharedPreferencesValue(this,Constant.WALLET_ID,walletSaved.getId());
-            }
 
+            Wallet walletSaved = (Wallet)walletController.create(newWallet);
+//            if (walletController.getCount() == 1){
+//                chooseCB.setChecked(true);
+//                utils.setSharedPreferencesValue(this, Constant.WALLET_ID, walletSaved.getId());
+//            }else if (walletController.getCount() > 1) {
+            if (chooseCB.isChecked()) {
+                utils.setSharedPreferencesValue(this, Constant.WALLET_ID, walletSaved.getId());
+                Utils.setWallet_id(walletSaved.getId());
+            }
+            //}
             finish();
         }
     }

@@ -4,6 +4,7 @@ package com.alanddev.manwal.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -36,34 +37,43 @@ public class MainActivity extends AppCompatActivity {
         File dbtest = new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
         if (dbtest.exists()) {
             Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, TransactionActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            //init currency
-            currController = new CurrencyController(getApplicationContext());
-            currController.open();
-            currController.init();
-            currController.close();
-            //init category
-            categoryController = new CategoryController(getApplicationContext());
-            categoryController.open();
-            categoryController.init(getApplicationContext());
-            categoryController.close();
-            utils.createFolder(Constant.PATH_IMG);
-            //set wallet_id
-            if(Utils.getWallet_id()==0){
-                Utils.setWallet_id(Utils.getSharedPreferences(this).getInt(Constant.WALLET_ID, 0));
-            }
-            Intent intent = new Intent(this, WalletAddActivity.class);
-            startActivity(intent);
+            Utils.setWallet_id(utils.getSharedPreferencesValue(this, Constant.WALLET_ID));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }, Constant.SPLASH_DISPLAY_LENGTH);
         }
-
-
+        else
+        {
+             //init currency
+             currController = new CurrencyController(getApplicationContext());
+             currController.open();
+             currController.init();
+             currController.close();
+             //init category
+             categoryController = new CategoryController(getApplicationContext());
+             categoryController.open();
+             categoryController.init(getApplicationContext());
+             categoryController.close();
+             utils.createFolder(Constant.PATH_IMG);
+             new Handler().postDelayed(new Runnable() {
+                 @Override
+                 public void run() {
+                     Intent intent = new Intent(MainActivity.this, WalletAddActivity.class);
+                     startActivity(intent);
+                     finish();
+                 }
+             }, Constant.SPLASH_DISPLAY_LENGTH);
+        }
 
     }
 
-    @Override
+
+            @Override
     protected void onResume() {
         if(currController!=null) {
             currController.open();
