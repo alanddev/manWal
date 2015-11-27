@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.controller.WalletController;
+import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
@@ -31,11 +33,14 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WalletAddActivity extends AppCompatActivity {
 
     WalletController walletController;
+    TransactionController transactionController;
     Utils utils;
     // Full path of image
     String imagePath = "";
@@ -49,6 +54,8 @@ public class WalletAddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         walletController = new WalletController(this);
         walletController.open();
+        transactionController = new TransactionController(this);
+        transactionController.open();
         if (walletController.getCount() == 0){
             CheckBox chooseCB = (CheckBox)findViewById(R.id.choose);
             chooseCB.setChecked(true);
@@ -119,14 +126,17 @@ public class WalletAddActivity extends AppCompatActivity {
             walletController.open();
 
             Wallet walletSaved = (Wallet)walletController.create(newWallet);
-//            if (walletController.getCount() == 1){
-//                chooseCB.setChecked(true);
-//                utils.setSharedPreferencesValue(this, Constant.WALLET_ID, walletSaved.getId());
-//            }else if (walletController.getCount() > 1) {
+
+
             if (chooseCB.isChecked()) {
                 utils.setSharedPreferencesValue(this, Constant.WALLET_ID, walletSaved.getId());
                 Utils.setWallet_id(walletSaved.getId());
             }
+
+
+            // create Transaction
+            createTransactionDefault(amountEdit);
+
             //}
             finish();
         }
@@ -137,6 +147,9 @@ public class WalletAddActivity extends AppCompatActivity {
         if(walletController!=null) {
             walletController.open();
         }
+        if(transactionController!=null) {
+            transactionController.open();
+        }
         super.onResume();
     }
 
@@ -144,6 +157,9 @@ public class WalletAddActivity extends AppCompatActivity {
     protected void onPause() {
         if(walletController!=null) {
             walletController.close();
+        }
+        if(transactionController!=null) {
+            transactionController.close();
         }
         super.onPause();
     }
@@ -201,6 +217,20 @@ public class WalletAddActivity extends AppCompatActivity {
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent , Constant.GALLERY_WALLET_REQUEST );
     }
+
+
+    public void createTransactionDefault(EditText amountEdit){
+        TransactionDetail transaction = new TransactionDetail();
+        transaction.setAmountt(Float.valueOf(amountEdit.getText().toString()));
+        transaction.setNote(getResources().getString(R.string.title_transaction_wallet_add));
+        transaction.setCat_id(Constant.CAT_WALLET_ADD);
+        String date =  new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        transaction.setDisplay_date(Utils.getDatefromDayView(this, date));
+        transaction.setWallet_id(Utils.getWallet_id());
+        transactionController.create(transaction);
+        transactionController.close();
+    }
+
 
 //    public void createChart(){
 //        // Creating a Data Set;

@@ -85,9 +85,9 @@ public class WalletController implements IDataSource {
     public int getCount() {
         String countQuery = "SELECT  * FROM " + MwSQLiteHelper.TABLE_WALLET;
         Cursor cursor = database.rawQuery(countQuery, null);
+        int count  = cursor.getCount();
         cursor.close();
-        // return count
-        return cursor.getCount();
+        return count;
 
     }
     @Override
