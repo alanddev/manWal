@@ -21,6 +21,8 @@ import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
@@ -75,6 +77,9 @@ public class TransactionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

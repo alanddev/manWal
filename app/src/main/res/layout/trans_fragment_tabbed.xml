@@ -1,31 +1,27 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="20dp"
-            android:background="#000000">
-            <TextView
-                android:id="@+id/txtheadtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true">
-            </TextView>
-        </RelativeLayout>
-        <com.foound.widget.AmazingListView
-            android:id="@+id/lsttransaction"
-            android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#000000">
+
+        <TextView
+            android:id="@+id/txtheadtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="@color/colorWhite" >
-        </com.foound.widget.AmazingListView>
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorWhite"></TextView>
+    </RelativeLayout>
 
-    </LinearLayout>
-
-</RelativeLayout>
+    <com.foound.widget.AmazingListView
+        android:id="@+id/lsttransaction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/colorWhite"
+        android:layout_above="@+id/nothing"
+        android:layout_marginBottom="120dp">
+    </com.foound.widget.AmazingListView>
+</LinearLayout>

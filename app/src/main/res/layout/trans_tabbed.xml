@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.anld.test.TabbedActivity">
+    tools:context="com.example.anld.test.TabbedActivity"
+    xmlns:ads="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -38,8 +39,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginBottom="60dp"
         app:backgroundTint="@color/colorfab"
         android:src="@mipmap/img_add" />
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
 
 </android.support.design.widget.CoordinatorLayout>

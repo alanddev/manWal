@@ -2,7 +2,6 @@ package com.alanddev.manwal.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,8 @@ import android.widget.TextView;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransactionAdapter;
 import com.alanddev.manwal.model.Transactions;
-import com.alanddev.manwal.model.TransactionDay;
-import com.alanddev.manwal.model.TransactionDetail;
-import com.alanddev.manwal.util.Utils;
 import com.foound.widget.AmazingListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,7 +52,6 @@ public class TransactionFragment extends Fragment {
         lsComposer.setAdapter(adapter = new TransactionAdapter(getActivity().getApplicationContext(), inflater, transactions.getItems()));
         TextView txtheader = (TextView)rootView.findViewById(R.id.txtheadtitle);
         txtheader.setText(transactions.getTitle());
-
         View header = inflater.inflate(R.layout.trans_header_list, null, false);
         if(transactions.getItems()!=null&&transactions.getItems().size()>0){
             TextView txtInflowAmt = (TextView)header.findViewById(R.id.txtInflowAmt);
