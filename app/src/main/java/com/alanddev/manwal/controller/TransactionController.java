@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.IDataSource;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
@@ -18,6 +19,7 @@ import com.alanddev.manwal.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -186,7 +188,6 @@ public class TransactionController implements IDataSource {
                     .append(MwSQLiteHelper.COLUMN_CATE_ID)
                     .append(" WHERE s.").append(MwSQLiteHelper.COLUMN_TRANS_WALLET_ID).append(" = ?")
                     .append(" AND (s.").append(MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE).append(" BETWEEN ").append("Datetime(?) AND (?))");
-            Log.d("AAAAAAA",sql.toString());
             String[] atts = new String[]{Utils.getWallet_id()+"",strDate2,strDate1};
             Cursor cursor = database.rawQuery(sql.toString(), atts);
             cursor.moveToFirst();
@@ -196,6 +197,7 @@ public class TransactionController implements IDataSource {
                 trans.add(tran);
                 cursor.moveToNext();
             }
+            cursor.close();
             transactionDay.setItems(trans);
 
             for(int j=0;j<trans.size();j++){
@@ -216,11 +218,12 @@ public class TransactionController implements IDataSource {
             //set transactions
             transactions.setInamount(inamount);
             transactions.setExamount(examount);
-            transactions.setNetamount(inamount+examount);
+            transactions.setNetamount(inamount + examount);
             transactions.setItems(transactionDays);
-            transactions.setTitle(Utils.getDayView(mContext, Utils.changeDate2Date(cal.getTime(),Constant.DATE_FORMAT_PICKER)));
+            transactions.setTitle(Utils.getDayView(mContext, Utils.changeDate2Date(cal.getTime(), Constant.DATE_FORMAT_PICKER)));
             transactionses.add(transactions);
         }
+        transactionses.add(getFutureTrans());
         return transactionses;
     }
 
@@ -252,5 +255,82 @@ public class TransactionController implements IDataSource {
             transactionses.add(transactions);
         }
         return transactionses;
+    }
+
+    public List<String> getDisplayDateFuture(){
+        Calendar cal = Calendar.getInstance();
+        String strDate1 = Utils.changeDate2Str(cal.getTime());
+        StringBuffer sql = new StringBuffer("SELECT distinct ").append(MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE).append(" FROM ")
+                .append(MwSQLiteHelper.TABLE_TRANSACTION)
+                .append(" WHERE ").append(MwSQLiteHelper.COLUMN_TRANS_WALLET_ID).append(" = ").append(Utils.getWallet_id())
+                .append(" AND ").append(MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE).append(" >= ").append("Datetime(?)");
+        String[] atts = new String[]{strDate1};
+        Cursor cursor = database.rawQuery(sql.toString(), atts);
+        cursor.moveToFirst();
+        List<String> lstDisplayDate = new ArrayList<String>();
+        while (!cursor.isAfterLast()) {
+            String strDisplayDate = cursor.getString(0);
+            lstDisplayDate.add(strDisplayDate);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return lstDisplayDate;
+    }
+
+    public Transactions getFutureTrans(){
+        List<String> lstDisplayDt = getDisplayDateFuture();
+        Transactions transactions = new Transactions();
+        List<TransactionDay> transactionDays = new ArrayList<TransactionDay>();
+        Float ttexamount = Float.valueOf(0);
+        Float ttinamount = Float.valueOf(0);
+        for (int i=0;i<lstDisplayDt.size();i++){
+            TransactionDay transactionDay = new TransactionDay();
+            Float examount = Float.valueOf(0);
+            Float inamount = Float.valueOf(0);
+            String strDisplayDt = lstDisplayDt.get(i);
+            StringBuffer sql = new StringBuffer("SELECT * FROM ").append(MwSQLiteHelper.TABLE_TRANSACTION).append(" s inner join ")
+                    .append(MwSQLiteHelper.TABLE_CATEGORY).append(" c ON s.").append(MwSQLiteHelper.COLUMN_TRANS_CATE_ID).append(" = c.")
+                    .append(MwSQLiteHelper.COLUMN_CATE_ID)
+                    .append(" WHERE s.").append(MwSQLiteHelper.COLUMN_TRANS_WALLET_ID).append(" = ?")
+                    .append(" AND (s.").append(MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE).append(" BETWEEN ").append("Datetime(?) AND (?))");
+            Date dipslayDt = Utils.changeStr2Date(strDisplayDt, Constant.DATE_FORMAT_DB);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dipslayDt);
+            calendar.add(Calendar.DATE,-1);
+            String strDate2 = Utils.changeDate2Str(calendar.getTime());
+            String[] atts = new String[]{Utils.getWallet_id()+"",strDate2,strDisplayDt};
+            Cursor cursor = database.rawQuery(sql.toString(), atts);
+            cursor.moveToFirst();
+            List<TransactionDetail> trans = new ArrayList<TransactionDetail>();
+            while (!cursor.isAfterLast()) {
+                TransactionDetail tran = (TransactionDetail)cursorTo(cursor);
+                trans.add(tran);
+                cursor.moveToNext();
+            }
+            cursor.close();
+            transactionDay.setItems(trans);
+
+            for(int j=0;j<trans.size();j++){
+                TransactionDetail transactionDetail = trans.get(j);
+                if(transactionDetail.getCate_type()== Constant.EXPENSE_TYPE){
+                    examount = examount-transactionDetail.getAmountt();
+                }else{
+                    inamount = inamount+transactionDetail.getAmountt();
+                }
+            }
+            transactionDay.setExamount(examount);
+            transactionDay.setInamount(inamount);
+            transactionDay.setNetamount(examount + inamount);
+            transactionDay.setDisplay_date(dipslayDt);
+            transactionDays.add(transactionDay);
+            ttexamount = ttexamount - examount;
+            ttinamount = ttinamount + inamount;
+        }
+        transactions.setItems(transactionDays);
+        transactions.setNetamount(ttexamount + ttinamount);
+        transactions.setExamount(ttexamount);
+        transactions.setInamount(ttinamount);
+        transactions.setTitle(mContext.getResources().getString(R.string.future));
+        return transactions;
     }
 }

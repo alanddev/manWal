@@ -66,7 +66,7 @@ public class TransactionActivity extends AppCompatActivity
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         if(transactionses.size()>0) {
-            mViewPager.setCurrentItem(transactionses.size() - 1);
+            mViewPager.setCurrentItem(transactionses.size() - 2);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -109,21 +109,38 @@ public class TransactionActivity extends AppCompatActivity
             mShaPref = Utils.getSharedPreferences(this);
         }
         int viewtype=mShaPref.getInt(Constant.VIEW_TYPE, 0);
+        Boolean isState = true;
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_view_day) {
-            viewtype = Constant.VIEW_TYPE_DAY;
+            if(viewtype!=Constant.VIEW_TYPE_DAY) {
+                viewtype = Constant.VIEW_TYPE_DAY;
+                isState=false;
+            }
         }else if (id == R.id.action_view_week) {
-            viewtype = Constant.VIEW_TYPE_WEEK;
+            if(viewtype!=Constant.VIEW_TYPE_WEEK) {
+                viewtype = Constant.VIEW_TYPE_WEEK;
+                isState=false;
+            }
         }else if(id == R.id.action_view_month) {
-            viewtype = Constant.VIEW_TYPE_MONTH;
+            if(viewtype!=Constant.VIEW_TYPE_MONTH) {
+                viewtype = Constant.VIEW_TYPE_MONTH;
+                isState=false;
+            }
         }else if (id == R.id.action_view_year) {
-            viewtype = Constant.VIEW_TYPE_YEAR;
+            if(viewtype!=Constant.VIEW_TYPE_MONTH) {
+                viewtype = Constant.VIEW_TYPE_MONTH;
+                isState=false;
+            }
         }else if (id == R.id.action_view_trans) {
-            viewtype = Constant.VIEW_TYPE_CATE;
+            if(viewtype!=Constant.VIEW_TYPE_CATE) {
+                viewtype = Constant.VIEW_TYPE_CATE;
+                isState=false;
+            }
         }
-        mShaPref.edit().putInt(Constant.VIEW_TYPE,viewtype).apply();
-        mSectionsPagerAdapter.setData(getData(viewtype));
-        mSectionsPagerAdapter.notifyDataSetChanged();
+        if(!isState){
+           notifyDataSetChanged();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -176,13 +193,16 @@ public class TransactionActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
         if(requestCode==Constant.ADD_TRANSACTION_SUCCESS) {
-            transactionses = getData(mShaPref.getInt(Constant.VIEW_TYPE, 0));
-            mSectionsPagerAdapter.setData(transactionses);
-            mSectionsPagerAdapter.notifyDataSetChanged();
+            notifyDataSetChanged();
+        }
+    }
 
-            if(transactionses.size()>0) {
-                mViewPager.setCurrentItem(transactionses.size() - 1);
-            }
+    private void notifyDataSetChanged(){
+        transactionses = getData(mShaPref.getInt(Constant.VIEW_TYPE, 0));
+        mSectionsPagerAdapter.setData(transactionses);
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        if(transactionses.size()>0) {
+            mViewPager.setCurrentItem(transactionses.size() - 2);
         }
     }
 }
