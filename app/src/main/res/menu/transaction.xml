@@ -9,6 +9,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_view_year" android:title="@string/action_view_year"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_view_trans" android:title="@string/action_view_trans"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <!--<item android:id="@+id/action_view_trans" android:title="@string/action_view_trans"
+        android:orderInCategory="100" app:showAsAction="never" />-->
 </menu>
