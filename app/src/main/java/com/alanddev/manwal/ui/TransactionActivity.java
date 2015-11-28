@@ -82,9 +82,9 @@ public class TransactionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        /*AdView mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
     }
 
     @Override
@@ -132,8 +132,8 @@ public class TransactionActivity extends AppCompatActivity
                 isState=false;
             }
         }else if (id == R.id.action_view_year) {
-            if(viewtype!=Constant.VIEW_TYPE_MONTH) {
-                viewtype = Constant.VIEW_TYPE_MONTH;
+            if(viewtype!=Constant.VIEW_TYPE_YEAR) {
+                viewtype = Constant.VIEW_TYPE_YEAR;
                 isState=false;
             }
         }else if (id == R.id.action_view_trans) {
@@ -142,6 +142,7 @@ public class TransactionActivity extends AppCompatActivity
                 isState=false;
             }
         }
+        Utils.setSharedPreferencesValue(this,Constant.VIEW_TYPE,viewtype);
         if(!isState){
            notifyDataSetChanged();
         }

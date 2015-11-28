@@ -69,17 +69,20 @@ public class TransactionAdapter extends AmazingAdapter {
 			header.setVisibility(View.VISIBLE);
 			TransactionDay transactionDay = datas.get(getSectionForPosition(position));
 			Date date = transactionDay.getDisplay_date();
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
 			TextView txtDate = (TextView) header.findViewById(R.id.txtdate);
-			txtDate.setText(cal.get(Calendar.DATE)+"");
-			TextView txtDay = (TextView) header.findViewById(R.id.txtday);
-			txtDay.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,Utils.getLocale()));
+			if(date!=null) {
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				txtDate.setText(cal.get(Calendar.DATE) + "");
+				TextView txtDay = (TextView) header.findViewById(R.id.txtday);
+				txtDay.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Utils.getLocale()));
+				TextView txtyear = (TextView) header.findViewById(R.id.txtyear);
+				txtyear.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Utils.getLocale()) + " " + cal.get(Calendar.YEAR));
+			}else if(transactionDay.getDisplayStr()!=null){
+				txtDate.setText(transactionDay.getDisplayStr());
+			}
 			TextView txtAmount = (TextView) header.findViewById(R.id.txtheadamout);
-			txtAmount.setText(transactionDay.getNetamount()+"");
-			TextView txtyear = (TextView) header.findViewById(R.id.txtyear);
-			//txtyear.setText(Utils.getMonthName(cal.getTime()) + " " + cal.get(Calendar.YEAR));
-			txtyear.setText(cal.getDisplayName(Calendar.MONTH,Calendar.LONG,Utils.getLocale()) + " " + cal.get(Calendar.YEAR));
+			txtAmount.setText(transactionDay.getNetamount() + "");
 		} else {
 			header.setVisibility(View.GONE);
 		}

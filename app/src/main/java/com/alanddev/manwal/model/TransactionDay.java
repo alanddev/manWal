@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class TransactionDay {
     private Date display_date;
+    private String displayStr;
     private float examount;
     private float inamount;
     private float netamount;
@@ -19,6 +20,14 @@ public class TransactionDay {
 
     public void setDisplay_date(Date display_date) {
         this.display_date = display_date;
+    }
+
+    public String getDisplayStr() {
+        return displayStr;
+    }
+
+    public void setDisplayStr(String displayStr) {
+        this.displayStr = displayStr;
     }
 
     public float getExamount() {

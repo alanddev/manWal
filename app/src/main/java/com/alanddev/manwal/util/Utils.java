@@ -142,17 +142,17 @@ public class Utils {
     }
 
     public static SharedPreferences getSharedPreferences(Context context){
-        return context.getSharedPreferences(Constant.SHAREDPREFERENCES_NAME,context.MODE_PRIVATE);
+        return context.getSharedPreferences(Constant.SHAREDPREFERENCES_NAME, context.MODE_PRIVATE);
     }
 
-    public void setSharedPreferencesValue(Context context, String name, int value){
+    public static void setSharedPreferencesValue(Context context, String name, int value){
         SharedPreferences sharedPref = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(name, value);
         editor.commit();
     }
 
-    public void setSharedPreferencesValue(Context context, String name, String value){
+    public static void setSharedPreferencesValue(Context context, String name, String value){
         SharedPreferences sharedPref = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(name, value);
@@ -239,6 +239,20 @@ public class Utils {
             return changeDateStr2Str(dateStr);
         }
         return strRes;
+    }
+
+    public static String changeDateStr2Str2(String dateStr){
+        DateFormat fromFormat = new SimpleDateFormat(Constant.DATE_FORMAT_DB);
+        fromFormat.setLenient(false);
+        DateFormat toFormat = new SimpleDateFormat(Constant.DATE_FORMAT_PICKER);
+        toFormat.setLenient(false);
+        Date date = null;
+        try {
+            date = fromFormat.parse(dateStr);
+        } catch (ParseException e) {
+            date = new Date();
+        }
+        return toFormat.format(date);
     }
 
 

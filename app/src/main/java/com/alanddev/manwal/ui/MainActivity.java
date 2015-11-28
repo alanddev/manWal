@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
@@ -17,6 +18,7 @@ import com.alanddev.manwal.util.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_wal);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2015,10,0);
+        int dayofweek = calendar.get(Calendar.YEAR);
+        //calendar.add(Calendar.WEEK_OF_YEAR, -dayofweek);
+        String strDate1 = Utils.changeDate2Str(calendar.getTime());
 
+        Log.d("AAAAA",dayofweek+"");
         checkDb();
     }
 
