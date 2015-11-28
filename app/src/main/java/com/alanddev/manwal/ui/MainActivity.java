@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public void checkDb() {
         utils = new Utils();
         File dbtest = new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
+        utils.createFolder(Constant.PATH_IMG);
         if (dbtest.exists()) {
             Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
             Utils.setWallet_id(utils.getSharedPreferencesValue(this, Constant.WALLET_ID));
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
              categoryController.open();
              categoryController.init(getApplicationContext());
              categoryController.close();
-             utils.createFolder(Constant.PATH_IMG);
+             //utils.createFolder(Constant.PATH_IMG);
              new Handler().postDelayed(new Runnable() {
                  @Override
                  public void run() {

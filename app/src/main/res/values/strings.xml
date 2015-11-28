@@ -111,4 +111,7 @@
     <string name="preweek">Tuần trước</string>
     <string name="onmonth">Tháng này</string>
     <string name="premonth">Tháng trước</string>
+    <string name="title_transaction_wallet_edit">Điều chỉnh số dư</string>
+    <string name="title_activity_report">ReportActivity</string>
+
 </resources>

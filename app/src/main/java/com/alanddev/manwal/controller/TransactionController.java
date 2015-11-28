@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.renderscript.Sampler;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.IDataSource;
@@ -14,10 +15,12 @@ import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.TransactionDay;
 import com.alanddev.manwal.model.TransactionDetail;
+import com.alanddev.manwal.model.TransactionSum;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -541,6 +544,71 @@ public class TransactionController implements IDataSource {
 
 
 
+
+
+
+
+    public float getAmountByWalletCategory(int id,int type){
+        //StringBuffer sql = new StringBuffer("SELECT SUM (")
+        String date =  new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        StringBuffer sql = new StringBuffer("SELECT SUM( t." +dbHelper.COLUMN_TRANS_AMOUNT +") FROM " + dbHelper.TABLE_TRANSACTION +" as t JOIN " +
+                dbHelper.TABLE_CATEGORY + " as c ON t."+dbHelper.COLUMN_TRANS_CATE_ID +"=c."+dbHelper.COLUMN_CATE_ID + " where t."
+                + dbHelper.COLUMN_TRANS_WALLET_ID +" = "  + id + " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE +"<='" + date +
+                "' and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type );
+
+        Cursor cursor = database.rawQuery(sql.toString(), null);
+        float returnAmount =0;
+        if(cursor.moveToFirst()) {
+            returnAmount =  cursor.getInt(0);
+        }
+        cursor.close();
+        return returnAmount;
+
+    }
+
+    public float getAmountByWallet(int id){
+        float amountExpense = getAmountByWalletCategory(id, Constant.EXPENSE_TYPE);
+        float amountIncome = getAmountByWalletCategory(id, Constant.INCOME_TYPE);
+        float amount = amountIncome - amountExpense;
+        return amount;
+    }
+
+    public ArrayList<TransactionSum> getAmountByCategoryType(int type, int walletId){
+        //String date =  new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        StringBuffer sql = new StringBuffer("SELECT SUM( t." +dbHelper.COLUMN_TRANS_AMOUNT +")" + ",c."+ dbHelper.COLUMN_CATE_ID +
+                ",c."+ dbHelper.COLUMN_CATE_NAME +
+                " FROM " + dbHelper.TABLE_TRANSACTION +" as t JOIN " +
+                dbHelper.TABLE_CATEGORY + " as c ON t."+dbHelper.COLUMN_TRANS_CATE_ID +"=c."+dbHelper.COLUMN_CATE_ID + " where t."
+                + dbHelper.COLUMN_TRANS_WALLET_ID +" = "  + walletId  +
+                " and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type + " group by (c." + dbHelper.COLUMN_CATE_ID + ")" );
+
+        Cursor cursor = database.rawQuery(sql.toString(), null);
+
+        cursor.moveToFirst();
+        ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
+        while (!cursor.isAfterLast()) {
+            TransactionSum tran = new TransactionSum();
+            tran.setAmount(cursor.getFloat(0));
+            tran.setCatId(cursor.getInt(1));
+            tran.setCatName(cursor.getString(2));
+            trans.add(tran);
+            cursor.moveToNext();
+        }
+        return trans;
+    }
+
+
+    public void createTransactionDefault(Context context, float amount,int catId, String note){
+        TransactionDetail transaction = new TransactionDetail();
+        transaction.setAmountt(amount);
+        transaction.setNote(note);
+        transaction.setCat_id(catId);
+        String date =  new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        transaction.setDisplay_date(Utils.getDatefromDayView(context, date));
+        transaction.setWallet_id(Utils.getWallet_id());
+        create(transaction);
+        //close();
+    }
 
 
 

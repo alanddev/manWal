@@ -160,6 +160,8 @@ public class TransactionActivity extends AppCompatActivity
             Intent intent = new Intent(this, WalletsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(this, ReportActivity.class);
+            startActivity(intent);
             //item.getSubMenu().add("list_submenu");
         } else if (id == R.id.nav_slideshow) {
 

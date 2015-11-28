@@ -23,5 +23,8 @@ public class Constant {
     public static final int ADD_TRANSACTION_SUCCESS = 1;
     public static final String CUR_ID = "CUR_ID";
     public static final long SPLASH_DISPLAY_LENGTH = 2000;
-    public static final int CAT_WALLET_ADD = 7;
+    public static final int CAT_WALLET_ADD_INCOME = 19;
+    public static final int CAT_WALLET_ADD_EXPENSE = 12;
+    public static final int CAT_TYPE_EXPENSE = 0;
+    public static final int CAT_TYPE_INCOME = 1;
 }

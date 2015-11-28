@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.alanddev.manwal" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,17 +43,21 @@
         <activity
             android:name=".ui.CategoryActivity"
             android:label="@string/title_activity_category"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.WalletsActivity"
             android:label="@string/title_activity_wallets"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.WalletEditActivity"
             android:label="@string/title_activity_wallet_edit"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-    </application>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.ReportActivity"
+            android:label="@string/title_activity_report"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </application>
 
 </manifest>

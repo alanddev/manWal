@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.model.Currency;
 import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
@@ -24,9 +25,11 @@ import java.util.List;
  */
 public class WalletAdapter extends ArrayAdapter<Wallet> {
     Utils utils;
+    TransactionController transactionController;
     public WalletAdapter(Context context, List<Wallet> currencies) {
         super(context, 0, currencies);
         utils = new Utils();
+        transactionController = new TransactionController(context);
     }
 
     @Override
@@ -44,8 +47,10 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
         ImageView imgChecked = (ImageView)convertView.findViewById(R.id.checked);
         // Populate the data into the template view using the data object
         tvName.setText(wallet.getName());
-        tvAmount.setText(wallet.getAmount() + "  " + wallet.getCurrency());
 
+        transactionController.open();
+        tvAmount.setText(transactionController.getAmountByWallet(wallet.getId()) + "  " + wallet.getCurrency());
+        transactionController.close();
 //        Resources res = convertView.getResources();
 //        String srcImg = "ic_currency_" + wallet.getImage().toLowerCase();
 //        int id = res.getIdentifier(srcImg, "mipmap", getContext().getPackageName());

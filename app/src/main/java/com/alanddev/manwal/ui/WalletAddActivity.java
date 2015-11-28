@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +22,12 @@ import android.widget.Toast;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.controller.WalletController;
+import com.alanddev.manwal.helper.CurrencyTextWatcher;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.data.BarData;
@@ -33,6 +37,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +50,7 @@ public class WalletAddActivity extends AppCompatActivity {
     Utils utils;
     // Full path of image
     String imagePath = "";
+    //EditText amountEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,13 @@ public class WalletAddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         //amountEdit = (EditText)findViewById(R.id.txtAmount);
+        //EditText test = (EditText)findViewById(R.id.txtCurrency);
+        //CurrencyEditText amountEdit = (CurrencyEditText)findViewById(R.id.txtAmount);
+        //amountEdit.setDefaultHintEnabled(false);
+        //amountEdit.addTextChangedListener(new CurrencyTextWatcher(test));
+
+
         walletController = new WalletController(this);
         walletController.open();
         transactionController = new TransactionController(this);
@@ -98,9 +112,9 @@ public class WalletAddActivity extends AppCompatActivity {
         String imageFileName = "";
         String nameWallet = nameEdit.getText().toString();
         String currency = currEdit.getText().toString();
-        Double amount = 0.0;
-        if (!amountEdit.getText().toString().equals("")) {
-            amount = Double.parseDouble(amountEdit.getText().toString());
+        float amount = 0.0f;
+        if (!amountEdit.getText().toString().equals("")|| !amountEdit.getText().toString().equals("0")) {
+            amount = Float.valueOf(amountEdit.getText().toString());
         }
 
         if (!imagePath.equals("")) {
@@ -135,10 +149,19 @@ public class WalletAddActivity extends AppCompatActivity {
 
 
             // create Transaction
-            createTransactionDefault(amountEdit);
+            if (amount >0 ) {
+                transactionController.createTransactionDefault(this, amount, Constant.CAT_WALLET_ADD_INCOME, getResources().getString(R.string.title_transaction_wallet_add));
+            }else {
+                transactionController.createTransactionDefault(this, amount, Constant.CAT_WALLET_ADD_EXPENSE, getResources().getString(R.string.title_transaction_wallet_add));
+            }
 
-            //}
+            if (walletController.getCount() == 1) {
+                Intent intent = new Intent(this, TransactionActivity.class);
+                //startActivity(intent);
+                startActivity(intent);
+            }
             finish();
+
         }
     }
 
@@ -215,21 +238,11 @@ public class WalletAddActivity extends AppCompatActivity {
         Intent galleryIntent = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent , Constant.GALLERY_WALLET_REQUEST );
+        startActivityForResult(galleryIntent, Constant.GALLERY_WALLET_REQUEST);
     }
 
 
-    public void createTransactionDefault(EditText amountEdit){
-        TransactionDetail transaction = new TransactionDetail();
-        transaction.setAmountt(Float.valueOf(amountEdit.getText().toString()));
-        transaction.setNote(getResources().getString(R.string.title_transaction_wallet_add));
-        transaction.setCat_id(Constant.CAT_WALLET_ADD);
-        String date =  new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        transaction.setDisplay_date(Utils.getDatefromDayView(this, date));
-        transaction.setWallet_id(Utils.getWallet_id());
-        transactionController.create(transaction);
-        transactionController.close();
-    }
+
 
 
 //    public void createChart(){

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 public class WalletEditActivity extends AppCompatActivity {
 
     WalletController walletController;
+    TransactionController transactionController;
     Utils utils;
     // Full path of image
     String imagePath = "";
@@ -47,6 +49,8 @@ public class WalletEditActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        transactionController = new TransactionController(this);
+        transactionController.open();
         walletController = new WalletController(this);
         walletController.open();
         utils = new Utils();
@@ -88,9 +92,9 @@ public class WalletEditActivity extends AppCompatActivity {
 
         String nameWallet = nameEdit.getText().toString();
         String currency = currEdit.getText().toString();
-        Double amount = 0.0;
+        float amount = 0.0f;
         if (!amountEdit.getText().toString().equals("")) {
-            amount = Double.parseDouble(amountEdit.getText().toString());
+            amount = Float.valueOf(amountEdit.getText().toString());
         }
 
 
@@ -98,7 +102,7 @@ public class WalletEditActivity extends AppCompatActivity {
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_name),Toast.LENGTH_LONG).show();
         } else if (currency.equals("")){
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_cur),Toast.LENGTH_LONG).show();
-        }else if (amount == 0.0){
+        }else if (amount == 0.0f){
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_amount),Toast.LENGTH_LONG).show();
         }else {
 
@@ -119,6 +123,7 @@ public class WalletEditActivity extends AppCompatActivity {
                     utils.copyFile(imagePath, Constant.PATH_IMG + "/" + imageFileName);
                 }
                 catch (IOException e){};
+                editWallet.setImage(imageFileName);
 
             }
             walletController.update(editWallet);
@@ -127,7 +132,16 @@ public class WalletEditActivity extends AppCompatActivity {
                 utils.setSharedPreferencesValue(this,Constant.WALLET_ID,walletId);
                 Utils.setWallet_id(walletId);
             }
-            //returnMainActivity();
+
+            float amountWallet = transactionController.getAmountByWallet(walletId);
+            amountWallet = amountWallet - amount;
+
+            if (amountWallet < 0) {
+                transactionController.createTransactionDefault(this, amountWallet, Constant.CAT_WALLET_ADD_EXPENSE,getResources().getString(R.string.title_transaction_wallet_edit));
+            }else{
+                transactionController.createTransactionDefault(this, amountWallet, Constant.CAT_WALLET_ADD_EXPENSE,getResources().getString(R.string.title_transaction_wallet_edit));
+            }
+            transactionController.close();
             finish();
         }
     }
@@ -137,6 +151,9 @@ public class WalletEditActivity extends AppCompatActivity {
         if(walletController!=null) {
             walletController.open();
         }
+        if(transactionController!=null) {
+            transactionController.open();
+        }
         super.onResume();
     }
 
@@ -144,6 +161,9 @@ public class WalletEditActivity extends AppCompatActivity {
     protected void onPause() {
         if(walletController!=null) {
             walletController.close();
+        }
+        if(transactionController!=null) {
+            transactionController.close();
         }
         super.onPause();
     }
@@ -158,10 +178,13 @@ public class WalletEditActivity extends AppCompatActivity {
         int choose = b.getInt("wallet_choose", 0);
 
         ImageView imgWallet = (ImageView)findViewById(R.id.imageWallet);
-        imgWallet.setImageBitmap(BitmapFactory.decodeFile( Constant.PATH_IMG + "/" +   imagePath));
+        imgWallet.setImageBitmap(BitmapFactory.decodeFile(Constant.PATH_IMG + "/" + imagePath));
 
         TextView tvCurrency = (TextView) findViewById(R.id.txtCurrency);
         tvCurrency.setText(currency);
+
+        CheckBox chooseCB = (CheckBox)findViewById(R.id.choose);
+        chooseCB.setChecked(choose==1?true:false);
 
         ImageView imageCurrency = (ImageView) findViewById(R.id.imageCurrency);
         Resources res = getResources();
@@ -175,6 +198,7 @@ public class WalletEditActivity extends AppCompatActivity {
         tvName.setText(name);
 
         TextView tvAmount = (TextView) findViewById(R.id.txtAmount );
+        amount= transactionController.getAmountByWallet(walletId);
         tvAmount.setText(Double.toString(amount));
     }
 
