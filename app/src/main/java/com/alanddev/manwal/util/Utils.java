@@ -168,8 +168,7 @@ public class Utils {
 
 
     public static int getWallet_id() {
-        //return wallet_id;
-        return 1;
+        return wallet_id;
     }
 
     public static void setWallet_id(int wallet_id) {
