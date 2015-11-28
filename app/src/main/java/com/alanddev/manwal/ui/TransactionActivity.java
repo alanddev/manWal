@@ -136,12 +136,12 @@ public class TransactionActivity extends AppCompatActivity
                 viewtype = Constant.VIEW_TYPE_YEAR;
                 isState=false;
             }
-        }else if (id == R.id.action_view_trans) {
+        }/*else if (id == R.id.action_view_trans) {
             if(viewtype!=Constant.VIEW_TYPE_CATE) {
                 viewtype = Constant.VIEW_TYPE_CATE;
                 isState=false;
             }
-        }
+        }*/
         Utils.setSharedPreferencesValue(this,Constant.VIEW_TYPE,viewtype);
         if(!isState){
            notifyDataSetChanged();
