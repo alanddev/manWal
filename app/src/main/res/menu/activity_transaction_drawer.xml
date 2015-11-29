@@ -11,7 +11,7 @@
         <item android:id="@+id/nav_wallet" android:icon="@mipmap/wallet"
             android:title="Quản lý Ví" />
         <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Goi Menu con"
+            android:title="Report"
             >
 
         </item>

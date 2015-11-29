@@ -543,6 +543,17 @@ public class TransactionController implements IDataSource {
 
 
 
+    public void createTransactionDefault(Context context, float amount,int catId, String note){
+        TransactionDetail transaction = new TransactionDetail();
+        transaction.setAmountt(amount);
+        transaction.setNote(note);
+        transaction.setCat_id(catId);
+        String date =  new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        transaction.setDisplay_date(Utils.getDatefromDayView(context, date));
+        transaction.setWallet_id(Utils.getWallet_id());
+        create(transaction);
+        //close();
+    }
 
 
 
@@ -566,6 +577,7 @@ public class TransactionController implements IDataSource {
 
     }
 
+
     public float getAmountByWallet(int id){
         float amountExpense = getAmountByWalletCategory(id, Constant.EXPENSE_TYPE);
         float amountIncome = getAmountByWalletCategory(id, Constant.INCOME_TYPE);
@@ -573,13 +585,15 @@ public class TransactionController implements IDataSource {
         return amount;
     }
 
-    public ArrayList<TransactionSum> getAmountByCategoryType(int type, int walletId){
-        //String date =  new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+    public ArrayList<TransactionSum> getAmountCategoryTypeByDate(int type, int walletId, Date dateReport){
+        String date =  new SimpleDateFormat("yyyy-MM-dd").format(dateReport);
         StringBuffer sql = new StringBuffer("SELECT SUM( t." +dbHelper.COLUMN_TRANS_AMOUNT +")" + ",c."+ dbHelper.COLUMN_CATE_ID +
-                ",c."+ dbHelper.COLUMN_CATE_NAME +
+                ",c."+ dbHelper.COLUMN_CATE_NAME + ",c."+ dbHelper.COLUMN_CATE_IMG +
                 " FROM " + dbHelper.TABLE_TRANSACTION +" as t JOIN " +
                 dbHelper.TABLE_CATEGORY + " as c ON t."+dbHelper.COLUMN_TRANS_CATE_ID +"=c."+dbHelper.COLUMN_CATE_ID + " where t."
                 + dbHelper.COLUMN_TRANS_WALLET_ID +" = "  + walletId  +
+                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + "=='"+ date +"'"+
                 " and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type + " group by (c." + dbHelper.COLUMN_CATE_ID + ")" );
 
         Cursor cursor = database.rawQuery(sql.toString(), null);
@@ -591,25 +605,103 @@ public class TransactionController implements IDataSource {
             tran.setAmount(cursor.getFloat(0));
             tran.setCatId(cursor.getInt(1));
             tran.setCatName(cursor.getString(2));
+            tran.setCatImage(cursor.getString(3));
+            tran.setType(type);
             trans.add(tran);
             cursor.moveToNext();
         }
+
+
+        return trans;
+
+    }
+
+
+    public ArrayList<TransactionSum> getAmountCategoryTypeByDate(int type, int walletId, ArrayList<Date> dates){
+        Date dateStart = dates.get(0);
+        Date dateEnd = dates.get(1);
+        String sDateStart =  new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
+        String sDateEnd =  new SimpleDateFormat("yyyy-MM-dd").format(dateEnd);
+
+        StringBuffer sql = new StringBuffer("SELECT SUM( t." +dbHelper.COLUMN_TRANS_AMOUNT +")" + ",c."+ dbHelper.COLUMN_CATE_ID +
+                ",c."+ dbHelper.COLUMN_CATE_NAME +  ",c."+ dbHelper.COLUMN_CATE_IMG +
+                " FROM " + dbHelper.TABLE_TRANSACTION +" as t JOIN " +
+                dbHelper.TABLE_CATEGORY + " as c ON t."+dbHelper.COLUMN_TRANS_CATE_ID +"=c."+dbHelper.COLUMN_CATE_ID + " where t."
+                + dbHelper.COLUMN_TRANS_WALLET_ID +" = "  + walletId  +
+                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + ">='"+ dateStart +"'"+
+                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + "<='"+ dateEnd +"'"+
+                " and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type + " group by (c." + dbHelper.COLUMN_CATE_ID + ")" );
+
+        Cursor cursor = database.rawQuery(sql.toString(), null);
+
+        cursor.moveToFirst();
+        ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
+        while (!cursor.isAfterLast()) {
+            TransactionSum tran = new TransactionSum();
+            tran.setAmount(cursor.getFloat(0));
+            tran.setCatId(cursor.getInt(1));
+            tran.setCatName(cursor.getString(2));
+            tran.setCatImage(cursor.getString(3));
+            tran.setType(type);
+            trans.add(tran);
+            cursor.moveToNext();
+        }
+
+
+        return trans;
+
+    }
+
+
+    public ArrayList<TransactionSum> getAmountCategoryTypeByWeek(int type, int walletId,Date date){
+        ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
+        ArrayList<Date> dates = getDateOfWeek(date);
+        trans = getAmountCategoryTypeByDate(type,walletId,dates);
         return trans;
     }
 
 
-    public void createTransactionDefault(Context context, float amount,int catId, String note){
-        TransactionDetail transaction = new TransactionDetail();
-        transaction.setAmountt(amount);
-        transaction.setNote(note);
-        transaction.setCat_id(catId);
-        String date =  new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        transaction.setDisplay_date(Utils.getDatefromDayView(context, date));
-        transaction.setWallet_id(Utils.getWallet_id());
-        create(transaction);
-        //close();
+    public ArrayList<TransactionSum> getAmountCategoryTypeByMonth(int type, int walletId,Date date){
+        ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
+        ArrayList<Date> dates = getDateOfMonth(date);
+        trans = getAmountCategoryTypeByDate(type,walletId,dates);
+        return trans;
     }
 
 
+
+    private ArrayList<Date> getDateOfWeek(Date date){
+        //Date date = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - c.getFirstDayOfWeek();
+        c.add(Calendar.DAY_OF_MONTH, -dayOfWeek);
+
+        Date weekStart = c.getTime();
+        // we do not need the same day a week after, that's why use 6, not 7
+        c.add(Calendar.DAY_OF_MONTH, 6);
+        Date weekEnd = c.getTime();
+        ArrayList<Date>dates = new ArrayList<Date>();
+        dates.add(weekStart);
+        dates.add(weekEnd);
+        return dates;
+    }
+
+
+    private ArrayList<Date>getDateOfMonth(Date date){
+        Calendar c = Calendar.getInstance();   // this takes current date
+        c.setTime(date);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        Date monthStart = c.getTime();
+
+        c.add(Calendar.DATE, -1);
+        Date monthEnd = c.getTime();
+        ArrayList<Date>dates = new ArrayList<Date>();
+        dates.add(monthStart);
+        dates.add(monthEnd);
+        //System.out.println(c.getTime());
+        return dates;
+
+    }
 
 }

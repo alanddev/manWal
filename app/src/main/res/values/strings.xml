@@ -113,5 +113,6 @@
     <string name="premonth">Tháng trước</string>
     <string name="title_transaction_wallet_edit">Điều chỉnh số dư</string>
     <string name="title_activity_report">ReportActivity</string>
-
+    <string name="title_activity_report_expense">Chi tiêu</string>
+    <string name="title_activity_report_income">Thu nhập</string>
 </resources>
