@@ -107,17 +107,15 @@ public class ReportActivity extends AppCompatActivity {
 
     private void getData(){
         Bundle b = getIntent().getExtras();
-        typeReport = b.getInt(Constant.VIEW_TYPE, 0);
-        String dateStr = b.getString(Constant.PUT_EXTRA_DATE);
-        dateReport = Utils.changeStr2Date(dateStr,Constant.DATE_FORMAT_DB);
-        Log.d("AAAAAAAAA",typeReport + " "+dateStr);
-        //String currency = b.getString("wallet_currency");
-        /*DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            dateReport = format.parse(date);
-        }catch (Exception e){
+        if (b!=null) {
+            typeReport = b.getInt(Constant.VIEW_TYPE, 0);
+            String dateStr = b.getString(Constant.PUT_EXTRA_DATE);
+            dateReport = Utils.changeStr2Date(dateStr, Constant.DATE_FORMAT_DB);
+            Log.d("AAAAAAAAA", typeReport + " " + dateStr);
+        }else{
+            typeReport = Constant.VIEW_TYPE_DAY;
             dateReport = new Date();
-        }*/
+        }
     }
 
 

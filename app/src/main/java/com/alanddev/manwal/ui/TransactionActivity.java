@@ -164,7 +164,8 @@ public class TransactionActivity extends AppCompatActivity
             startActivity(intent);
             //item.getSubMenu().add("list_submenu");
         } else if (id == R.id.nav_slideshow) {
-
+            Intent intent = new Intent(this, TrendActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

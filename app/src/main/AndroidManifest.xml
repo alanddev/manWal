@@ -57,6 +57,11 @@
             android:label="@string/title_activity_report"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ui.TrendActivity"
+            android:label="@string/title_activity_trend"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
 
         <activity
             android:name=".ui.TransactionDetailActivity"

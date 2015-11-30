@@ -115,4 +115,19 @@
     <string name="title_activity_report">ReportActivity</string>
     <string name="title_activity_report_expense">Chi tiêu</string>
     <string name="title_activity_report_income">Thu nhập</string>
+    <string name="title_activity_trend">TrendActivity</string>
+
+    <string-array name="type_array">
+        <item>Chi tiêu</item>
+        <item>Thu nhập</item>
+        <item>Số dư</item>
+    </string-array>
+
+    <string-array name="time_array">
+        <item>Theo thời gian</item>
+        <item>Theo nhóm</item>
+    </string-array>
+
+
+
 </resources>
