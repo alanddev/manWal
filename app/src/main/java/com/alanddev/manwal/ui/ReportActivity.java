@@ -2,6 +2,7 @@ package com.alanddev.manwal.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
@@ -30,8 +31,11 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,9 +45,11 @@ public class ReportActivity extends AppCompatActivity {
     public static final int REPORT_BY_DATE = 1;
     public static final int REPORT_BY_WEEK = 2;
     public static final int REPORT_BY_MONTH = 3;
+    public static final int REPORT_BY_YEAR = 4;
 
-    TransactionController transactionController;
-
+    private TransactionController transactionController;
+    private Date dateReport;
+    private int typeReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +65,19 @@ public class ReportActivity extends AppCompatActivity {
 
         PieChart chartExpense = (PieChart)findViewById(R.id.report_chart_expense);
         PieChart chartIncome = (PieChart)findViewById(R.id.report_chart_income);
-        Date today = new Date();
+        //Date today = new Date();
+        getData();
+
 
         ArrayList<TransactionSum> transExpense = new ArrayList<TransactionSum>();
-        transExpense = getTransactions(Constant.CAT_TYPE_EXPENSE,REPORT_BY_DATE,today);
+        transExpense = getTransactions(Constant.CAT_TYPE_EXPENSE,typeReport,dateReport);
         setData(chartExpense,transExpense);
         ListView listViewTransExpense = (ListView)findViewById(R.id.list_transaction_expense);
         listViewTransExpense.setAdapter(new TransactionSumAdapter(this, transExpense));
 
 
         ArrayList<TransactionSum> transIncome = new ArrayList<TransactionSum>();
-        transIncome = getTransactions(Constant.CAT_TYPE_INCOME,REPORT_BY_DATE,today);
+        transIncome = getTransactions(Constant.CAT_TYPE_INCOME,typeReport,dateReport);
         setData(chartIncome, transIncome);
         ListView listViewTransIncome = (ListView)findViewById(R.id.list_transaction_income);
         listViewTransIncome.setAdapter(new TransactionSumAdapter(this,transIncome));
@@ -101,6 +109,20 @@ public class ReportActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void getData(){
+        Bundle b = getIntent().getExtras();
+        typeReport = b.getInt("type", 1);
+        String date = b.getString("date",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        String currency = b.getString("wallet_currency");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            dateReport = format.parse(date);
+        }catch (Exception e){
+            dateReport = new Date();
+        }
+    }
+
+
     private ArrayList<TransactionSum>getTransactions(int type, int option, Date date){
         ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
         switch (option){
@@ -111,8 +133,12 @@ public class ReportActivity extends AppCompatActivity {
                 trans = transactionController.getAmountCategoryTypeByWeek(type, Utils.getWallet_id(), date);
                 break;
             case REPORT_BY_MONTH:
+                trans = transactionController.getAmountCategoryTypeByMonth(type, Utils.getWallet_id(), date);
+                break;
+            case REPORT_BY_YEAR:
                 trans = transactionController.getAmountCategoryTypeByMonth(type,Utils.getWallet_id(),date);
                 break;
+
         }
         return trans;
     }
@@ -139,28 +165,55 @@ public class ReportActivity extends AppCompatActivity {
 
 
         PieData data = new PieData(xVals, pieDataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.GRAY);
 
         chart.setData(data);
-        decorationChart(chart);
+        decorationChart(chart, pieDataSet);
 
     }
 
 
-    private void decorationChart(PieChart chart){
+    private void decorationChart(PieChart chart,PieDataSet dataSet){
+
         chart.getLegend().setEnabled(false);
         chart.setDescription("");
         chart.animateY(800, Easing.EasingOption.EaseInBounce);
         chart.setTouchEnabled(true);
-        chart.setDrawCenterText(false);
-        chart.setDrawSliceText(true);
+        //chart.setDrawCenterText(false);
+        //chart.setDrawSliceText(true);
+        chart.setUsePercentValues(true);
         chart.setDrawHoleEnabled(true);
         chart.setHoleColorTransparent(true);
         chart.setHoleRadius(7);
         chart.setTransparentCircleRadius(10);
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+        dataSet.setColors(colors);
+
+
+
         //chart.setOnChartValueSelectedListener(context);
         chart.invalidate(); // refresh
         Legend l = chart.getLegend();
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
     }
