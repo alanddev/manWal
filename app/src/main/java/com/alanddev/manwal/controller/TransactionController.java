@@ -87,7 +87,20 @@ public class TransactionController implements IDataSource {
 
     @Override
     public void update(Model data) {
-
+        ContentValues values = new ContentValues();
+        TransactionDetail trans = (TransactionDetail) data;
+        values.put(MwSQLiteHelper.COLUMN_TRANS_AMOUNT, trans.getAmountt());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_DISPLAY_DATE, trans.getDisplay_date());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_CATE_ID, trans.getCat_id());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_NOTE, trans.getNote());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_LONGITUDE, trans.getLongitude());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_LATTITUDE, trans.getLattitude());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_ADDRESS, trans.getAddress());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_WALLET_ID, trans.getWallet_id());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_REMIND_ID, trans.getRemind_id());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_SEARCH_NOTE, trans.getSearch_note());
+        values.put(MwSQLiteHelper.COLUMN_TRANS_BILL_ID, trans.getBill_id());
+        database.update(MwSQLiteHelper.TABLE_TRANSACTION, values,MwSQLiteHelper.COLUMN_TRANS_ID + " = ?",new String[]{String.valueOf(trans.getId())});
     }
 
     @Override
@@ -131,7 +144,6 @@ public class TransactionController implements IDataSource {
 
     @Override
     public Model get(String query) {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(MwSQLiteHelper.TABLE_TRANSACTION,
                 allColumns, query, null,
                 null, null, null);
@@ -706,10 +718,22 @@ public class TransactionController implements IDataSource {
 
     }
 
-    public TransactionDetail getTransbyId(int id){
-        TransactionDetail transactionDetail = new TransactionDetail();
+    public TransactionDetail getTransbyId(long id){
+        StringBuffer sql = new StringBuffer("SELECT * FROM ").append(MwSQLiteHelper.TABLE_TRANSACTION).append(" s inner join ")
+                .append(MwSQLiteHelper.TABLE_CATEGORY).append(" c ON s.").append(MwSQLiteHelper.COLUMN_TRANS_CATE_ID).append(" = c.")
+                .append(MwSQLiteHelper.COLUMN_CATE_ID)
+                .append(" WHERE s.").append(MwSQLiteHelper.COLUMN_TRANS_WALLET_ID).append(" = ").append(Utils.getWallet_id())
+                .append(" AND s.").append(MwSQLiteHelper.COLUMN_TRANS_ID).append(" = ?");
+        String[] atts = new String[]{id+""};
+        Cursor cursor = database.rawQuery(sql.toString(), atts);
+        cursor.moveToFirst();
+        TransactionDetail tran = (TransactionDetail) cursorTo(cursor);
+        cursor.close();
+        return tran;
+    }
 
-        return transactionDetail;
+    public Boolean delete(long tranId){
+        return database.delete(MwSQLiteHelper.TABLE_TRANSACTION, MwSQLiteHelper.COLUMN_TRANS_ID + "=" + tranId, null) > 0;
     }
 
 }

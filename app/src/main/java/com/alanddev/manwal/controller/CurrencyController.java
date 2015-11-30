@@ -105,7 +105,6 @@ public class CurrencyController implements IDataSource {
 
     @Override
     public Model get(String query) {
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(MwSQLiteHelper.TABLE_CUR,
                 allColumns, query, null,
                 null, null, null);

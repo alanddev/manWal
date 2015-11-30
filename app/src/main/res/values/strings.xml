@@ -128,6 +128,9 @@
         <item>Theo nhóm</item>
     </string-array>
 
+    <string name="dialog_confirm_delete_trans">Bạn có muốn xóa giao dịch này không?</string>
+    <string name="dialog_yes_button">Có</string>
+    <string name="dialog_no_button">Không</string>
 
-
+    <string name="check_change_data">Bạn chưa nhập mới thông tin</string>
 </resources>

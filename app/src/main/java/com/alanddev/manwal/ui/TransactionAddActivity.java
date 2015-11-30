@@ -31,7 +31,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     private EditText edtAmout;
     private EditText edtDes;
     private ImageView imgCate;
-    public static final int PICK_CATEGORY = 1;
+
     private Category category;
     private TransactionController transController;
 
@@ -63,7 +63,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==PICK_CATEGORY)
+        if(requestCode==Constant.PICK_CATEGORY)
         {
             if(data!=null) {
                 category = new Category();
@@ -146,7 +146,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         if(v.getId()==R.id.edtcate){
             Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
-            startActivityForResult(intent, PICK_CATEGORY);
+            startActivityForResult(intent, Constant.PICK_CATEGORY);
         }
         if(v.getId()==R.id.edtdate){
             showDatePickerDialog(v);

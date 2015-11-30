@@ -62,7 +62,7 @@ public class TransactionActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TransactionAddActivity.class);
-                startActivityForResult(intent, Constant.ADD_TRANSACTION_SUCCESS);
+                startActivityForResult(intent, Constant.ADD_TRANSACTION_REQUEST);
             }
         });
         transactionses = getData(viewType);
@@ -142,7 +142,7 @@ public class TransactionActivity extends AppCompatActivity
                 isState=false;
             }
         }*/
-        Utils.setSharedPreferencesValue(this,Constant.VIEW_TYPE,viewtype);
+        Utils.setSharedPreferencesValue(this, Constant.VIEW_TYPE, viewtype);
         if(!isState){
            notifyDataSetChanged();
         }
@@ -201,7 +201,10 @@ public class TransactionActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==Constant.ADD_TRANSACTION_SUCCESS) {
+        if(requestCode==Constant.ADD_TRANSACTION_REQUEST&&resultCode==Constant.ADD_TRANSACTION_SUCCESS) {
+            notifyDataSetChanged();
+        }
+        if(resultCode==Constant.TRANS_DETAIL_UPDATE){
             notifyDataSetChanged();
         }
     }

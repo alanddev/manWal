@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alanddev.manwal.R;
@@ -36,6 +37,7 @@ public class TransactionFragment extends Fragment{
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static  List<Transactions> transactionses;
+    private static TransactionAdapter adapter;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -105,7 +107,6 @@ public class TransactionFragment extends Fragment{
 
         return rootView;
     }
-
 }
 
 

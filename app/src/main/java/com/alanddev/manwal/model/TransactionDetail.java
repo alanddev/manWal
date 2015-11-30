@@ -1,7 +1,7 @@
 package com.alanddev.manwal.model;
 
 public class TransactionDetail extends Model{
-	private int id;
+	private long id;
 	private float amount;
 	private String created_date;
 	private String display_date;
@@ -22,7 +22,7 @@ public class TransactionDetail extends Model{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
