@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,11 +42,6 @@ import java.util.Date;
 import java.util.List;
 
 public class ReportActivity extends AppCompatActivity {
-
-    public static final int REPORT_BY_DATE = 1;
-    public static final int REPORT_BY_WEEK = 2;
-    public static final int REPORT_BY_MONTH = 3;
-    public static final int REPORT_BY_YEAR = 4;
 
     private TransactionController transactionController;
     private Date dateReport;
@@ -111,31 +107,33 @@ public class ReportActivity extends AppCompatActivity {
 
     private void getData(){
         Bundle b = getIntent().getExtras();
-        typeReport = b.getInt("type", 1);
-        String date = b.getString("date",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        String currency = b.getString("wallet_currency");
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        typeReport = b.getInt(Constant.VIEW_TYPE, 0);
+        String dateStr = b.getString(Constant.PUT_EXTRA_DATE);
+        dateReport = Utils.changeStr2Date(dateStr,Constant.DATE_FORMAT_DB);
+        Log.d("AAAAAAAAA",typeReport + " "+dateStr);
+        //String currency = b.getString("wallet_currency");
+        /*DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             dateReport = format.parse(date);
         }catch (Exception e){
             dateReport = new Date();
-        }
+        }*/
     }
 
 
     private ArrayList<TransactionSum>getTransactions(int type, int option, Date date){
         ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
         switch (option){
-            case REPORT_BY_DATE:
+            case Constant.VIEW_TYPE_DAY:
                 trans = transactionController.getAmountCategoryTypeByDate(type, Utils.getWallet_id(), date);
                 break;
-            case REPORT_BY_WEEK:
+            case Constant.VIEW_TYPE_WEEK:
                 trans = transactionController.getAmountCategoryTypeByWeek(type, Utils.getWallet_id(), date);
                 break;
-            case REPORT_BY_MONTH:
+            case Constant.VIEW_TYPE_MONTH:
                 trans = transactionController.getAmountCategoryTypeByMonth(type, Utils.getWallet_id(), date);
                 break;
-            case REPORT_BY_YEAR:
+            case Constant.VIEW_TYPE_YEAR:
                 trans = transactionController.getAmountCategoryTypeByMonth(type,Utils.getWallet_id(),date);
                 break;
 

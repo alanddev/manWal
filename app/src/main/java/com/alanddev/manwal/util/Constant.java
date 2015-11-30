@@ -27,4 +27,7 @@ public class Constant {
     public static final int CAT_WALLET_ADD_EXPENSE = 12;
     public static final int CAT_TYPE_EXPENSE = 0;
     public static final int CAT_TYPE_INCOME = 1;
+    public static final int TRANS_DETAIL_REQUEST = 8;
+    public static final String TRANSACTION_OBJECT = "TRANSACTION_OBJECT";
+    public static final String PUT_EXTRA_DATE = "PUT_EXTRA_DATE";
 }

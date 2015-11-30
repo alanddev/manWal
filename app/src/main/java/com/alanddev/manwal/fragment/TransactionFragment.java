@@ -1,23 +1,35 @@
 package com.alanddev.manwal.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransactionAdapter;
+import com.alanddev.manwal.helper.MwSQLiteHelper;
+import com.alanddev.manwal.model.TransactionDay;
+import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.model.Transactions;
+import com.alanddev.manwal.ui.ReportActivity;
+import com.alanddev.manwal.ui.TransactionDetailActivity;
+import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 import com.foound.widget.AmazingListView;
+import com.google.android.gms.plus.internal.model.moments.ItemScopeEntity;
 
 import java.util.List;
 
 /**
  * Created by ANLD on 18/11/2015.
  */
-public class TransactionFragment extends Fragment {
+public class TransactionFragment extends Fragment{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -45,11 +57,11 @@ public class TransactionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.trans_fragment_tabbed, container, false);
-        TransactionAdapter adapter;
         Integer sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-        Transactions transactions = transactionses.get(sectionNumber - 1);
+        final Transactions transactions = transactionses.get(sectionNumber - 1);
         AmazingListView lsComposer = (AmazingListView) rootView.findViewById(R.id.lsttransaction);
-        lsComposer.setAdapter(adapter = new TransactionAdapter(getActivity().getApplicationContext(), inflater, transactions.getItems()));
+        final TransactionAdapter adapter = new TransactionAdapter(getActivity().getApplicationContext(), inflater, transactions.getItems());
+        lsComposer.setAdapter(adapter);
         TextView txtheader = (TextView)rootView.findViewById(R.id.txtheadtitle);
         txtheader.setText(transactions.getTitle());
         View header = inflater.inflate(R.layout.trans_header_list, null, false);
@@ -63,6 +75,34 @@ public class TransactionFragment extends Fragment {
             txtheader.setText((transactions.getTitle()));
             lsComposer.addHeaderView(header);
         }
+
+        lsComposer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long arg3) {
+                TransactionDetail transactionDetail= (TransactionDetail)adapter.getItem(position-1);
+                Intent intent = new Intent(getContext(), TransactionDetailActivity.class);
+                intent.putExtra(MwSQLiteHelper.COLUMN_TRANS_ID,transactionDetail.getId());
+                startActivityForResult(intent, Constant.TRANS_DETAIL_REQUEST);
+            }
+        });
+
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (transactions.getItems() != null && transactions.getItems().size() > 0) {
+                    TransactionDay transactionDay = transactions.getItems().get(0);
+                    if (transactionDay.getItems() != null && transactionDay.getItems().size() > 0) {
+                        TransactionDetail transactionDetail = transactionDay.getItems().get(0);
+                        Intent intent = new Intent(getContext(), ReportActivity.class);
+                        intent.putExtra(Constant.VIEW_TYPE, Utils.getSharedPreferences(getContext()).getInt(Constant.VIEW_TYPE, 0));
+                        intent.putExtra(Constant.PUT_EXTRA_DATE,transactionDetail.getDisplay_date());
+                        startActivity(intent);
+                    }
+                }
+
+            }
+        });
+
         return rootView;
     }
 

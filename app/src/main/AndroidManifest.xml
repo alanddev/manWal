@@ -58,6 +58,12 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
+        <activity
+            android:name=".ui.TransactionDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
+
     </application>
 
 </manifest>

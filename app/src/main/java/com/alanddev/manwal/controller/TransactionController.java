@@ -704,4 +704,10 @@ public class TransactionController implements IDataSource {
 
     }
 
+    public TransactionDetail getTransbyId(int id){
+        TransactionDetail transactionDetail = new TransactionDetail();
+
+        return transactionDetail;
+    }
+
 }
