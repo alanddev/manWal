@@ -628,8 +628,8 @@ public class TransactionController implements IDataSource {
                 " FROM " + dbHelper.TABLE_TRANSACTION +" as t JOIN " +
                 dbHelper.TABLE_CATEGORY + " as c ON t."+dbHelper.COLUMN_TRANS_CATE_ID +"=c."+dbHelper.COLUMN_CATE_ID + " where t."
                 + dbHelper.COLUMN_TRANS_WALLET_ID +" = "  + walletId  +
-                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + ">='"+ dateStart +"'"+
-                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + "<='"+ dateEnd +"'"+
+                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " >= '"+ sDateStart +"'"+
+                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " <= '"+ sDateEnd +"'"+
                 " and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type + " group by (c." + dbHelper.COLUMN_CATE_ID + ")" );
 
         Cursor cursor = database.rawQuery(sql.toString(), null);
@@ -694,7 +694,9 @@ public class TransactionController implements IDataSource {
         c.set(Calendar.DAY_OF_MONTH, 1);
         Date monthStart = c.getTime();
 
-        c.add(Calendar.DATE, -1);
+        //c.set(Calendar.DATE, 1);
+        //c.add(Calendar.DATE, -1);
+        c.set(Calendar.DATE, c.getActualMaximum(Calendar.DATE));
         Date monthEnd = c.getTime();
         ArrayList<Date>dates = new ArrayList<Date>();
         dates.add(monthStart);
