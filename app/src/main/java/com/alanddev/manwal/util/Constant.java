@@ -32,4 +32,11 @@ public class Constant {
     public static final String PUT_EXTRA_DATE = "PUT_EXTRA_DATE";
     public static final int PICK_CATEGORY = 1;
     public static final int ADD_TRANSACTION_REQUEST = 2;
+    public static final int TREND_TYPE_INCOME = 0;
+    public static final int TREND_TYPE_EXPENSE = 1;
+    public static final int TREND_TYPE_BALANCE = 2;
+    public static final int TREND_TYPE_SUB = 3;
+    public static String TREND_MONTH_TITLE = "Th";
+
+
 }

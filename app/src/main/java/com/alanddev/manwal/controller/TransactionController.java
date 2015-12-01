@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.renderscript.Sampler;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.alanddev.manwal.R;
@@ -17,6 +18,7 @@ import com.alanddev.manwal.model.TransactionDay;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.model.TransactionSum;
 import com.alanddev.manwal.model.Transactions;
+import com.alanddev.manwal.model.Trend;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
@@ -100,7 +102,7 @@ public class TransactionController implements IDataSource {
         values.put(MwSQLiteHelper.COLUMN_TRANS_REMIND_ID, trans.getRemind_id());
         values.put(MwSQLiteHelper.COLUMN_TRANS_SEARCH_NOTE, trans.getSearch_note());
         values.put(MwSQLiteHelper.COLUMN_TRANS_BILL_ID, trans.getBill_id());
-        database.update(MwSQLiteHelper.TABLE_TRANSACTION, values,MwSQLiteHelper.COLUMN_TRANS_ID + " = ?",new String[]{String.valueOf(trans.getId())});
+        database.update(MwSQLiteHelper.TABLE_TRANSACTION, values, MwSQLiteHelper.COLUMN_TRANS_ID + " = ?", new String[]{String.valueOf(trans.getId())});
     }
 
     @Override
@@ -732,8 +734,90 @@ public class TransactionController implements IDataSource {
         return tran;
     }
 
+
+    public float getAmountByMonth(int type, int walletId, int month, String year){
+        String beginDateOfMonth = year + "-" + month + "-01";
+        Date dateBeginOfMoth = Utils.changeStr2Date(beginDateOfMonth, Constant.DATE_FORMAT_DB);
+        ArrayList<Date> dates =  getDateOfMonth(dateBeginOfMoth);
+        Date dateStart = dates.get(0);
+        Date dateEnd = dates.get(1);
+        String sDateStart =  new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
+        String sDateEnd =  new SimpleDateFormat("yyyy-MM-dd").format(dateEnd);
+
+
+        StringBuffer sql = new StringBuffer("SELECT SUM( t." +dbHelper.COLUMN_TRANS_AMOUNT +")" +
+                " FROM " + dbHelper.TABLE_TRANSACTION +" as t JOIN " +
+                dbHelper.TABLE_CATEGORY + " as c ON t."+dbHelper.COLUMN_TRANS_CATE_ID +"=c."+dbHelper.COLUMN_CATE_ID + " where t."
+                + dbHelper.COLUMN_TRANS_WALLET_ID +" = "  + walletId  +
+                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " >= '"+ sDateStart +"'"+
+                " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " <= '"+ sDateEnd +"'"+
+                " and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type + " group by (t." + dbHelper.COLUMN_WALLET_ID + ")" );
+
+        Cursor cursor = database.rawQuery(sql.toString(), null);
+
+        cursor.moveToFirst();
+        float amount = 0;
+        ArrayList<Trend> trans = new ArrayList<Trend>();
+        while (!cursor.isAfterLast()) {
+            amount = cursor.getFloat(0);
+            cursor.moveToNext();
+        }
+
+        return amount;
+
+    }
+
+
+    public Trend getAmountTrendByMonth(int option, int walletId, int month, String year){
+        Trend trend = new Trend();
+        float amount = 0;
+        float income = 0;
+        float expense = 0;
+        trend.setMonth(Integer.toString(month));
+        trend.setYear(year);
+        switch(option) {
+            case Constant.TREND_TYPE_INCOME:
+                amount = getAmountByMonth(Constant.INCOME_TYPE, walletId, month, year);
+                trend.setAmount(amount);
+                break;
+            case Constant.TREND_TYPE_EXPENSE:
+                amount = getAmountByMonth(Constant.EXPENSE_TYPE, walletId, month, year);
+                trend.setAmount(amount);
+                break;
+            case Constant.TREND_TYPE_SUB:
+                income = getAmountByMonth(Constant.INCOME_TYPE, walletId, month, year);
+                expense = getAmountByMonth(Constant.EXPENSE_TYPE, walletId, month, year);
+                trend.setAmountIn(income);
+                trend.setAmountOut(expense);
+                trend.setAmount(income - expense);
+                break;
+            case Constant.TREND_TYPE_BALANCE:
+                income = getAmountByMonth(Constant.INCOME_TYPE, walletId, month, year);
+                expense = getAmountByMonth(Constant.EXPENSE_TYPE, walletId, month, year);
+                trend.setAmount(income - expense);
+            default:
+                break;
+        }
+
+        return trend;
+    }
+
+
+    public ArrayList<Trend> getAmountTrendByMonths(int option, int walletId, int monthBegin, int monthEnd, String year) {
+        ArrayList<Trend>trends = new ArrayList<Trend>();
+        for (int i = monthBegin; i<=monthEnd ; i++){
+            Trend trend = getAmountTrendByMonth(option,walletId,i,year);
+            trends.add(trend);
+        }
+        return trends;
+    }
+
+
     public Boolean delete(long tranId){
         return database.delete(MwSQLiteHelper.TABLE_TRANSACTION, MwSQLiteHelper.COLUMN_TRANS_ID + "=" + tranId, null) > 0;
     }
+
+
+
 
 }

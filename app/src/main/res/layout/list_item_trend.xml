@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/txtMonth"
+            android:layout_width="@dimen/size_image_transaction"
+            android:layout_height="@dimen/size_image_transaction"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_transaction_title"
+            android:hint="Th1"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginTop="@dimen/margin_top" />
+
+        <TextView
+            android:id="@+id/txtYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginTop="@dimen/margin_top_sub_title"
+            android:layout_toRightOf="@id/imgicon"
+            android:hint="2015"
+            android:textSize="@dimen/text_size_transaction_sub_title"
+            android:textColor="@color/colorTextColor"/>
+
+        <TextView
+            android:id="@+id/txtAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:hint="0"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorOutFlow"
+            android:layout_marginRight="@dimen/margin_right"
+            android:textSize="@dimen/text_size_transaction_amount" />
+
+
+
+        <TextView
+            android:id="@+id/txtIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="0"
+            android:textColor="@color/colorOutFlow"
+            android:textSize="@dimen/text_size_transaction_amount"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="false"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/txtExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="0"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorInflow"
+            android:textSize="@dimen/text_size_transaction_amount"
+            android:layout_marginTop="25dp" />
+
+
+    </RelativeLayout>
+

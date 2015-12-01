@@ -6,14 +6,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.TrendAdapter;
+import com.alanddev.manwal.controller.TransactionController;
+import com.alanddev.manwal.model.Trend;
+import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -21,11 +28,13 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TrendActivity extends AppCompatActivity {
 
     Spinner spinnerType;
     Spinner spinnerTime;
+    private TransactionController transactionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +43,28 @@ public class TrendActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        transactionController = new TransactionController(this);
+        transactionController.open();
+
+        ListView listViewTrend = (ListView)findViewById(R.id.list_transaction_trend);
+
+
         spinnerType = (Spinner) findViewById(R.id.spinner_type);
         spinnerTime = (Spinner) findViewById(R.id.spinner_time);
         setDataSpinner();
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        setDataBarChart(chart);
+        //setDataBarChart(chart);
+        getData(chart, Constant.TREND_TYPE_EXPENSE, 1, 12, "2015",listViewTrend);
 
-        BarChart chart2 = new BarChart(this);
-        chart2.setMinimumHeight(200);
-        setDataCombinedChart(chart2);
 
-        ViewGroup viewGroup = (ViewGroup)chart.getParent();
-        viewGroup.removeView(chart);
-        viewGroup.addView(chart2);
+//        BarChart chart2 = new BarChart(this);
+//        chart2.setMinimumHeight(200);
+//        setDataCombinedChart(chart2);
+//
+//        ViewGroup viewGroup = (ViewGroup)chart.getParent();
+//        viewGroup.removeView(chart);
+//        viewGroup.addView(chart2);
 
     }
 
@@ -167,5 +184,33 @@ public class TrendActivity extends AppCompatActivity {
 
     }
 
+
+    private void getData(BarChart chart, int option, int monthBegin, int monthEnd, String year,ListView listView){
+        ArrayList<String>xAxis = new ArrayList<>();
+        for (int m = monthBegin; m <=monthEnd; m++){
+            xAxis.add(Integer.toString(m));
+        }
+
+        ArrayList<BarDataSet> dataSets = null;
+        ArrayList<BarEntry> valueSetY = new ArrayList<>();
+        ArrayList<Trend> trends = transactionController.getAmountTrendByMonths(option,Utils.getWallet_id(),monthBegin,monthEnd,year);
+        listView.setAdapter(new TrendAdapter(this, trends));
+        for (int i = 0; i<trends.size();i++){
+            Trend trend = trends.get(i);
+            valueSetY.add(new BarEntry(trend.getAmount(),i));
+        }
+
+        dataSets = new ArrayList<>();
+        BarDataSet barDataSet1 = new BarDataSet(valueSetY, year);
+        barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSets.add(barDataSet1);
+
+        BarData data = new BarData(xAxis,dataSets);
+        chart.setData(data);
+        chart.setDescription("Trend");
+        chart.animateXY(2000, 2000);
+        chart.invalidate();
+
+    }
 
 }
