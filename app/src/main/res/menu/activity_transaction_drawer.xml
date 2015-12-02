@@ -10,15 +10,10 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_wallet" android:icon="@mipmap/wallet"
             android:title="Quản lý Ví" />
-        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Report"
-            >
-
-        </item>
         <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
             android:title="Trend" />
-        <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-            android:title="Tools" />
+        <item android:id="@+id/nav_budget" android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/budget_menu" />
     </group>
 
     <item android:title="Communicate">

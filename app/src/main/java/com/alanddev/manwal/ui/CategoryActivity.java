@@ -196,9 +196,9 @@ public class CategoryActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Expense";
+                    return getString(R.string.expense_category);
                 case 1:
-                    return "Income";
+                    return getString(R.string.income_category);
             }
             return null;
         }

@@ -23,7 +23,6 @@ import com.alanddev.manwal.ui.TransactionDetailActivity;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.foound.widget.AmazingListView;
-import com.google.android.gms.plus.internal.model.moments.ItemScopeEntity;
 
 import java.util.List;
 
@@ -37,7 +36,6 @@ public class TransactionFragment extends Fragment{
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static  List<Transactions> transactionses;
-    private static TransactionAdapter adapter;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -60,7 +58,12 @@ public class TransactionFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.trans_fragment_tabbed, container, false);
         Integer sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-        final Transactions transactions = transactionses.get(sectionNumber - 1);
+        final Transactions transactions;
+        if(transactionses.size()>=sectionNumber) {
+            transactions = transactionses.get(sectionNumber - 1);
+        }else{
+            transactions = new Transactions();
+        }
         AmazingListView lsComposer = (AmazingListView) rootView.findViewById(R.id.lsttransaction);
         final TransactionAdapter adapter = new TransactionAdapter(getActivity().getApplicationContext(), inflater, transactions.getItems());
         lsComposer.setAdapter(adapter);

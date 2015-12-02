@@ -159,15 +159,12 @@ public class TransactionActivity extends AppCompatActivity
         if (id == R.id.nav_wallet) {
             Intent intent = new Intent(this, WalletsActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(this, ReportActivity.class);
-            startActivity(intent);
-            //item.getSubMenu().add("list_submenu");
         } else if (id == R.id.nav_slideshow) {
             Intent intent = new Intent(this, TrendActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_budget) {
+            Intent intent = new Intent(this, BudgetActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

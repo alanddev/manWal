@@ -13,6 +13,7 @@ import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.Currency;
 import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,10 +102,12 @@ public class CategoryController  implements IDataSource {
         return null;
     }
 
-    public Category getbyId(int id){
+    public Category getByName(String catename){
         StringBuffer sql = new StringBuffer("SELECT * FROM ").
-                append(MwSQLiteHelper.TABLE_CATEGORY).append(" WHERE ID = ").append(id);
-        Cursor cursor = database.rawQuery(sql.toString(),null);
+                append(MwSQLiteHelper.TABLE_CATEGORY).append(" WHERE ").append(MwSQLiteHelper.COLUMN_CATE_NAME)
+                .append("= ?");
+        String[] atts = new String[]{catename};
+        Cursor cursor = database.rawQuery(sql.toString(),atts);
         cursor.moveToFirst();
         Category category = (Category)cursorTo(cursor);
         cursor.close();
@@ -114,10 +117,14 @@ public class CategoryController  implements IDataSource {
     @Override
     public Model cursorTo(Cursor cursor) {
         Category category = new Category();
-        category.setId(cursor.getInt(0));
-        category.setName(cursor.getString(1));
-        category.setImage(cursor.getString(2));
-        category.setType(cursor.getInt(3));
+        try {
+            category.setId(cursor.getInt(0));
+            category.setName(cursor.getString(1));
+            category.setImage(cursor.getString(2));
+            category.setType(cursor.getInt(3));
+        }catch (Exception ex){
+            //don't do anything
+        }
         return category;
     }
 
@@ -144,6 +151,12 @@ public class CategoryController  implements IDataSource {
             lstCategories.add(category);
         }
 
+        //add category all
+        Category category = new Category();
+        category.setType(Constant.ALL_CATEGORY_TYPE);
+        category.setName(context.getString(R.string.all_category_name));
+        category.setImage(context.getString(R.string.all_category_image));
+        lstCategories.add(category);
         //add data
         for(int j=0;j<lstCategories.size();j++){
             create(lstCategories.get(j));

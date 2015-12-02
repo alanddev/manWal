@@ -11,6 +11,8 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_CUR = "currency";
     public static final String TABLE_CATEGORY = "category";
     public static final String TABLE_TRANSACTION = "transactions";
+    public static final String TABLE_BUDGET = "budget";
+
 
     // table Wallet
     public static final String COLUMN_WALLET_ID = "id";
@@ -51,6 +53,16 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TRANS_REMIND_ID = "remind_id";
     public static final String COLUMN_TRANS_SEARCH_NOTE = "search_note";
     public static final String COLUMN_TRANS_BILL_ID = "bill_id";
+
+    //budget column
+    public static final String COLUMN_BUDGET_ID = "budget_id";
+    public static final String COLUMN_BUDGET_START_DATE = "start_date";
+    public static final String COLUMN_BUDGET_END_DATE = "end_date";
+    public static final String COLUMN_BUDGET_AMOUNT = "amount";
+    public static final String COLUMN_BUDGET_WALLET_ID = "wallet_id";
+    public static final String COLUMN_BUDGET_CATE_ID = "cat_id";
+    public static final String COLUMN_BUDGET_RECURRING_NOTIFY = "recurring_notify";
+    public static final String COLUMN_BUDGET_IS_REAPEAT = "isrepeat";
 
     public static final String DATABASE_NAME = "manwal.db";
     private static final int DATABASE_VERSION = 1;
@@ -101,6 +113,18 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_TRANS_BILL_ID + " integer"
             + ");";
 
+    private static final String BUDGET_CREATE = "CREATE TABLE "
+            + TABLE_BUDGET + "("
+            + COLUMN_BUDGET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_BUDGET_START_DATE + " DATETIME not null,"
+            + COLUMN_BUDGET_END_DATE + " DATETIME not null,"
+            + COLUMN_BUDGET_AMOUNT + " Float not null,"
+            + COLUMN_BUDGET_CATE_ID + " integer not null,"
+            + COLUMN_BUDGET_WALLET_ID + " integer not null,"
+            + COLUMN_BUDGET_RECURRING_NOTIFY + " INTEGER DEFAULT 0,"
+            + COLUMN_BUDGET_IS_REAPEAT + " INTEGER DEFAULT 0"
+            + ");";
+
 
     public MwSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -113,6 +137,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(CUR_CREATE);
         database.execSQL(CATE_CREATE);
         database.execSQL(TRANS_CREATE);
+        database.execSQL(BUDGET_CREATE);
     }
 
 
@@ -126,6 +151,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGET);
         onCreate(db);
     }
 

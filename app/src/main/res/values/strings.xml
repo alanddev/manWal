@@ -70,6 +70,8 @@
         <item>selling</item>
         <item>other_income</item>
     </string-array>
+    <string name="all_category_name">Tất cả</string>
+    <string name="all_category_image">all</string>
 
     <string-array name="currency_code">
         <item>VND</item>
@@ -133,4 +135,13 @@
     <string name="dialog_no_button">Không</string>
 
     <string name="check_change_data">Bạn chưa nhập mới thông tin</string>
+    <string name="title_activity_budget">Ngân sách</string>
+    <string name="budget_menu">Ngân sách</string>
+    <string name="expense_category">Nhóm chi tiêu</string>
+    <string name="income_category">Nhóm thu nhập</string>
+    <string name="budget_applied">Đang áp dụng</string>
+    <string name="budget_finished">Đã kết thúc</string>
+    <string name="budget_amount">Ngân sách</string>
+    <string name="budget_time">Tháng này</string>
+    <string name="check_amount_zero">Không được nhập số tiền bằng 0</string>
 </resources>
