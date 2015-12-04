@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.IDataSource;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
+import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.TransactionDay;
@@ -815,6 +816,51 @@ public class TransactionController implements IDataSource {
 
     public Boolean delete(long tranId){
         return database.delete(MwSQLiteHelper.TABLE_TRANSACTION, MwSQLiteHelper.COLUMN_TRANS_ID + "=" + tranId, null) > 0;
+    }
+
+    public Float getRealAmount(Budget budget){
+        String startDt = budget.getStartdate();
+        String endDt = budget.getEnddate();
+        int cate_id = budget.getCate_id();
+        CategoryController cateController = new CategoryController(mContext);
+        cateController.open();
+        Category category = cateController.getById(cate_id);
+        cateController.close();
+        StringBuffer sql;
+        if(category.getType()!=Constant.ALL_CATEGORY_TYPE) {
+            sql = new StringBuffer("SELECT SUM( " + dbHelper.COLUMN_TRANS_AMOUNT + ")" +
+                    " FROM " + dbHelper.TABLE_TRANSACTION + " where "
+                    + dbHelper.COLUMN_TRANS_WALLET_ID + " = " + budget.getWallet_id() +
+                    " and " + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " >= '" + startDt + "'" +
+                    " and " + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " <= '" + endDt + "'" +
+                    " and " + dbHelper.COLUMN_TRANS_CATE_ID + "=" + cate_id + " group by (" + dbHelper.COLUMN_TRANS_CATE_ID + ")");
+        }else{
+            sql = new StringBuffer("SELECT SUM(s." + dbHelper.COLUMN_TRANS_AMOUNT + ")" +
+                    " FROM " + dbHelper.TABLE_TRANSACTION +" s inner join "+MwSQLiteHelper.TABLE_CATEGORY +" c ON s."
+                    + MwSQLiteHelper.COLUMN_TRANS_CATE_ID + " =c."+MwSQLiteHelper.COLUMN_CATE_ID + " where "
+                    + dbHelper.COLUMN_TRANS_WALLET_ID + " = " + budget.getWallet_id()
+                    + " and (c." + dbHelper.COLUMN_CATE_TYPE + " = " + Constant.EXPENSE_TYPE + " OR c." + dbHelper.COLUMN_CATE_TYPE
+                    + " = " + Constant.ALL_CATEGORY_TYPE + ")"
+                    + " and " + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " >= '" + startDt + "'" +
+                    " and " + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " <= '" + endDt + "'");
+        }
+
+        new StringBuffer("SELECT * FROM ").append(MwSQLiteHelper.TABLE_TRANSACTION).append(" s inner join ")
+                .append(MwSQLiteHelper.TABLE_CATEGORY).append(" c ON s.").append(MwSQLiteHelper.COLUMN_TRANS_CATE_ID).append(" = c.")
+                .append(MwSQLiteHelper.COLUMN_CATE_ID)
+                .append(" WHERE s.").append(MwSQLiteHelper.COLUMN_TRANS_WALLET_ID).append(" = ").append(Utils.getWallet_id())
+                .append(" AND s.").append(MwSQLiteHelper.COLUMN_TRANS_ID).append(" = ?");
+
+        Cursor cursor = database.rawQuery(sql.toString(), null);
+
+        cursor.moveToFirst();
+        Float amount = Float.valueOf(0);
+        while (!cursor.isAfterLast()) {
+            TransactionSum tran = new TransactionSum();
+            amount = amount + cursor.getFloat(0);
+            cursor.moveToNext();
+        }
+        return amount;
     }
 
 

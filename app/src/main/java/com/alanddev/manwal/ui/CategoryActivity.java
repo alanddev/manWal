@@ -52,6 +52,7 @@ public class CategoryActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private CategoryController categoryController;
+    private Boolean isCallFromBudget=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,9 @@ public class CategoryActivity extends AppCompatActivity {
         categoryController.open();
         List<Model> categories = categoryController.getAll();
         categoryController.close();
+        if(getIntent().getExtras()!=null&&getIntent().getExtras().getBoolean(Constant.PUT_EXTRA_BUDGET)){
+            isCallFromBudget=true;
+        }
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),getExCategory(categories),getInCategory(categories));
 
         // Set up the ViewPager with the sections adapter.
@@ -189,7 +193,11 @@ public class CategoryActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            if(lstInCates.size()==0) {
+                return 1;
+            }else{
+                return 2;
+            }
         }
 
         @Override
@@ -207,9 +215,12 @@ public class CategoryActivity extends AppCompatActivity {
 
     private List<Category> getExCategory(List<Model> categories){
         List<Category> lstCategories = new ArrayList<Category>();
+        if(isCallFromBudget){
+            lstCategories.add(getAllCategory(categories));
+        }
         for(int i=0;i<categories.size();i++){
             Category cate = (Category)categories.get(i);
-            if(cate.getType()==0){
+            if(cate.getType()==Constant.EXPENSE_TYPE){
                 lstCategories.add(cate);
             }
         }
@@ -217,13 +228,26 @@ public class CategoryActivity extends AppCompatActivity {
     }
     private List<Category> getInCategory(List<Model> categories){
         List<Category> lstCategories = new ArrayList<Category>();
+        if(isCallFromBudget){
+            return lstCategories;
+        }
         for(int i=0;i<categories.size();i++){
             Category cate = (Category)categories.get(i);
-            if(cate.getType()==1){
+            if(cate.getType()==Constant.INCOME_TYPE){
                 lstCategories.add(cate);
             }
         }
         return lstCategories;
+    }
+
+    private Category getAllCategory(List<Model> categories){
+        for(int i=0;i<categories.size();i++){
+            Category cate = (Category)categories.get(i);
+            if(cate.getType()==Constant.ALL_CATEGORY_TYPE){
+                return cate;
+            }
+        }
+        return null;
     }
 
 }

@@ -114,6 +114,18 @@ public class CategoryController  implements IDataSource {
         return category;
     }
 
+    public Category getById(int cateId){
+        StringBuffer sql = new StringBuffer("SELECT * FROM ").
+                append(MwSQLiteHelper.TABLE_CATEGORY).append(" WHERE ").append(MwSQLiteHelper.COLUMN_CATE_ID)
+                .append("= ?");
+        String[] atts = new String[]{cateId+""};
+        Cursor cursor = database.rawQuery(sql.toString(),atts);
+        cursor.moveToFirst();
+        Category category = (Category)cursorTo(cursor);
+        cursor.close();
+        return category;
+    }
+
     @Override
     public Model cursorTo(Cursor cursor) {
         Category category = new Category();

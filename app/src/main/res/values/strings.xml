@@ -142,6 +142,7 @@
     <string name="budget_applied">Đang áp dụng</string>
     <string name="budget_finished">Đã kết thúc</string>
     <string name="budget_amount">Ngân sách</string>
-    <string name="budget_time">Tháng này</string>
     <string name="check_amount_zero">Không được nhập số tiền bằng 0</string>
+    <string name="budget_from">Từ ngày</string>
+    <string name="budget_to">Đến ngày</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.IDataSource;
@@ -26,6 +27,7 @@ import java.util.List;
 public class BudgetController implements IDataSource {
     private SQLiteDatabase database;
     private MwSQLiteHelper dbHelper;
+    private Context mContext;
 
     private String [] allColumns = {
             MwSQLiteHelper.COLUMN_BUDGET_ID,
@@ -40,6 +42,7 @@ public class BudgetController implements IDataSource {
 
     public BudgetController(Context context){
         dbHelper = new MwSQLiteHelper(context);
+        this.mContext = context;
     }
 
     @Override
@@ -75,11 +78,11 @@ public class BudgetController implements IDataSource {
         values.put(MwSQLiteHelper.COLUMN_BUDGET_START_DATE, budget.getStartdate());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_END_DATE, budget.getEnddate());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_AMOUNT, budget.getAmount());
-        values.put(MwSQLiteHelper.COLUMN_BUDGET_CATE_ID, budget.getStartdate());
-        values.put(MwSQLiteHelper.COLUMN_BUDGET_WALLET_ID, budget.getEnddate());
+        values.put(MwSQLiteHelper.COLUMN_BUDGET_CATE_ID, budget.getCate_id());
+        values.put(MwSQLiteHelper.COLUMN_BUDGET_WALLET_ID, budget.getWallet_id());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_RECURRING_NOTIFY, budget.getRecurring_notify());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_IS_REAPEAT, budget.getIs_repeat());
-        database.update(MwSQLiteHelper.TABLE_BUDGET, values, MwSQLiteHelper.COLUMN_BUDGET_ID + " = ?", new String[]{String.valueOf(budget.getId())});
+        database.update(MwSQLiteHelper.TABLE_BUDGET, values, MwSQLiteHelper.COLUMN_BUDGET_ID + " = ?", new String[]{budget.getId()+""});
     }
 
     @Override
@@ -128,23 +131,27 @@ public class BudgetController implements IDataSource {
                     .append(MwSQLiteHelper.TABLE_CATEGORY).append(" c ON s.").append(MwSQLiteHelper.COLUMN_BUDGET_CATE_ID).append(" = c.")
                     .append(MwSQLiteHelper.COLUMN_CATE_ID)
                     .append(" WHERE s.").append(MwSQLiteHelper.COLUMN_BUDGET_WALLET_ID).append(" = ").append(Utils.getWallet_id())
-                    .append(" AND s.").append(MwSQLiteHelper.COLUMN_BUDGET_END_DATE).append(" >= Datetime(?)");
+                    .append(" AND s.").append(MwSQLiteHelper.COLUMN_BUDGET_END_DATE).append(" >= ?");
         }else{
             sql = new StringBuffer("SELECT * FROM ").append(MwSQLiteHelper.TABLE_BUDGET).append(" s inner join ")
                     .append(MwSQLiteHelper.TABLE_CATEGORY).append(" c ON s.").append(MwSQLiteHelper.COLUMN_BUDGET_CATE_ID).append(" = c.")
                     .append(MwSQLiteHelper.COLUMN_CATE_ID)
                     .append(" WHERE s.").append(MwSQLiteHelper.COLUMN_BUDGET_WALLET_ID).append(" = ").append(Utils.getWallet_id())
-                    .append(" AND s.").append(MwSQLiteHelper.COLUMN_BUDGET_END_DATE).append(" < Datetime(?)");
+                    .append(" AND s.").append(MwSQLiteHelper.COLUMN_BUDGET_END_DATE).append(" < ?");
         }
         String strDate = Utils.changeDate2Str(new Date(), Constant.DATE_FORMAT_DB);
         String[] atts = new String[]{strDate};
         Cursor cursor = database.rawQuery(sql.toString(), atts);
         cursor.moveToFirst();
+        TransactionController transController = new TransactionController(mContext);
+        transController.open();
         while (!cursor.isAfterLast()) {
             Budget budget = (Budget)cursorTo(cursor);
+            budget.setRealamt(transController.getRealAmount(budget));
             budgets.add(budget);
             cursor.moveToNext();
         }
+        transController.close();
         return budgets;
     }
 

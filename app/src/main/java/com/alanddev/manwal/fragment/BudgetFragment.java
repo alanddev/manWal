@@ -72,7 +72,7 @@ public class BudgetFragment extends Fragment{
                 Budget budget = budgets.get(position);
                 Intent intent = new Intent(getContext(), BudgetAddActivity.class);
                 intent.putExtra(MwSQLiteHelper.COLUMN_BUDGET_ID,budget.getId());
-                startActivityForResult(intent, Constant.BUDGET_ADD_REQUEST);
+                startActivityForResult(intent,Constant.BUDGET_ADD_REQUEST);
             }
         });
 

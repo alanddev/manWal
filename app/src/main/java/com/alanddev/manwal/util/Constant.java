@@ -42,6 +42,7 @@ public class Constant {
     public static final int BUDGET_AVAL_TYPE = 0;
     public static final int BUDGET_EX_TYPE = 1;
     public static final int ALL_CATEGORY_TYPE=2;
+    public static final String PUT_EXTRA_BUDGET = "PUT_EXTRA_BUDGET";
 
 
 }

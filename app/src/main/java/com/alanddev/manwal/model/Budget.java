@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by ANLD on 01/12/2015.
  */
 public class Budget extends Model{
-    private long id;
+    private int id;
     private String startdate;
     private String enddate;
     private Float amount;
@@ -17,12 +17,13 @@ public class Budget extends Model{
     private String cate_name;
     private int recurring_notify;
     private int is_repeat;
+    private Float realamt;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -104,5 +105,12 @@ public class Budget extends Model{
 
     public void setIs_repeat(int is_repeat) {
         this.is_repeat = is_repeat;
+    }
+    public Float getRealamt() {
+        return realamt;
+    }
+
+    public void setRealamt(Float realamt) {
+        this.realamt = realamt;
     }
 }

@@ -27,6 +27,7 @@ import com.alanddev.manwal.adapter.BudgetAdapter;
 import com.alanddev.manwal.adapter.BudgetSectionPagerAdapter;
 import com.alanddev.manwal.adapter.CategoryAdapter;
 import com.alanddev.manwal.controller.BudgetController;
+import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.model.Budgets;
 import com.alanddev.manwal.util.Constant;
@@ -111,7 +112,7 @@ public class BudgetActivity extends AppCompatActivity {
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==Constant.BUDGET_ADD_REQUEST&&resultCode==Constant.BUDGET_ADD_RESULT) {
+        if(resultCode==Constant.BUDGET_ADD_RESULT) {
             notifyDataSetChanged();
         }
     }
@@ -119,6 +120,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void notifyDataSetChanged(){
         mSectionsPagerAdapter.setData(getData());
         mSectionsPagerAdapter.notifyDataSetChanged();
+        mViewPager.setCurrentItem(0);
     }
 
     private List<Budgets> getData(){

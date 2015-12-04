@@ -50,21 +50,37 @@
             android:src="@mipmap/calendar"
             android:layout_marginLeft="8dp"/>
         <TextView
-            android:id="@+id/txt_startdt"
+            android:id="@+id/txt_start_tt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:hint="@string/budget_time"
-            android:layout_toRightOf="@+id/img_date"/>
+            android:layout_toRightOf="@+id/img_date"
+            android:text="@string/budget_from"/>
+        <TextView
+            android:id="@+id/txt_startdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_start_tt"
+            android:layout_marginLeft="28dp"
+            android:layout_toRightOf="@+id/img_date"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/txt_end_tt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_toRightOf="@+id/img_date"
+            android:layout_below="@+id/txt_startdt"
+            android:text="@string/budget_to"
+            android:layout_marginTop="20dp"/>
         <TextView
             android:id="@+id/txt_enddt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:hint="@string/budget_time"
             android:layout_toRightOf="@+id/img_date"
-            android:layout_below="@+id/txt_startdt"
-            android:layout_marginTop="30dp"/>
+            android:layout_below="@+id/txt_end_tt"
+            android:layout_marginTop="5dp"/>
     </RelativeLayout>
 
 </LinearLayout>

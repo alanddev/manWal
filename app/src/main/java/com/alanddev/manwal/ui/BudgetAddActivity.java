@@ -20,7 +20,6 @@ import com.alanddev.manwal.controller.CategoryController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.model.Category;
-import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -38,7 +37,8 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
     private ImageView imgCate;
     private BudgetController budgetController;
     private Budget budget;
-
+    private final int CREATE = 0;
+    private final int EDIT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +53,11 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
         txtCate.setOnClickListener(this);
         edtAmout = (EditText)findViewById(R.id.edt_amt);
         imgCate = (ImageView)findViewById(R.id.img_cate);
-
+        budgetController = new BudgetController(this);
         Bundle bundle = getIntent().getExtras();
-        long budgetId=0;
+        int budgetId=0;
         if(bundle!=null){
-            budgetId = bundle.getLong(MwSQLiteHelper.COLUMN_BUDGET_ID,0);
+            budgetId = bundle.getInt(MwSQLiteHelper.COLUMN_BUDGET_ID, 0);
         }
         if(budgetId==0){
             CategoryController categoryController = new CategoryController(this);
@@ -70,7 +70,6 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
             txtEndDate.setText(Utils.changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_PICKER));
         }else{
-            budgetController = new BudgetController(this);
             budgetController.open();
             budget = budgetController.getBudgetById(budgetId);
             budgetController.close();
@@ -79,6 +78,9 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             txtCate.setText(budget.getCate_name());
             edtAmout.setText(budget.getAmount()+"");
             imgCate.setImageResource(getResources().getIdentifier("ic_category_" + budget.getCate_img(), "mipmap", getPackageName()));
+            category = new Category();
+            category.setId(budget.getCate_id());
+            category.setName(budget.getCate_name());
         }
 
 
@@ -108,7 +110,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
         }
 
         if (id == R.id.save) {
-            saveBudget();
+            saveBudget(CREATE);
         }
 
         if (id == R.id.action_delete) {
@@ -116,10 +118,8 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
         }
 
         if (id == R.id.action_edit) {
-            if(true) {
-                saveBudget();
-                setResult(Constant.TRANS_DETAIL_UPDATE);
-                finish();
+            if(changeData()) {
+                saveBudget(EDIT);
             }else{
                 Toast.makeText(this, getResources().getText(R.string.check_change_data), Toast.LENGTH_LONG).show();
             }
@@ -131,6 +131,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         if(v==txtCate){
             Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+            intent.putExtra(Constant.PUT_EXTRA_BUDGET,true);
             startActivityForResult(intent, Constant.PICK_CATEGORY);
         }
         if(v==txtStartDate||v==txtEndDate){
@@ -180,24 +181,27 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void saveBudget() {
+    private void saveBudget(int type) {
         String amount = edtAmout.getText().toString();
         if(amount.equals("")){
             Toast.makeText(this, getResources().getText(R.string.check_amout_exist), Toast.LENGTH_LONG).show();
         }else if(Float.valueOf(amount)<=0){
             Toast.makeText(this, getResources().getText(R.string.check_amount_zero), Toast.LENGTH_LONG).show();
         }else {
-            BudgetController controller = new BudgetController(this);
-            controller.open();
-            Budget budget = new Budget();
-            budget.setAmount(Float.valueOf(edtAmout.getText().toString()));
-            budget.setCate_id(category.getId());
-            budget.setStartdate(Utils.changeDateStr2Str(txtStartDate.getText().toString()));
-            budget.setEnddate(Utils.changeDateStr2Str(txtEndDate.getText().toString()));
-            budget.setWallet_id(Utils.getWallet_id());
-            Log.d("AAAAAAA", budget.getCate_name() + " " + budget.getCate_id() + " " + budget.getStartdate() + " ");
-            controller.create(budget);
-            controller.close();
+            budgetController.open();
+            Budget newBudget = new Budget();
+            newBudget.setAmount(Float.valueOf(edtAmout.getText().toString()));
+            newBudget.setCate_id(category.getId());
+            newBudget.setStartdate(Utils.changeDateStr2Str(txtStartDate.getText().toString()));
+            newBudget.setEnddate(Utils.changeDateStr2Str(txtEndDate.getText().toString()));
+            newBudget.setWallet_id(Utils.getWallet_id());
+            if(type==CREATE) {
+                budgetController.create(newBudget);
+            }else if(type==EDIT){
+                newBudget.setId(budget.getId());
+                budgetController.update(newBudget);
+            }
+            budgetController.close();
         }
         setResult(Constant.BUDGET_ADD_RESULT, new Intent());
         finish();
@@ -211,7 +215,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 delete(budget.getId());
-                setResult(Constant.TRANS_DETAIL_UPDATE);
+                setResult(Constant.BUDGET_ADD_RESULT, new Intent());
                 finish();
             }
         });
@@ -227,9 +231,21 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
         alertDialog.show();
     }
 
-    private void delete(long budgetId){
+   private void delete(long budgetId){
         budgetController.open();
         budgetController.delete(budgetId);
         budgetController.close();
+    }
+
+    private Boolean changeData(){
+        Float amount = Float.valueOf(edtAmout.getText().toString());
+        String catename = txtCate.getText().toString();
+        String startDt = Utils.changeDateStr2Str(txtStartDate.getText().toString());
+        String endDt = Utils.changeDateStr2Str(txtEndDate.getText().toString());
+        if(amount.compareTo(budget.getAmount())==0&&catename.equals(budget.getCate_name())
+                &&startDt.equals(budget.getStartdate())&&endDt.equals(budget.getEnddate())){
+            return false;
+        }
+        return true;
     }
 }
