@@ -4,8 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_transaction">TransactionActivity</string>
+    <string name="action_settings">Thiết lập</string>
+    <string name="title_activity_transaction">Giao dịch</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="name_wallet">Tên</string>
@@ -16,8 +16,8 @@
     <string name="title_activity_wallet_add">Add Wallet</string>
     <string name="title_transaction_wallet_add"> Khoản cân đối </string>
 
-    <string name="title_activity_list_currency">Currency</string>
-    <string name="title_activity_category">Select Category</string>
+    <string name="title_activity_list_currency">Đồng tiền</string>
+    <string name="title_activity_category">Lựa chọn đồng tiền</string>
     <string name="action_view_day">Xem theo ngày</string>
     <string name="action_view_week">Xem theo tuần</string>
     <string name="action_view_month">Xem theo tháng</string>
@@ -25,18 +25,18 @@
     <string name="action_view_trans">Xem theo giao dịch</string>
 
     <string-array name="exp_category_names">
-        <item>Loan</item>
-        <item>Shopping</item>
-        <item>Food - Drink</item>
-        <item>Transport</item>
-        <item>Education</item>
-        <item>Entertainment</item>
-        <item>Family</item>
-        <item>Friends - Lover</item>
-        <item>Invest</item>
-        <item>Medical</item>
-        <item>Travel</item>
-        <item>Other</item>
+        <item>Vay</item>
+        <item>Mua bán</item>
+        <item>Ăn uống</item>
+        <item>Di chuyển</item>
+        <item>Giáo dục</item>
+        <item>Giải trí</item>
+        <item>Gia đình</item>
+        <item>Bạn bè \ Gấu </item>
+        <item>Đầu tư</item>
+        <item>Thuốc</item>
+        <item>Du lịch</item>
+        <item>Khác</item>
     </string-array>
     <string-array name="exp_category_image">
         <item>loan</item>
@@ -120,15 +120,32 @@
     <string name="title_activity_trend">TrendActivity</string>
 
     <string-array name="type_array">
-        <item>Chi tiêu</item>
-        <item>Thu nhập</item>
-        <item>Số dư</item>
+        <item>@string/type_array_expense</item>
+        <item>@string/type_array_income</item>
+        <item>@string/type_array_balance</item>
     </string-array>
 
+    <string name="type_array_expense">Chi tiêu</string>
+    <string name="type_array_income">Thu nhập</string>
+    <string name="type_array_balance">Số dư</string>
+
     <string-array name="time_array">
-        <item>Theo thời gian</item>
-        <item>Theo nhóm</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
     </string-array>
+    <string name="title_trend_from_month">Từ tháng</string>
+    <string name="title_trend_to_month">Đến tháng</string>
+
 
     <string name="dialog_confirm_delete_trans">Bạn có muốn xóa giao dịch này không?</string>
     <string name="dialog_yes_button">Có</string>

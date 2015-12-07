@@ -3,7 +3,7 @@
         android:layout_height="wrap_content" >
         <TextView
             android:id="@+id/txtMonth"
-            android:layout_width="@dimen/size_image_transaction"
+            android:layout_width="@dimen/width_trend_month"
             android:layout_height="@dimen/size_image_transaction"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

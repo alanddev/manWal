@@ -33,8 +33,14 @@ import java.util.Date;
 public class TrendActivity extends AppCompatActivity {
 
     Spinner spinnerType;
-    Spinner spinnerTime;
+    Spinner spinnerToTime;
+    Spinner spinnerFromTime;
     private TransactionController transactionController;
+    BarChart chart;
+    ListView listViewTrend;
+    String year;
+    int toMonth;
+    int fromMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +52,24 @@ public class TrendActivity extends AppCompatActivity {
         transactionController = new TransactionController(this);
         transactionController.open();
 
-        ListView listViewTrend = (ListView)findViewById(R.id.list_transaction_trend);
+        listViewTrend = (ListView)findViewById(R.id.list_transaction_trend);
 
+        year  = Utils.getYear();
+        toMonth = 1;
+        fromMonth = 12;
 
         spinnerType = (Spinner) findViewById(R.id.spinner_type);
-        spinnerTime = (Spinner) findViewById(R.id.spinner_time);
+        spinnerFromTime = (Spinner) findViewById(R.id.from_month);
+        spinnerToTime = (Spinner) findViewById(R.id.to_month);
+
         setDataSpinner();
 
-        BarChart chart = (BarChart) findViewById(R.id.chart);
+
+        chart = (BarChart) findViewById(R.id.chart);
         //setDataBarChart(chart);
-        getData(chart, Constant.TREND_TYPE_EXPENSE, 1, 12, "2015",listViewTrend);
+
+        getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrend);
+        Utils.ListUtils.setDynamicHeight(listViewTrend);
 
 
 //        BarChart chart2 = new BarChart(this);
@@ -81,19 +95,57 @@ public class TrendActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     private void setDataSpinner(){
 
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(this,
                 R.array.type_array, android.R.layout.simple_spinner_item);
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapterType);
-        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if (selectedItem.equals(getResources().getString(R.string.type_array_expense))) {
+                    getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth,toMonth,  year,listViewTrend);
+                }else if(selectedItem.equals(getResources().getString(R.string.type_array_income))){
+                    getData(chart, Constant.TREND_TYPE_INCOME, fromMonth,toMonth, year,listViewTrend);
+                }else if(selectedItem.equals(getResources().getString(R.string.type_array_balance))){
+                    getData(chart, Constant.TREND_TYPE_BALANCE, fromMonth,toMonth, year,listViewTrend);
+                }
             }
 
-            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+
+
+
+        //ArrayAdapter<CharSequence> adapterTime = ArrayAdapter.createFromResource(this,
+        //        R.array.time_array, android.R.layout.simple_spinner_item);
+
+        String values[] =   getResources().getStringArray(R.array.time_array);
+        for (int i = 0; i <values.length;i++){
+            values[i] = values[i] + "-" + year;
+        }
+
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_list_item_1, values);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFromTime.setAdapter(adapter);
+
+        spinnerFromTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                String[] temps = selectedItem.split("-");
+                String month = temps[0];
+                fromMonth = Integer.valueOf(month);
+                getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrend);
+            }
+
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
@@ -101,10 +153,22 @@ public class TrendActivity extends AppCompatActivity {
 
 
 
-        ArrayAdapter<CharSequence> adapterTime = ArrayAdapter.createFromResource(this,
-                R.array.time_array, android.R.layout.simple_spinner_item);
-        adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTime.setAdapter(adapterTime);
+        spinnerToTime.setAdapter(adapter);
+        spinnerToTime.setSelection(11);
+        //spinnerTime.setAdapter(adapterTime);
+        spinnerToTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                String[] temps = selectedItem.split("-");
+                String month = temps[0];
+                toMonth = Integer.valueOf(month);
+                getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrend);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 

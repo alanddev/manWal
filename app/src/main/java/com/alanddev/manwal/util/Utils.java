@@ -7,6 +7,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.alanddev.manwal.R;
 
@@ -144,7 +148,7 @@ public class Utils {
 
     public static Date changeDate2Date(Date date,String datefomat){
         String strDate = changeDate2Str(date,datefomat);
-        return changeStr2Date(strDate,datefomat);
+        return changeStr2Date(strDate, datefomat);
     }
 
     public static SharedPreferences getSharedPreferences(Context context){
@@ -224,7 +228,7 @@ public class Utils {
         }else if(date.compareTo(getTomorrow())==0){
             return dayview[2];
         }else{
-            return changeDate2Str(date,Constant.DATE_FORMAT_PICKER);
+            return changeDate2Str(date, Constant.DATE_FORMAT_PICKER);
         }
     }
 
@@ -285,5 +289,32 @@ public class Utils {
     }
 
 
+    public static String getYear(){
+        Calendar calendar = Calendar.getInstance();
+        int thisYear = calendar.get(Calendar.YEAR);
+        return Integer.toString(thisYear);
+    }
+
+
+    public static class ListUtils {
+        public static void setDynamicHeight(ListView mListView) {
+            ListAdapter mListAdapter = mListView.getAdapter();
+            if (mListAdapter == null) {
+                // when adapter is null
+                return;
+            }
+            int height = 0;
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+            for (int i = 0; i < mListAdapter.getCount(); i++) {
+                View listItem = mListAdapter.getView(i, null, mListView);
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                height += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = mListView.getLayoutParams();
+            params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+            mListView.setLayoutParams(params);
+            mListView.requestLayout();
+        }
+    }
 
 }
