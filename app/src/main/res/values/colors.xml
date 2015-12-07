@@ -12,4 +12,7 @@
     <color name="colorTextColor">#303030</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorfab">#5500FF</color>
+    <color name="colorTomato">#FF6347</color>
+    <color name="colorOrangeDack">#FF8C00</color>
+    <color name="colorOrangeRed">#FF4500</color>
 </resources>

@@ -1,6 +1,8 @@
 package com.alanddev.manwal.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -31,6 +33,10 @@ public class Utils {
 
     private static Locale locale;
     private static Locale localDefault = new Locale("vi","VI");
+    private static int sTheme;
+    public final static int THEME_DEFAULT = 0;
+    public final static int THEME_WHITE = 1;
+    public final static int THEME_BLUE = 2;
 
     public static Locale getLocale() {
         if(locale==null){
@@ -197,7 +203,7 @@ public class Utils {
         return changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_DB);
     }
 
-    public static String getStrYesterday(){
+    public static String getStrYesterday() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,-1);
         return changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_DB);
@@ -252,6 +258,30 @@ public class Utils {
             date = new Date();
         }
         return toFormat.format(date);
+    }
+
+    public static void changeToTheme(Activity activity, int theme)
+    {
+        sTheme = theme;
+        activity.finish();
+        activity.startActivity(new Intent(activity, activity.getClass()));
+    }
+    /** Set the theme of the activity, according to the configuration. */
+    public static void onActivityCreateSetTheme(Activity activity)
+    {
+        switch (sTheme)
+        {
+            default:
+            case THEME_DEFAULT:
+                activity.setTheme(R.style.AppTheme);
+                break;
+            case THEME_WHITE:
+                activity.setTheme(R.style.AppTheme1);
+                break;
+            case THEME_BLUE:
+                activity.setTheme(R.style.AppTheme);
+                break;
+        }
     }
 
 

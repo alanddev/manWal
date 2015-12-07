@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme_Tomator">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorOutFlow</item>
+        <item name="colorPrimaryDark">@color/colorOutFlow</item>
+        <item name="colorAccent">@color/colorOutFlow</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

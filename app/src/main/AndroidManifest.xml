@@ -64,6 +64,7 @@
             android:label="@string/title_activity_budget"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.BudgetAddActivity" />
+        <activity android:name=".ui.SettingActivity"></activity>
     </application>
 
 </manifest>

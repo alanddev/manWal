@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_category_all"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:id="@+id/txt_budget_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
+            android:text="Tất cả khoản chi"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/img_icon"/>
+        <TextView
+            android:id="@+id/txt_budget_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="12sp"
+            android:layout_marginLeft="10dp"
+            android:text="Tháng này"
+            android:layout_toRightOf="@+id/img_icon"
+            android:layout_below="@+id/txt_budget_category"/>
+        <TextView
+            android:id="@+id/txt_budget_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:text="300.000"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="16sp"
+            android:layout_marginLeft="70dp"
+            android:text="Còn lại"
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/txt_budget_amount1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="12sp"
+            android:layout_marginRight="20dp"
+            android:text="200.000"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="7dp"
+        android:id="@+id/progress"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="50dp"
+        android:max="100" />
+
+</LinearLayout>

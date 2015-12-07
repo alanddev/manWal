@@ -51,9 +51,11 @@ public class TransactionActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTheme(R.style.AppTheme1);
         setContentView(R.layout.activity_transaction);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         mShaPref = Utils.getSharedPreferences(this);
         int viewType = mShaPref.getInt(Constant.VIEW_TYPE, 0);
 
@@ -165,10 +167,9 @@ public class TransactionActivity extends AppCompatActivity
         } else if (id == R.id.nav_budget) {
             Intent intent = new Intent(this, BudgetActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_setting) {
+            Intent intent = new Intent(this,SettingActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
