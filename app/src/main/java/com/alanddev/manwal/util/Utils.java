@@ -276,7 +276,7 @@ public class Utils {
                 activity.setTheme(R.style.AppTheme);
                 break;
             case THEME_WHITE:
-                activity.setTheme(R.style.AppTheme1);
+                activity.setTheme(R.style.AppTheme);
                 break;
             case THEME_BLUE:
                 activity.setTheme(R.style.AppTheme);
