@@ -9,6 +9,7 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="size_image">40dp</dimen>
     <dimen name="size_image_checked">30dp</dimen>
+    <dimen name="size_image_small">30dp</dimen>
     <dimen name="size_image_transaction">32dp</dimen>
     <dimen name="width_trend_month">40dp</dimen>
     <dimen name="text_size_transaction_title">15sp</dimen>

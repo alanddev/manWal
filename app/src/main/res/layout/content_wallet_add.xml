@@ -13,18 +13,19 @@
     android:orientation="vertical"
     >
 
-    <LinearLayout
+    <LinearLayout android:gravity="left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
         <ImageView
-            android:layout_width="@dimen/size_image"
-            android:layout_height="@dimen/size_image"
+            android:layout_width="@dimen/size_image_small"
+            android:layout_height="@dimen/size_image_small"
             android:id="@+id/imageWallet"
             android:src="@mipmap/wallet"
             android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
             android:onClick="clickChooseImage"/>
 
         <EditText
@@ -47,12 +48,13 @@
         >
 
         <ImageView
-            android:layout_width="@dimen/size_image"
-            android:layout_height="@dimen/size_image"
+            android:layout_width="@dimen/size_image_small"
+            android:layout_height="@dimen/size_image_small"
             android:id="@+id/imageCurrency"
             android:clickable="false"
             android:scaleType="fitXY"
-            android:src="@mipmap/wallet" />
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_currency" />
 
         <EditText
             android:layout_width="match_parent"
@@ -72,11 +74,12 @@
 
 
         <ImageView
-            android:layout_width="@dimen/size_image"
-            android:layout_height="@dimen/size_image"
+            android:layout_width="@dimen/size_image_small"
+            android:layout_height="@dimen/size_image_small"
             android:id="@+id/imageAmount"
             android:scaleType="fitXY"
-            android:src="@mipmap/wallet" />
+            android:layout_gravity="center_vertical"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -89,12 +92,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/layoutCheck">
         <CheckBox
             android:id = "@+id/choose"
             android:checked="false"
-            android:layout_width="@dimen/size_image"
-            android:layout_height="@dimen/size_image" />
+            android:layout_width="@dimen/size_image_small"
+            android:layout_height="@dimen/size_image_small" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,11 +106,5 @@
             android:hint="@string/choose_wallet"
             android:inputType="numberDecimal"/>
     </LinearLayout>
-
-
-    <!--<com.github.mikephil.charting.charts.BarChart-->
-        <!--android:id="@+id/chart"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
 
 </LinearLayout>

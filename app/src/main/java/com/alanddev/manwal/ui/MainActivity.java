@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
              //init currency
              currController = new CurrencyController(getApplicationContext());
              currController.open();
-             currController.init();
+             currController.init(this);
              currController.close();
              //init category
              categoryController = new CategoryController(getApplicationContext());

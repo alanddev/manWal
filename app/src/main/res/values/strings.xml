@@ -224,4 +224,33 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+
+    <string-array name="code_currency_array">
+        <item>VND</item>
+        <item>USD</item>
+        <item>JPY</item>
+        <item>EUR</item>
+        <item>GBP</item>
+    </string-array>
+
+    <string-array name="name_currency_array">
+        <item>Việt Nam Đồng</item>
+        <item>Dollar</item>
+        <item>Yen</item>
+        <item>Euro</item>
+        <item>Pound</item>
+    </string-array>
+
+    <string-array name="symbol_currency_array">
+        <item>đ</item>
+        <item>$</item>
+        <item>¥</item>
+        <item>€</item>
+        <item>£</item>
+    </string-array>
+
+
+
+
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.alanddev.manwal.R;
 import com.alanddev.manwal.helper.IDataSource;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Currency;
@@ -135,10 +136,17 @@ public class CurrencyController implements IDataSource {
         return currency;
     }
 
-    public void init(){
-        Currency currency_vnd  = new Currency("VND","Viet Nam Dong","đ",1);
-        Currency currency_usd  = new Currency("USD","Dollar","$",0);
-        create(currency_vnd);
-        create(currency_usd);
+    public void init(Context context){
+        //Currency currency_vnd  = new Currency("VND","Viet Nam Dong","đ",1);
+        //Currency currency_usd  = new Currency("USD","Dollar","$",0);
+        String code[] =   context.getResources().getStringArray(R.array.code_currency_array);
+        String name[] =   context.getResources().getStringArray(R.array.name_currency_array);
+        String symbol[] =   context.getResources().getStringArray(R.array.symbol_currency_array);
+        for(int i = 0; i < code.length; i++){
+            Currency cur = new Currency(code[i],name[i],symbol[i],0);
+            create(cur);
+        }
+        //create(currency_vnd);
+        //create(currency_usd);
     }
 }
