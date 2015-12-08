@@ -16,15 +16,24 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.TransactionSumAdapter;
 import com.alanddev.manwal.adapter.TrendAdapter;
 import com.alanddev.manwal.controller.TransactionController;
+import com.alanddev.manwal.model.TransactionSum;
 import com.alanddev.manwal.model.Trend;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -37,10 +46,13 @@ public class TrendActivity extends AppCompatActivity {
     Spinner spinnerFromTime;
     private TransactionController transactionController;
     BarChart chart;
+    PieChart chartPie;
     ListView listViewTrend;
+    ListView listViewTrendPie;
     String year;
     int toMonth;
     int fromMonth;
+    int option;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +65,12 @@ public class TrendActivity extends AppCompatActivity {
         transactionController.open();
 
         listViewTrend = (ListView)findViewById(R.id.list_transaction_trend);
+        listViewTrendPie = (ListView)findViewById(R.id.list_transaction_trend_pie);
 
         year  = Utils.getYear();
         toMonth = 1;
         fromMonth = 12;
+        option = Constant.TREND_TYPE_EXPENSE;
 
         spinnerType = (Spinner) findViewById(R.id.spinner_type);
         spinnerFromTime = (Spinner) findViewById(R.id.from_month);
@@ -66,19 +80,24 @@ public class TrendActivity extends AppCompatActivity {
 
 
         chart = (BarChart) findViewById(R.id.chart);
-        //setDataBarChart(chart);
+        chartPie = (PieChart) findViewById(R.id.chartPie);
+
 
         getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrend);
-        Utils.ListUtils.setDynamicHeight(listViewTrend);
 
+
+        getDataPie(chartPie, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrendPie);
+        //Utils.ListUtils.setDynamicHeight(listViewTrendPie);
 
 //        BarChart chart2 = new BarChart(this);
 //        chart2.setMinimumHeight(200);
 //        setDataCombinedChart(chart2);
 //
 //        ViewGroup viewGroup = (ViewGroup)chart.getParent();
+//        viewGroup.removeView(listViewTrend);
 //        viewGroup.removeView(chart);
-//        viewGroup.addView(chart2);
+//        viewGroup.removeView(chartPie);
+        //viewGroup.addView(chart2);
 
     }
 
@@ -108,11 +127,17 @@ public class TrendActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if (selectedItem.equals(getResources().getString(R.string.type_array_expense))) {
-                    getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth,toMonth,  year,listViewTrend);
+                    option = Constant.TREND_TYPE_EXPENSE;
+                    getData(chart, option, fromMonth,toMonth,  year,listViewTrend);
+                    getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
                 }else if(selectedItem.equals(getResources().getString(R.string.type_array_income))){
-                    getData(chart, Constant.TREND_TYPE_INCOME, fromMonth,toMonth, year,listViewTrend);
+                    option = Constant.TREND_TYPE_INCOME;
+                    getData(chart, option, fromMonth,toMonth, year,listViewTrend);
+                    getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
                 }else if(selectedItem.equals(getResources().getString(R.string.type_array_balance))){
-                    getData(chart, Constant.TREND_TYPE_BALANCE, fromMonth,toMonth, year,listViewTrend);
+                    option = Constant.TREND_TYPE_BALANCE;
+                    getData(chart, option, fromMonth,toMonth, year,listViewTrend);
+                    getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
                 }
             }
 
@@ -143,7 +168,8 @@ public class TrendActivity extends AppCompatActivity {
                 String[] temps = selectedItem.split("-");
                 String month = temps[0];
                 fromMonth = Integer.valueOf(month);
-                getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrend);
+                getData(chart, option, fromMonth, toMonth, year, listViewTrend);
+                getDataPie(chartPie,option,fromMonth,toMonth,year,listViewTrendPie);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -162,89 +188,14 @@ public class TrendActivity extends AppCompatActivity {
                 String[] temps = selectedItem.split("-");
                 String month = temps[0];
                 toMonth = Integer.valueOf(month);
-                getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrend);
+                getData(chart, option, fromMonth, toMonth, year, listViewTrend);
+                getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
-    }
-
-    private void setDataBarChart(BarChart chart){
-        ArrayList<BarDataSet> dataSets = null;
-        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(110.000f, 0); // Jan
-        valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(40.000f, 1); // Feb
-        valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(60.000f, 2); // Mar
-        valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(30.000f, 3); // Apr
-        valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(90.000f, 4); // May
-        valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(100.000f, 5); // Jun
-        valueSet1.add(v1e6);
-
-        dataSets = new ArrayList<>();
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Brand 1");
-        barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSets.add(barDataSet1);
-        //dataSets.add(barDataSet2);
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("JAN");
-        xAxis.add("FEB");
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAY");
-        xAxis.add("JUN");
-
-        BarData data = new BarData(xAxis,dataSets);
-        chart.setData(data);
-        chart.setDescription("My Chart");
-        chart.animateXY(2000, 2000);
-        chart.invalidate();
-
-
-    }
-
-    private void setDataCombinedChart(BarChart chart){
-        ArrayList<BarDataSet> dataSets = null;
-        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(110.000f, 0); // Jan
-        valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(40.000f, 1); // Feb
-        valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(60.000f, 2); // Mar
-        valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(30.000f, 3); // Apr
-        valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(90.000f, 4); // May
-        valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(100.000f, 5); // Jun
-        valueSet1.add(v1e6);
-
-        dataSets = new ArrayList<>();
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Brand 1");
-        barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSets.add(barDataSet1);
-        //dataSets.add(barDataSet2);
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("1");
-        xAxis.add("2");
-        xAxis.add("3");
-        xAxis.add("4");
-        xAxis.add("5");
-        xAxis.add("6");
-
-        BarData data = new BarData(xAxis,dataSets);
-        chart.setData(data);
-        chart.setDescription("My Chart");
-        chart.animateXY(2000, 2000);
-        chart.invalidate();
-
 
     }
 
@@ -271,10 +222,92 @@ public class TrendActivity extends AppCompatActivity {
 
         BarData data = new BarData(xAxis,dataSets);
         chart.setData(data);
-        chart.setDescription("Trend");
+        chart.setDescription("");
         chart.animateXY(2000, 2000);
         chart.invalidate();
+        Utils.ListUtils.setDynamicHeight(listView);
+    }
+
+    private void getDataPie(PieChart chart, int option, int monthBegin, int monthEnd, String year,ListView listView){
+        ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
+        if (option != Constant.TREND_TYPE_BALANCE) {
+            trans = transactionController.getAmountCategoryTypeByMonths(option, Utils.getWallet_id(), monthBegin, monthEnd, year);
+        }
+        setData(chart,trans);
+        listView.setAdapter(new TransactionSumAdapter(this, trans));
+        Utils.ListUtils.setDynamicHeight(listView);
+    }
+
+    private void setData(PieChart chart, ArrayList<TransactionSum> trans){
+
+        ArrayList<Entry> yVals = new ArrayList<Entry>();
+
+        for (int i = 0; i < trans.size(); i++)
+            yVals.add(new Entry(trans.get(i).getAmount(), i));
+
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for (int i = 0; i < trans.size(); i++)
+            xVals.add(trans.get(i).getCatName());
+
+        PieDataSet pieDataSet = new PieDataSet(yVals, "");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setDrawValues(false);
+
+
+        PieData data = new PieData(xVals, pieDataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.GRAY);
+
+        chart.setData(data);
+        decorationChart(chart, pieDataSet);
 
     }
+
+    private void decorationChart(PieChart chart,PieDataSet dataSet){
+
+        chart.getLegend().setEnabled(false);
+        chart.setDescription("");
+        chart.animateY(800, Easing.EasingOption.EaseInBounce);
+        chart.setTouchEnabled(true);
+        //chart.setDrawCenterText(false);
+        //chart.setDrawSliceText(true);
+        chart.setUsePercentValues(true);
+        chart.setDrawHoleEnabled(true);
+        chart.setHoleColorTransparent(true);
+        chart.setHoleRadius(7);
+        chart.setTransparentCircleRadius(10);
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+        dataSet.setColors(colors);
+
+
+
+        //chart.setOnChartValueSelectedListener(context);
+        chart.invalidate(); // refresh
+        Legend l = chart.getLegend();
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setXEntrySpace(7);
+        l.setYEntrySpace(5);
+    }
+
+
 
 }

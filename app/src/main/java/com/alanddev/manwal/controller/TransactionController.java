@@ -684,6 +684,13 @@ public class TransactionController implements IDataSource {
     }
 
 
+    public ArrayList<TransactionSum>getAmountCategoryTypeByMonths(int type,int walletId, int fromMonth,int toMonth,String year){
+        ArrayList<TransactionSum> trans = new ArrayList<TransactionSum>();
+        ArrayList<Date> dates = getDateOfMonths(fromMonth, toMonth, year);
+        trans = getAmountCategoryTypeByDate(type,walletId,dates);
+        return trans;
+    }
+
 
     private ArrayList<Date> getDateOfWeek(Date date){
         //Date date = new Date();
@@ -720,6 +727,28 @@ public class TransactionController implements IDataSource {
         return dates;
 
     }
+
+
+    private ArrayList<Date>getDateOfMonths(int fromMonth, int toMonth, String year){
+        String beginDateOfMonth = year + "-" + fromMonth + "-01";
+        Date dateStart = Utils.changeStr2Date(beginDateOfMonth, Constant.DATE_FORMAT_DB);
+
+        String endDateOfMonth = year + "-" + toMonth + "-01";
+        Date dateTo = Utils.changeStr2Date(endDateOfMonth, Constant.DATE_FORMAT_DB);
+        Calendar c = Calendar.getInstance();   // this takes current date
+        c.setTime(dateTo);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        c.set(Calendar.DATE, c.getActualMaximum(Calendar.DATE));
+        Date dateEnd = c.getTime();
+
+        ArrayList<Date>dates = new ArrayList<Date>();
+        dates.add(dateStart);
+        dates.add(dateEnd);
+        //System.out.println(c.getTime());
+        return dates;
+
+    }
+
 
     public TransactionDetail getTransbyId(long id){
         StringBuffer sql = new StringBuffer("SELECT * FROM ").append(MwSQLiteHelper.TABLE_TRANSACTION).append(" s inner join ")
