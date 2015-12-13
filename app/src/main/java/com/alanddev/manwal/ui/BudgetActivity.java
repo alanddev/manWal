@@ -31,6 +31,7 @@ import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.model.Budgets;
 import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class BudgetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_budget);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

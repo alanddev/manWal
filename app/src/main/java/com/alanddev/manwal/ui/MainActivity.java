@@ -3,6 +3,7 @@ package com.alanddev.manwal.ui;
 //import android.support.v4.app.DialogFragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences mshare = Utils.getSharedPreferences(this);
+        String theme = mshare.getString(Constant.THEME_CURRENT,"");
+        if(!theme.equals("")){
+            Utils.changeToTheme(theme);
+        }else{
+            Utils.changeToTheme("AppTheme");
+        }
         setContentView(R.layout.activity_man_wal);
         checkDb();
     }

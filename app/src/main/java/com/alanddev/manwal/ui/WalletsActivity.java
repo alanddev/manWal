@@ -18,6 +18,7 @@ import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Currency;
 import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class WalletsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_list_currency);
 
         final ListView listWallet = (ListView)findViewById(R.id.list_currency);

@@ -1,7 +1,10 @@
 package com.alanddev.manwal.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,37 +14,36 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.SellectThemeAdapter;
 import com.alanddev.manwal.adapter.SettingAdapter;
 import com.alanddev.manwal.model.Setting;
+import com.alanddev.manwal.model.Theme;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingActivity extends AppCompatActivity {
+public class SelectThemeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_select_theme);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ListView lvSetting = (ListView)findViewById(R.id.lstSetting);
-        final SettingAdapter adapter = new SettingAdapter(this,createData());
-        lvSetting.setAdapter(adapter);
-        lvSetting.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView lvTheme = (ListView)findViewById(R.id.lstthemes);
+        final SellectThemeAdapter adapter = new SellectThemeAdapter(this,createData());
+        lvTheme.setAdapter(adapter);
+        lvTheme.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int itemId = (int)adapter.getItemId(position);
-                switch (itemId){
-                    case Constant.CHANGE_THEME_ID:
-                        Intent intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
-                        startActivity(intent);
-                        break;
-                }
+                Theme theme = (Theme)parent.getAdapter().getItem(position);
+                Utils.setSharedPreferencesValue(getApplicationContext(),Constant.THEME_CURRENT,theme.getTheme());
+                Utils.changeToTheme(theme.getTheme());
+                finish();
             }
         });
 
@@ -68,23 +70,19 @@ public class SettingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<Setting> createData(){
-        List<Setting> lstSetting = new ArrayList<Setting>();
-        String[] arrSettings = getResources().getStringArray(R.array.settings);
-        if(arrSettings!=null&&arrSettings.length>0) {
-            for (int i = 0; i < arrSettings.length;i++) {
-                Setting setting = new Setting();
-                setting.setId(i);
-                setting.setTitle(arrSettings[i]);
-                lstSetting.add(setting);
+    private List<Theme> createData(){
+        List<Theme> lstTheme = new ArrayList<Theme>();
+        String[] arrThemes = getResources().getStringArray(R.array.theme_array);
+        String[] arrColors = getResources().getStringArray(R.array.color_array);
+        if(arrThemes!=null&&arrThemes.length>0) {
+            for (int i = 0; i < arrThemes.length;i++) {
+                Theme theme = new Theme();
+                theme.setTheme(arrThemes[i]);
+                theme.setColor(arrColors[i]);
+                lstTheme.add(theme);
             }
         }
-        return lstSetting;
+        return lstTheme;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Utils.onActivityCreateSetTheme(this);
-    }
 }

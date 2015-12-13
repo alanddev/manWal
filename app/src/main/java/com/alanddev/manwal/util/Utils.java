@@ -37,10 +37,7 @@ public class Utils {
 
     private static Locale locale;
     private static Locale localDefault = new Locale("vi","VI");
-    private static int sTheme;
-    public final static int THEME_DEFAULT = 0;
-    public final static int THEME_WHITE = 1;
-    public final static int THEME_BLUE = 2;
+    private static String sTheme;
 
     public static Locale getLocale() {
         if(locale==null){
@@ -264,27 +261,15 @@ public class Utils {
         return toFormat.format(date);
     }
 
-    public static void changeToTheme(Activity activity, int theme)
+    public static void changeToTheme(String theme)
     {
         sTheme = theme;
-        activity.finish();
-        activity.startActivity(new Intent(activity, activity.getClass()));
     }
     /** Set the theme of the activity, according to the configuration. */
     public static void onActivityCreateSetTheme(Activity activity)
     {
-        switch (sTheme)
-        {
-            default:
-            case THEME_DEFAULT:
-                activity.setTheme(R.style.AppTheme);
-                break;
-            case THEME_WHITE:
-                activity.setTheme(R.style.AppTheme);
-                break;
-            case THEME_BLUE:
-                activity.setTheme(R.style.AppTheme);
-                break;
+        if(!sTheme.equals("AppTheme")) {
+            activity.setTheme(activity.getResources().getIdentifier(sTheme, "style", activity.getPackageName()));
         }
     }
 

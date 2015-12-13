@@ -165,7 +165,7 @@
     <string name="setting">Cài đặt</string>
     <string name="trend">Xu hướng</string>
     <string name="manage_wallet">Quản lý ví</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_settings">Cài đặt</string>
 
     <!-- Strings related to Settings -->
 
@@ -250,7 +250,19 @@
         <item>£</item>
     </string-array>
 
+    <string-array name="settings">
+        <item>Thay đổi Theme</item>
+    </string-array>
+    <string name="title_activity_select_theme">Lựa chọn Theme</string>
 
+    <string-array name="theme_array">
+        <item>Default_Theme</item>
+        <item>Tomato_Theme</item>
+    </string-array>
+    <string-array name="color_array">
+        <item>colorPrimaryDark</item>
+        <item>colorOutFlow</item>
+    </string-array>
 
 
 </resources>

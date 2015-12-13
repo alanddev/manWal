@@ -23,6 +23,7 @@ import com.alanddev.manwal.controller.CurrencyController;
 //import com.alanddev.manwal.helper.Constants;
 import com.alanddev.manwal.model.Currency;
 import com.alanddev.manwal.util.Constant;
+import com.alanddev.manwal.util.Utils;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class ListCurrencyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_list_currency);
 
         final ListView listCurrency = (ListView)findViewById(R.id.list_currency);
