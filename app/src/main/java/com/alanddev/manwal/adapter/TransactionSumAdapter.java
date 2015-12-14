@@ -15,6 +15,8 @@ import com.alanddev.manwal.model.Currency;
 import com.alanddev.manwal.model.TransactionSum;
 import com.alanddev.manwal.util.Constant;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -39,7 +41,11 @@ public class TransactionSumAdapter extends ArrayAdapter<TransactionSum> {
         ImageView imgIcon = (ImageView)convertView.findViewById(R.id.imgIcon);
         // Populate the data into the template view using the data object
         tvTitle.setText(transaction.getCatName());
-        tvAmount.setText(Float.toString(transaction.getAmount()));
+
+        NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+        String sAmount =  formatter.format(transaction.getAmount());
+        tvAmount.setText(sAmount);
+
         if (transaction.getType() == Constant.CAT_TYPE_EXPENSE){
             tvAmount.setTextColor(convertView.getResources().getColor(R.color.colorOutFlow));
         }else{

@@ -15,6 +15,8 @@ import com.alanddev.manwal.model.TransactionSum;
 import com.alanddev.manwal.model.Trend;
 import com.alanddev.manwal.util.Constant;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -44,7 +46,9 @@ public class TrendAdapter extends ArrayAdapter<Trend> {
         // Populate the data into the template view using the data object
         tvMonth.setText(Constant.TREND_MONTH_TITLE + trend.getMonth());
         tvYear.setText(trend.getYear());
-        tvAmount.setText(Float.toString(trend.getAmount()));
+        NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+        String sAmount =  formatter.format(trend.getAmount());
+        tvAmount.setText(sAmount);
 
         if (trend.getType() == Constant.TREND_TYPE_SUB){
             tvIncome.setVisibility(View.INVISIBLE);

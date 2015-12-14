@@ -18,6 +18,8 @@ import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -49,7 +51,12 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
         tvName.setText(wallet.getName());
 
         transactionController.open();
-        tvAmount.setText(transactionController.getAmountByWallet(wallet.getId()) + "  " + wallet.getCurrency());
+        float fAmount = transactionController.getAmountByWallet(wallet.getId());
+        //String sAmount = transactionController.getAmountByWallet(wallet.getId()) + "  " + wallet.getCurrency();
+        NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+        String sAmount =  formatter.format(fAmount) + "  " + wallet.getCurrency();
+        tvAmount.setText(sAmount);
+
         transactionController.close();
 //        Resources res = convertView.getResources();
 //        String srcImg = "ic_currency_" + wallet.getImage().toLowerCase();
