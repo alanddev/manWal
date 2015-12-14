@@ -25,6 +25,9 @@ import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -87,6 +90,15 @@ public class TransactionActivity extends AppCompatActivity
         /*AdView mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);*/
+
+        Target viewTarget = new ViewTarget(R.id.fab, this);
+        new ShowcaseView.Builder(this)
+                .setTarget(viewTarget)
+                .setContentTitle("Khoi tao giao dich ")
+                .setContentText("Cham vao day de khoi tao giao dich moi :D")
+                //.singleShot(42)
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .build();
     }
 
     @Override
