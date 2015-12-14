@@ -96,7 +96,7 @@ public class TransactionActivity extends AppCompatActivity
                 .setTarget(viewTarget)
                 .setContentTitle("Khoi tao giao dich ")
                 .setContentText("Cham vao day de khoi tao giao dich moi :D")
-                //.singleShot(42)
+                .singleShot(42)
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .build();
     }

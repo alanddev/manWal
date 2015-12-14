@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.CurrencyTextWatcher;
 import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Wallet;
@@ -55,6 +56,9 @@ public class WalletEditActivity extends AppCompatActivity {
         walletController = new WalletController(this);
         walletController.open();
         utils = new Utils();
+        EditText amountEdit   = (EditText)findViewById(R.id.txtAmount);
+        amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
+
         getData();
 
     }
@@ -94,8 +98,11 @@ public class WalletEditActivity extends AppCompatActivity {
         String nameWallet = nameEdit.getText().toString();
         String currency = currEdit.getText().toString();
         float amount = 0.0f;
-        if (!amountEdit.getText().toString().equals("")) {
-            amount = Float.valueOf(amountEdit.getText().toString());
+        String sAmount = amountEdit.getText().toString();
+
+        if (!sAmount.equals("")|| !sAmount.equals("0")) {
+            sAmount = sAmount.replaceAll(",", "");
+            amount = Float.valueOf(sAmount);
         }
 
 
@@ -106,8 +113,6 @@ public class WalletEditActivity extends AppCompatActivity {
         }else if (amount == 0.0f){
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_amount),Toast.LENGTH_LONG).show();
         }else {
-
-
             //db.createWallet();
             walletController = new WalletController(getApplicationContext());
             walletController.open();
@@ -135,12 +140,13 @@ public class WalletEditActivity extends AppCompatActivity {
             }
 
             float amountWallet = transactionController.getAmountByWallet(walletId);
-            amountWallet = amountWallet - amount;
+            // new - old
+            amountWallet = amount - amountWallet ;
 
             if (amountWallet < 0) {
-                transactionController.createTransactionDefault(this, amountWallet, Constant.CAT_WALLET_ADD_EXPENSE,getResources().getString(R.string.title_transaction_wallet_edit));
+                transactionController.createTransactionDefault(this,walletId, amountWallet, Constant.CAT_WALLET_ADD_EXPENSE,getResources().getString(R.string.title_transaction_wallet_edit));
             }else{
-                transactionController.createTransactionDefault(this, amountWallet, Constant.CAT_WALLET_ADD_EXPENSE,getResources().getString(R.string.title_transaction_wallet_edit));
+                transactionController.createTransactionDefault(this,walletId, amountWallet, Constant.CAT_WALLET_ADD_INCOME,getResources().getString(R.string.title_transaction_wallet_edit));
             }
             transactionController.close();
             finish();

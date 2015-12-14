@@ -558,14 +558,14 @@ public class TransactionController implements IDataSource {
 
 
 
-    public void createTransactionDefault(Context context, float amount,int catId, String note){
+    public void createTransactionDefault(Context context, int walletId, float amount,int catId, String note){
         TransactionDetail transaction = new TransactionDetail();
         transaction.setAmountt(amount);
         transaction.setNote(note);
         transaction.setCat_id(catId);
         String date =  new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         transaction.setDisplay_date(Utils.getDatefromDayView(context, date));
-        transaction.setWallet_id(Utils.getWallet_id());
+        transaction.setWallet_id(walletId);
         create(transaction);
         //close();
     }

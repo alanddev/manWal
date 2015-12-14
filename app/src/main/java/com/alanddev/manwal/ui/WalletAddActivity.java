@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.CurrencyTextWatcher;
 import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Wallet;
@@ -26,6 +29,8 @@ import com.alanddev.manwal.util.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class WalletAddActivity extends AppCompatActivity {
 
@@ -34,7 +39,7 @@ public class WalletAddActivity extends AppCompatActivity {
     Utils utils;
     // Full path of image
     String imagePath = "";
-    //EditText amountEdit;
+    EditText amountEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +49,6 @@ public class WalletAddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-         //amountEdit = (EditText)findViewById(R.id.txtAmount);
-        //EditText test = (EditText)findViewById(R.id.txtCurrency);
-        //CurrencyEditText amountEdit = (CurrencyEditText)findViewById(R.id.txtAmount);
-        //amountEdit.setDefaultHintEnabled(false);
-        //amountEdit.addTextChangedListener(new CurrencyTextWatcher(test));
 
 
         walletController = new WalletController(this);
@@ -62,7 +62,12 @@ public class WalletAddActivity extends AppCompatActivity {
         }
         utils = new Utils();
 
+        amountEdit = (EditText)findViewById(R.id.txtAmount);
+        amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,8 +103,10 @@ public class WalletAddActivity extends AppCompatActivity {
         String nameWallet = nameEdit.getText().toString();
         String currency = currEdit.getText().toString();
         float amount = 0.0f;
-        if (!amountEdit.getText().toString().equals("")|| !amountEdit.getText().toString().equals("0")) {
-            amount = Float.valueOf(amountEdit.getText().toString());
+        String sAmount = amountEdit.getText().toString();
+        if (!sAmount.equals("")|| !sAmount.equals("0")) {
+            sAmount = sAmount.replaceAll(",", "");
+            amount = Float.valueOf(sAmount);
         }
 
         if (!imagePath.equals("")) {
@@ -135,9 +142,9 @@ public class WalletAddActivity extends AppCompatActivity {
 
             // create Transaction
             if (amount >0 ) {
-                transactionController.createTransactionDefault(this, amount, Constant.CAT_WALLET_ADD_INCOME, getResources().getString(R.string.title_transaction_wallet_add));
+                transactionController.createTransactionDefault(this,walletSaved.getId(), amount, Constant.CAT_WALLET_ADD_INCOME, getResources().getString(R.string.title_transaction_wallet_add));
             }else {
-                transactionController.createTransactionDefault(this, amount, Constant.CAT_WALLET_ADD_EXPENSE, getResources().getString(R.string.title_transaction_wallet_add));
+                transactionController.createTransactionDefault(this,walletSaved.getId(), amount, Constant.CAT_WALLET_ADD_EXPENSE, getResources().getString(R.string.title_transaction_wallet_add));
             }
 
             if (walletController.getCount() == 1) {
@@ -225,38 +232,6 @@ public class WalletAddActivity extends AppCompatActivity {
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, Constant.GALLERY_WALLET_REQUEST);
     }
-
-
-
-
-
-//    public void createChart(){
-//        // Creating a Data Set;
-//        // Defining Y Axis;
-//        ArrayList<BarEntry> entries = new ArrayList<>();
-//        entries.add(new BarEntry(4f, 0));
-//        entries.add(new BarEntry(8f, 1));
-//        entries.add(new BarEntry(6f, 2));
-//        entries.add(new BarEntry(12f, 3));
-//        entries.add(new BarEntry(18f, 4));
-//        entries.add(new BarEntry(9f, 5));
-//        BarDataSet dataset = new BarDataSet(entries, "# of Calls");
-//        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-//        // Defining X Axis;
-//        ArrayList<String> labels = new ArrayList<String>();
-//        labels.add("January");
-//        labels.add("February");
-//        labels.add("March");
-//        labels.add("April");
-//        labels.add("May");
-//        labels.add("June");
-//        BarChart chart = (BarChart)findViewById(R.id.chart);
-//        BarData data = new BarData(labels, dataset);
-//        chart.setData(data);
-//        chart.setDescription("# of times Alice called Bob");
-//        chart.animateY(5000);
-//    }
-//
 
 
 }
