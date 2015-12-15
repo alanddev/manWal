@@ -1,5 +1,7 @@
 package com.alanddev.manwal.adapter;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -83,7 +85,9 @@ public class TransactionAdapter extends AmazingAdapter {
 				txtDate.setText(transactionDay.getDisplayStr());
 			}
 			TextView txtAmount = (TextView) header.findViewById(R.id.txtheadamout);
-			txtAmount.setText(transactionDay.getNetamount() + "");
+			NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+			String sAmount =  formatter.format(transactionDay.getNetamount());
+			txtAmount.setText(sAmount);
 		} else {
 			header.setVisibility(View.GONE);
 		}
@@ -108,7 +112,11 @@ public class TransactionAdapter extends AmazingAdapter {
 		}else{
 			txtamout.setTextColor(mContext.getResources().getColor(R.color.colorInflow));
 		}
-		txtamout.setText(composer.getAmountt()+"");
+		Float fAmount = composer.getAmountt();
+		NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+		String sAmount =  formatter.format(fAmount);
+		txtamout.setText(sAmount);
+
 		imgicon.setImageResource(mContext.getResources().getIdentifier("ic_category_"+composer.getCate_img(),"mipmap",mContext.getPackageName()));
 
 		return res;

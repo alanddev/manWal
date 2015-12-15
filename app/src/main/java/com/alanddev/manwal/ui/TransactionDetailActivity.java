@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.CurrencyTextWatcher;
 import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
@@ -25,6 +26,8 @@ import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 
 public class TransactionDetailActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
@@ -57,7 +60,11 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
         edtCate.setText(transactionDetail.getCate_name());
 
         edtAmout = (EditText)findViewById(R.id.edtamount);
-        edtAmout.setText(transactionDetail.getAmountt()+"");
+        NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+        String sAmount =  formatter.format(transactionDetail.getAmountt());
+        edtAmout.setText(sAmount);
+        edtAmout.addTextChangedListener(new CurrencyTextWatcher(edtAmout));
+
 
         edtDes = (EditText)findViewById(R.id.edtdes);
         edtDes.setText(transactionDetail.getNote());
@@ -167,7 +174,11 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
         }else {
             controller.open();
             TransactionDetail transaction = new TransactionDetail();
-            transaction.setAmountt(Float.valueOf(edtAmout.getText().toString()));
+
+            if (!amount.equals("")|| !amount.equals("0")) {
+                amount = amount.replaceAll(",", "");
+            }
+            transaction.setAmountt(Float.valueOf(amount));
             transaction.setNote(edtDes.getText().toString());
             transaction.setCat_id(transactionDetail.getCat_id());
             transaction.setDisplay_date(Utils.getDatefromDayView(this, edtDate.getText().toString()));
@@ -217,7 +228,11 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
     }
 
     private Boolean changeData(){
-        Float amount = Float.valueOf(edtAmout.getText().toString());
+        String sAmount = edtAmout.getText().toString();
+        if (!sAmount.equals("")|| !sAmount.equals("0")) {
+            sAmount = sAmount.replaceAll(",", "");
+        }
+        Float amount = Float.valueOf(sAmount);
         String catename = edtCate.getText().toString();
         String note = edtDes.getText().toString();
         String strdate = Utils.getDatefromDayView(this, edtDate.getText().toString());

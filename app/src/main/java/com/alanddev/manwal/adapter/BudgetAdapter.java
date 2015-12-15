@@ -18,6 +18,8 @@ import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.ui.ReportActivity;
 import com.alanddev.manwal.util.Utils;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -81,14 +83,24 @@ public class BudgetAdapter extends BaseAdapter {
         }
         viewHolder.cateimg.setImageResource(mContext.getResources().getIdentifier("ic_category_" + budget.getCate_img(), "mipmap", mContext.getPackageName()));
         viewHolder.catename.setText(budget.getCate_name());
-        viewHolder.budgetamt.setText(budget.getAmount() + "");
+
+        Float fAmount = budget.getAmount();
+        NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+        String sAmount =  formatter.format(fAmount);
+        viewHolder.budgetamt.setText(sAmount);
+
         viewHolder.budgetdate.setText(Utils.changeDateStr2Str2(budget.getStartdate())+" - "+Utils.changeDateStr2Str2(budget.getEnddate()));
         if(budget.getAmount()>budget.getRealamt()){
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorInflow));
         }else{
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
         }
-        viewHolder.budgetremain.setText(budget.getAmount()-budget.getRealamt()+"");
+
+
+        String sAmountRemain =  formatter.format(budget.getAmount()-budget.getRealamt());
+        viewHolder.budgetremain.setText(sAmountRemain);
+
+
         int progress =(int) (budget.getRealamt()*100/budget.getAmount());
         if(progress<25){
             viewHolder.progressBar.setProgressDrawable(mContext.getResources().getDrawable(R.drawable.progess_drawable_25));

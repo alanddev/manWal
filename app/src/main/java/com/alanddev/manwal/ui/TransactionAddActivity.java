@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.CurrencyTextWatcher;
 import com.alanddev.manwal.controller.TransactionController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Category;
@@ -54,6 +55,8 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         edtCate = (TextView)findViewById(R.id.edtcate);
         edtCate.setOnClickListener(this);
         edtAmout = (EditText)findViewById(R.id.edtamount);
+        edtAmout.addTextChangedListener(new CurrencyTextWatcher(edtAmout));
+
         edtDes = (EditText)findViewById(R.id.edtdes);
         imgCate = (ImageView)findViewById(R.id.imgcate);
         transController = new TransactionController(getApplicationContext());
@@ -113,7 +116,12 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         }else {
             transController.open();
             TransactionDetail transaction = new TransactionDetail();
-            transaction.setAmountt(Float.valueOf(edtAmout.getText().toString()));
+
+            String sAmount = edtAmout.getText().toString();
+            if (!sAmount.equals("")|| !sAmount.equals("0")) {
+                sAmount = sAmount.replaceAll(",", "");
+            }
+            transaction.setAmountt(Float.valueOf(sAmount));
             transaction.setNote(edtDes.getText().toString());
             transaction.setCat_id(category.getId());
             transaction.setDisplay_date(Utils.getDatefromDayView(this, edtDate.getText().toString()));

@@ -24,6 +24,8 @@ import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.foound.widget.AmazingListView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -74,9 +76,19 @@ public class TransactionFragment extends Fragment{
             TextView txtInflowAmt = (TextView)header.findViewById(R.id.txtInflowAmt);
             TextView txtOutflowAmt = (TextView)header.findViewById(R.id.txtOutflowAmt);
             TextView txtNetAmt = (TextView)header.findViewById(R.id.txtallAmt);
-            txtInflowAmt.setText(transactions.getInamount()+"");
-            txtOutflowAmt.setText(transactions.getExamount()+"");
-            txtNetAmt.setText(transactions.getNetamount()+"");
+
+            Float fInAmount = transactions.getInamount();
+            Float fExAmount = transactions.getExamount();
+            Float fNetAmount = transactions.getNetamount();
+
+            NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+            String sInAmount =  formatter.format(fInAmount);
+            String sExAmount =  formatter.format(fExAmount);
+            String sNetAmount =  formatter.format(fNetAmount);
+
+            txtInflowAmt.setText(sInAmount);
+            txtOutflowAmt.setText(sExAmount);
+            txtNetAmt.setText(sNetAmount);
             txtheader.setText((transactions.getTitle()));
             lsComposer.addHeaderView(header);
         }
