@@ -63,15 +63,18 @@ public class WalletsActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Intent intent;
         //noinspection SimplifiableIfStatement
         switch(id){
             case android.R.id.home:
-                //Intent intent = new Intent(this, WalletEditActivity.class);
-                //startActivity(intent);
                 finish();
                 break;
             case R.id.add:
-                Intent intent = new Intent(this, WalletAddActivity.class);
+                intent = new Intent(this, WalletAddActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.transfer:
+                intent = new Intent(this, WalletTransferActivity.class);
                 startActivity(intent);
                 break;
             default:

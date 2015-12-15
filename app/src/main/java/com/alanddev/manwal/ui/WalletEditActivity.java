@@ -130,7 +130,6 @@ public class WalletEditActivity extends AppCompatActivity {
                 }
                 catch (IOException e){};
                 editWallet.setImage(imageFileName);
-
             }
             walletController.update(editWallet);
 
@@ -185,7 +184,12 @@ public class WalletEditActivity extends AppCompatActivity {
         int choose = b.getInt("wallet_choose", 0);
 
         ImageView imgWallet = (ImageView)findViewById(R.id.imageWallet);
-        imgWallet.setImageBitmap(BitmapFactory.decodeFile(Constant.PATH_IMG + "/" + imagePath));
+        if (!imagePath.equals("")){
+            imgWallet.setImageBitmap(BitmapFactory.decodeFile(Constant.PATH_IMG + "/" + imagePath));
+        }else{
+            imgWallet.setImageResource(R.mipmap.wallet);
+        }
+
 
         TextView tvCurrency = (TextView) findViewById(R.id.txtCurrency);
         tvCurrency.setText(currency);

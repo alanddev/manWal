@@ -20,6 +20,7 @@ import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.model.TransactionSum;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.Trend;
+import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
@@ -559,17 +560,45 @@ public class TransactionController implements IDataSource {
 
 
     public void createTransactionDefault(Context context, int walletId, float amount,int catId, String note){
-        TransactionDetail transaction = new TransactionDetail();
-        transaction.setAmountt(amount);
-        transaction.setNote(note);
-        transaction.setCat_id(catId);
-        String date =  new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        transaction.setDisplay_date(Utils.getDatefromDayView(context, date));
-        transaction.setWallet_id(walletId);
-        create(transaction);
+        if (amount !=0.0f) {
+            TransactionDetail transaction = new TransactionDetail();
+            transaction.setAmountt(amount);
+            transaction.setNote(note);
+            transaction.setCat_id(catId);
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            transaction.setDisplay_date(Utils.getDatefromDayView(context, date));
+            transaction.setWallet_id(walletId);
+            create(transaction);
+        }
         //close();
     }
 
+
+    public void transferMoney(Context context, Wallet fromWallet, Wallet toWallet, float amount){
+
+        if (amount != 0) {
+            String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            TransactionDetail transactionFrom = new TransactionDetail();
+            transactionFrom.setAmountt(amount);
+
+            transactionFrom.setNote(context.getResources().getString(R.string.tranfer_to) + " - " + toWallet.getName());
+            transactionFrom.setCat_id(Constant.CAT_WALLET_ADD_EXPENSE);
+            transactionFrom.setDisplay_date(Utils.getDatefromDayView(context, date));
+            transactionFrom.setWallet_id(fromWallet.getId());
+            create(transactionFrom);
+
+
+            TransactionDetail transactionTo = new TransactionDetail();
+            transactionTo.setAmountt(amount);
+            transactionTo.setNote(context.getResources().getString(R.string.tranfer_from) + " - " +fromWallet.getName());
+            transactionTo.setCat_id(Constant.CAT_WALLET_ADD_INCOME);
+            transactionTo.setDisplay_date(Utils.getDatefromDayView(context, date));
+            transactionTo.setWallet_id(toWallet.getId());
+            create(transactionTo);
+
+        }
+        //close();
+    }
 
 
 

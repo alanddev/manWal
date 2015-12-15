@@ -2,12 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".WalletAddActivity">
 
-    <item android:id="@+id/add"
-        android:icon="@mipmap/img_add"
-        android:title=""
+    <item android:id="@+id/save" android:title="@string/action_save"
         android:orderInCategory="100" app:showAsAction="always" />
-    <item android:id="@+id/transfer"
-        android:icon="@mipmap/ic_category_loan"
-        android:title=""
-        android:orderInCategory="99" app:showAsAction="always" />
 </menu>
