@@ -26,6 +26,9 @@ import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +43,10 @@ public class WalletAddActivity extends AppCompatActivity {
     // Full path of image
     String imagePath = "";
     EditText amountEdit;
+    EditText txtName;
+    private int counter = 0;
 
+    private ShowcaseView showcaseView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +71,47 @@ public class WalletAddActivity extends AppCompatActivity {
         amountEdit = (EditText)findViewById(R.id.txtAmount);
         amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
 
+
+        Target viewTarget = new ViewTarget(R.id.txtName, this);
+        showcaseView = new ShowcaseView.Builder(this)
+                .setTarget(viewTarget)
+                .setContentTitle("Tao vi")
+                .setContentText("Cham vao day de nhap ten vi")
+                //.singleShot(42)
+                .withMaterialShowcase()
+                //.useDecorViewAsParent()
+                .setStyle(R.style.CustomShowcaseTheme3)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (counter) {
+                            case 0:
+                                showcaseView.setShowcase(new ViewTarget(amountEdit), true);
+                                //setAlpha(0.4f, txtName, amountEdit);
+                                showcaseView.setContentText("Cham vao day de nhap so tien");
+                                break;
+                            case 1:
+                                showcaseView.hide();
+                                break;
+                        }
+                        counter++;
+                    }
+                })
+                //.hideOnTouchOutside()
+                .build();
+        //showcaseView.setButtonText("Test");
+
+
     }
+
+
+//    private void setAlpha(float alpha, View... views) {
+//        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//            for (View view : views) {
+//                view.setAlpha(alpha);
+//            }
+//        //}
+//    }
 
 
 

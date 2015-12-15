@@ -101,6 +101,7 @@ public class TransactionActivity extends AppCompatActivity
                 .singleShot(42)
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .build();
+
     }
 
     @Override
