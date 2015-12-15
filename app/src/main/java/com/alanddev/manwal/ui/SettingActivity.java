@@ -21,6 +21,8 @@ import java.util.List;
 
 public class SettingActivity extends AppCompatActivity {
 
+    private final int REQUEST_CHANGE_THEME = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class SettingActivity extends AppCompatActivity {
                 switch (itemId){
                     case Constant.CHANGE_THEME_ID:
                         Intent intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, REQUEST_CHANGE_THEME);
                         break;
                 }
             }
@@ -85,6 +87,14 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Utils.onActivityCreateSetTheme(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CHANGE_THEME){
+            Utils.onActivityCreateSetTheme(this);
+            Utils.refresh(this);
+        }
     }
 }

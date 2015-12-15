@@ -28,12 +28,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences mshare = Utils.getSharedPreferences(this);
-        String theme = mshare.getString(Constant.THEME_CURRENT,"");
+        String theme = Utils.getCurrentTheme(this);
         if(!theme.equals("")){
             Utils.changeToTheme(theme);
         }else{
-            Utils.changeToTheme("AppTheme");
+            Utils.changeToTheme("Default_Theme");
         }
         setContentView(R.layout.activity_man_wal);
         checkDb();

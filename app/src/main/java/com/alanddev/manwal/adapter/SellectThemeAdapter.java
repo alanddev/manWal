@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.model.Setting;
 import com.alanddev.manwal.model.Theme;
+import com.alanddev.manwal.util.Utils;
 
 import java.util.List;
 
@@ -62,6 +63,12 @@ public class SellectThemeAdapter extends BaseAdapter {
             viewHolder = (Viewholder) convertView.getTag();
         }
         viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier(theme.getColor(),"color",mContext.getPackageName()));
+        String currentTheme = Utils.getCurrentTheme(mContext);
+        if(!currentTheme.equals(theme.getTheme())){
+            viewHolder.imgcheck.setVisibility(View.INVISIBLE);
+        }else{
+            viewHolder.imgcheck.setVisibility(View.VISIBLE);
+        }
 
         return convertView;
     }

@@ -257,14 +257,90 @@
 
     <string-array name="theme_array">
         <item>Default_Theme</item>
+        <item>DeepSkyBlue_Theme</item>
+        <item>DodgerBlue_Theme</item>
+        <item>LightSkyBlue_Theme</item>
+        <item>DarkBlue_Theme</item>
+        <item>MediumBlue_Theme</item>
+        <item>RoyalBlue_Theme</item>
+        <item>BlueViolet_Theme</item>
+        <item>Indigo_Theme</item>
+        <item>DarkOrchid_Theme</item>
+        <item>MediumOrchid_Theme</item>
+        <item>Magenta_Theme</item>
+        <item>DeepPink_Theme</item>
+        <item>Pink_Theme</item>
+        <item>Chocolate_Theme</item>
         <item>Tomato_Theme</item>
+        <item>Coral_Theme</item>
+        <item>OrangeDark_Theme</item>
+        <item>OrangeRed_Theme</item>
+        <item>Gold_Theme</item>
+        <item>DarkGoldenRod_Theme</item>
+        <item>GoldenRod_Theme</item>
+        <item>DarkKhaki_Theme</item>
+        <item>Khaki_Theme</item>
+        <item>Olive_Theme</item>
+        <item>YellowGreen_Theme</item>
+        <item>OliveDrab_Theme</item>
+        <item>ChartReuse_Theme</item>
+        <item>GreenYellow_Theme</item>
+        <item>Green_Theme</item>
+        <item>LimeGreen_Theme</item>
+        <item>LightGreen_Theme</item>
+        <item>DarkSeaGreen_Theme</item>
+        <item>SpringGreen_Theme</item>
+        <item>SeaGreen_Theme</item>
+        <item>MediumAquaMarine_Theme</item>
+        <item>LightSeaGreen_Theme</item>
+        <item>Teal_Theme</item>
+        <item>Cyan_Theme</item>
     </string-array>
     <string-array name="color_array">
         <item>colorPrimaryDark</item>
-        <item>colorOutFlow</item>
+        <item>colorDeepSkyBlue</item>
+        <item>colorDodgerBlue</item>
+        <item>colorLightSkyBlue</item>
+        <item>colorDarkBlue</item>
+        <item>colorMediumBlue</item>
+        <item>colorRoyalBlue</item>
+        <item>colorBlueViolet</item>
+        <item>colorIndigo</item>
+        <item>colorDarkOrchid</item>
+        <item>colorMediumOrchid</item>
+        <item>colorMagenta</item>
+        <item>colorDeepPink</item>
+        <item>colorPink</item>
+        <item>colorChocolate</item>
+        <item>colorTomato</item>
+        <item>colorCoral</item>
+        <item>colorOrangeDark</item>
+        <item>colorOrangeRed</item>
+        <item>colorGold</item>
+        <item>colorDarkGoldenRod</item>
+        <item>GoldenRod</item>
+        <item>colorDarkKhaki</item>
+        <item>colorKhaki</item>
+        <item>colorOlive</item>
+        <item>colorYellowGreen</item>
+        <item>colorOliveDrab</item>
+        <item>colorChartReuse</item>
+        <item>colorGreenYellow</item>
+        <item>colorGreen</item>
+        <item>colorLimeGreen</item>
+        <item>colorLightGreen</item>
+        <item>colorDarkSeaGreen</item>
+        <item>colorSpringGreen</item>
+        <item>colorSeaGreen</item>
+        <item>colorMediumAquaMarine</item>
+        <item>colorLightSeaGreen</item>
+        <item>colorTeal</item>
+        <item>colorCyan</item>
     </string-array>
     <string name="title_activity_wallet_transfer">Chuyển tiền</string>
     <string name="tranfer_from">Chuyển tiền từ ví </string>
     <string name="tranfer_to">Chuyển tiền đến ví </string>
     <string name="warning_transfer">Hai ví phải khác nhau </string>
+
+
 </resources>

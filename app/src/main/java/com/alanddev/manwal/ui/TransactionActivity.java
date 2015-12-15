@@ -50,6 +50,8 @@ public class TransactionActivity extends AppCompatActivity
 
     List<Transactions> transactionses;
 
+    private final int REQUEST_SETTING = 100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +183,7 @@ public class TransactionActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_setting) {
             Intent intent = new Intent(this,SettingActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent,REQUEST_SETTING);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -216,6 +218,11 @@ public class TransactionActivity extends AppCompatActivity
         }
         if(resultCode==Constant.TRANS_DETAIL_UPDATE){
             notifyDataSetChanged();
+        }
+
+        if(requestCode==REQUEST_SETTING){
+            Utils.onActivityCreateSetTheme(this);
+            Utils.refresh(this);
         }
     }
 

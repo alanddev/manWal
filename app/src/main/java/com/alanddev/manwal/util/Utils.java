@@ -302,4 +302,14 @@ public class Utils {
         }
     }
 
+    public static void refresh(Activity activity){
+        activity.finish();
+        activity.startActivity(activity.getIntent());
+    }
+
+    public static String getCurrentTheme(Context context){
+        SharedPreferences mshare = Utils.getSharedPreferences(context);
+        return mshare.getString(Constant.THEME_CURRENT,"");
+    }
+
 }
