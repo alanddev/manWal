@@ -268,7 +268,7 @@ public class Utils {
     /** Set the theme of the activity, according to the configuration. */
     public static void onActivityCreateSetTheme(Activity activity)
     {
-        if(!sTheme.equals("AppTheme")) {
+        if(sTheme!=null&&!sTheme.equals("AppTheme")) {
             activity.setTheme(activity.getResources().getIdentifier(sTheme, "style", activity.getPackageName()));
         }
     }
@@ -310,6 +310,10 @@ public class Utils {
     public static String getCurrentTheme(Context context){
         SharedPreferences mshare = Utils.getSharedPreferences(context);
         return mshare.getString(Constant.THEME_CURRENT,"");
+    }
+    public static String getCurrentNavHeader(Context context){
+        SharedPreferences mshare = Utils.getSharedPreferences(context);
+        return mshare.getString(Constant.NAV_HEADER_CURRENT,"");
     }
 
 }

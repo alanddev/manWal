@@ -22,6 +22,7 @@ import java.util.List;
 public class SettingActivity extends AppCompatActivity {
 
     private final int REQUEST_CHANGE_THEME = 1;
+    private final int REQUEST_CHANGE_NAV = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,17 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int itemId = (int)adapter.getItemId(position);
+                Intent intent;
                 switch (itemId){
                     case Constant.CHANGE_THEME_ID:
-                        Intent intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
+                        intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
+                        intent.putExtra("SETTING_EXTRA",Constant.CHANGE_THEME_ID);
                         startActivityForResult(intent, REQUEST_CHANGE_THEME);
+                        break;
+                    case Constant.CHANGE_NAV_ID:
+                        intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
+                        intent.putExtra("SETTING_EXTRA",Constant.CHANGE_NAV_ID);
+                        startActivityForResult(intent, REQUEST_CHANGE_NAV);
                         break;
                 }
             }

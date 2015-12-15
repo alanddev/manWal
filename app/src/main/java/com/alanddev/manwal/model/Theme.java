@@ -6,6 +6,7 @@ package com.alanddev.manwal.model;
 public class Theme {
     private String theme;
     private String color;
+    private String header;
 
     public String getTheme() {
         return theme;
@@ -21,5 +22,13 @@ public class Theme {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 }

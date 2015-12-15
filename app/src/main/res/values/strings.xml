@@ -251,7 +251,8 @@
     </string-array>
 
     <string-array name="settings">
-        <item>Thay đổi Theme</item>
+        <item>Đổi Theme</item>
+        <item>Đổi hình nền menu</item>
     </string-array>
     <string name="title_activity_select_theme">Lựa chọn Theme</string>
 
@@ -342,5 +343,20 @@
     <string name="tranfer_to">Chuyển tiền đến ví </string>
     <string name="warning_transfer">Hai ví phải khác nhau </string>
 
+    <string-array name="header_images">
+        <item>amber_pentagonal_background</item>
+        <item>blue_grey_pentagonal_background</item>
+        <item>brown_pentagonal_background</item>
+        <item>cyan_pentagonal_background</item>
+        <item>deep_orange_pentagonal_background</item>
+        <item>deep_purple_pentagonal_background</item>
+        <item>green_pentagonal_background</item>
+        <item>indigo_pentagonal_background</item>
+        <item>pink_pentagonal_background</item>
+        <item>purple_pentagonal_background</item>
+        <item>red_pentagonal_background</item>
+        <item>teal_pentagonal_background</item>
+    </string-array>
+    <string name="navi_header_default">green_pentagonal_background</string>
 
 </resources>

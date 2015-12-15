@@ -35,14 +35,27 @@ public class SelectThemeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ListView lvTheme = (ListView)findViewById(R.id.lstthemes);
-        final SellectThemeAdapter adapter = new SellectThemeAdapter(this,createData());
+        List<Theme> datas;
+        int type = getIntent().getExtras().getInt("SETTING_EXTRA",0);
+        if(type==Constant.CHANGE_THEME_ID){
+            datas=createThemeData();
+        }else if(type==Constant.CHANGE_NAV_ID){
+            datas=createHeaderData();
+        }else{
+            datas= new ArrayList<>();
+        }
+        final SellectThemeAdapter adapter = new SellectThemeAdapter(this,datas);
         lvTheme.setAdapter(adapter);
         lvTheme.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Theme theme = (Theme)parent.getAdapter().getItem(position);
-                Utils.setSharedPreferencesValue(getApplicationContext(),Constant.THEME_CURRENT,theme.getTheme());
-                Utils.changeToTheme(theme.getTheme());
+                if(theme.getHeader()!=null&&!theme.getHeader().equals("")){
+                    Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_HEADER_CURRENT, theme.getHeader());
+                }else {
+                    Utils.setSharedPreferencesValue(getApplicationContext(), Constant.THEME_CURRENT, theme.getTheme());
+                    Utils.changeToTheme(theme.getTheme());
+                }
                 finish();
             }
         });
@@ -70,7 +83,7 @@ public class SelectThemeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<Theme> createData(){
+    private List<Theme> createThemeData(){
         List<Theme> lstTheme = new ArrayList<Theme>();
         String[] arrThemes = getResources().getStringArray(R.array.theme_array);
         String[] arrColors = getResources().getStringArray(R.array.color_array);
@@ -79,6 +92,19 @@ public class SelectThemeActivity extends AppCompatActivity {
                 Theme theme = new Theme();
                 theme.setTheme(arrThemes[i]);
                 theme.setColor(arrColors[i]);
+                lstTheme.add(theme);
+            }
+        }
+        return lstTheme;
+    }
+
+    private List<Theme> createHeaderData(){
+        List<Theme> lstTheme = new ArrayList<Theme>();
+        String[] arrHeaders = getResources().getStringArray(R.array.header_images);
+        if(arrHeaders!=null&&arrHeaders.length>0) {
+            for (int i = 0; i < arrHeaders.length;i++) {
+                Theme theme = new Theme();
+                theme.setHeader(arrHeaders[i]);
                 lstTheme.add(theme);
             }
         }

@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Utils.changeToTheme("Default_Theme");
         }
+
+        String naviheader = Utils.getCurrentNavHeader(this);
+        if(naviheader.equals("")){
+            Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_HEADER_CURRENT, getString(R.string.navi_header_default));
+        }
         setContentView(R.layout.activity_man_wal);
         checkDb();
     }

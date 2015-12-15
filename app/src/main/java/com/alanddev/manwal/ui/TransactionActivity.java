@@ -2,6 +2,7 @@ package com.alanddev.manwal.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,14 +16,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.TransSectionPagerAdapter;
 import com.alanddev.manwal.controller.TransactionController;
+import com.alanddev.manwal.controller.WalletController;
 import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.Transactions;
 import com.alanddev.manwal.model.TransactionDetail;
+import com.alanddev.manwal.model.Wallet;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -31,8 +36,12 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.alanddev.manwal.R.layout.nav_header_transaction;
 
 public class TransactionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -89,6 +98,10 @@ public class TransactionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setNavHeader(navigationView);
+        /*navigationView.get
+        ImageView imgView = (ImageView) findViewById(R.id.imageView);
+        imgView.setImageResource(R.mipmap.ic_category_debt);*/
         /*AdView mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);*/
@@ -234,5 +247,36 @@ public class TransactionActivity extends AppCompatActivity
         if(transactionses.size()>0) {
             mViewPager.setCurrentItem(transactionses.size() - 2);
         }
+    }
+
+    private void setNavHeader(NavigationView navigationView){
+        View header = navigationView.getHeaderView(0);
+        WalletController controller = new WalletController(this);
+        controller.open();
+        Wallet wallet = controller.getId(Utils.getWallet_id());
+        controller.close();
+
+        TextView txtWallet = (TextView) header.findViewById(R.id.txtWallet);
+        ImageView imageView = (ImageView)header.findViewById(R.id.imageView);
+        txtWallet.setText(wallet.getName());
+
+        if (!wallet.getImage().equals("")){
+            imageView.setImageBitmap(BitmapFactory.decodeFile(Constant.PATH_IMG + "/" + wallet.getImage()));
+        }else {
+            imageView.setImageResource(R.mipmap.wallet);
+        }
+
+        String naviheader = Utils.getCurrentNavHeader(this);
+
+        header.setBackgroundResource(getResources().getIdentifier(naviheader,"mipmap",getPackageName()));
+
+        TextView textAmt = (TextView)header.findViewById(R.id.textAmt);
+        TransactionController transactionController = new TransactionController(this);
+        transactionController.open();
+        float fAmount = transactionController.getAmountByWallet(wallet.getId());
+        transactionController.close();
+        NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+        String sAmount =  formatter.format(fAmount) + "  " + wallet.getCurrency();
+        textAmt.setText(sAmount);
     }
 }

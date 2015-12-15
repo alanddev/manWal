@@ -44,5 +44,7 @@ public class Constant {
     public static final int ALL_CATEGORY_TYPE=2;
     public static final String PUT_EXTRA_BUDGET = "PUT_EXTRA_BUDGET";
     public static final int CHANGE_THEME_ID =0;
+    public static final int CHANGE_NAV_ID =1;
     public static final String THEME_CURRENT = "THEME_CURRENT";
+    public static final String NAV_HEADER_CURRENT = "NAV_HEADER_CURRENT";
 }

@@ -62,12 +62,22 @@ public class SellectThemeAdapter extends BaseAdapter {
         } else {
             viewHolder = (Viewholder) convertView.getTag();
         }
-        viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier(theme.getColor(),"color",mContext.getPackageName()));
-        String currentTheme = Utils.getCurrentTheme(mContext);
-        if(!currentTheme.equals(theme.getTheme())){
-            viewHolder.imgcheck.setVisibility(View.INVISIBLE);
-        }else{
-            viewHolder.imgcheck.setVisibility(View.VISIBLE);
+        if(null!=theme.getColor()&&!"".equals(theme.getColor())) {
+            viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier(theme.getColor(), "color", mContext.getPackageName()));
+            String currentTheme = Utils.getCurrentTheme(mContext);
+            if (!currentTheme.equals(theme.getTheme())) {
+                viewHolder.imgcheck.setVisibility(View.INVISIBLE);
+            } else {
+                viewHolder.imgcheck.setVisibility(View.VISIBLE);
+            }
+        }else if(null!=theme.getHeader()&&!"".equals(theme.getHeader())){
+            viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier(theme.getHeader(), "mipmap", mContext.getPackageName()));
+            String currentNavHeader = Utils.getCurrentNavHeader(mContext);
+            if (!currentNavHeader.equals(theme.getHeader())) {
+                viewHolder.imgcheck.setVisibility(View.INVISIBLE);
+            } else {
+                viewHolder.imgcheck.setVisibility(View.VISIBLE);
+            }
         }
 
         return convertView;
