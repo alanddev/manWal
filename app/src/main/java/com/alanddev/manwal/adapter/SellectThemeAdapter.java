@@ -1,6 +1,7 @@
 package com.alanddev.manwal.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class SellectThemeAdapter extends BaseAdapter {
                 viewHolder.imgcheck.setVisibility(View.VISIBLE);
             }
         }else if(null!=theme.getHeader()&&!"".equals(theme.getHeader())){
-            viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier(theme.getHeader(), "mipmap", mContext.getPackageName()));
+            viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier(theme.getHeader()+"_s", "mipmap", mContext.getPackageName()));
             String currentNavHeader = Utils.getCurrentNavHeader(mContext);
             if (!currentNavHeader.equals(theme.getHeader())) {
                 viewHolder.imgcheck.setVisibility(View.INVISIBLE);
