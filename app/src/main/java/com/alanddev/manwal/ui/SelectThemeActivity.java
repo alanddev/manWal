@@ -39,8 +39,10 @@ public class SelectThemeActivity extends AppCompatActivity {
         int type = getIntent().getExtras().getInt("SETTING_EXTRA",0);
         if(type==Constant.CHANGE_THEME_ID){
             datas=createThemeData();
-        }else if(type==Constant.CHANGE_NAV_ID){
-            datas=createHeaderData();
+        }else if(type==Constant.CHANGE_NAV_ID) {
+            datas = createHeaderData();
+        }else if(type ==Constant.CHANGE_LANGUAGE_ID){
+            datas = createLanguageData();
         }else{
             datas= new ArrayList<>();
         }
@@ -52,9 +54,13 @@ public class SelectThemeActivity extends AppCompatActivity {
                 Theme theme = (Theme)parent.getAdapter().getItem(position);
                 if(theme.getHeader()!=null&&!theme.getHeader().equals("")){
                     Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_HEADER_CURRENT, theme.getHeader());
-                }else {
+                }else if(theme.getColor()!=null&&!theme.getColor().equals("")) {
                     Utils.setSharedPreferencesValue(getApplicationContext(), Constant.THEME_CURRENT, theme.getTheme());
                     Utils.changeToTheme(theme.getTheme());
+                }else if(theme.getLanguage()!=null&&!theme.getLanguage().equals("")) {
+                    Utils.setSharedPreferencesValue(getApplicationContext(), Constant.LANGUAGE_CURRENT, theme.getLanguage());
+                    Utils.setLanguage(getApplicationContext(),theme.getLanguage());
+                    //Utils.changeToLanguage(theme.getLanguage());
                 }
                 finish();
             }
@@ -110,5 +116,19 @@ public class SelectThemeActivity extends AppCompatActivity {
         }
         return lstTheme;
     }
+
+    private List<Theme> createLanguageData(){
+        List<Theme> lstTheme = new ArrayList<Theme>();
+        String[] arrHeaders = getResources().getStringArray(R.array.language);
+        if(arrHeaders!=null&&arrHeaders.length>0) {
+            for (int i = 0; i < arrHeaders.length;i++) {
+                Theme theme = new Theme();
+                theme.setLanguage(arrHeaders[i]);
+                lstTheme.add(theme);
+            }
+        }
+        return lstTheme;
+    }
+
 
 }

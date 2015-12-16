@@ -79,7 +79,17 @@ public class SellectThemeAdapter extends BaseAdapter {
             } else {
                 viewHolder.imgcheck.setVisibility(View.VISIBLE);
             }
+        }else if(null!=theme.getLanguage()&&!"".equals(theme.getLanguage())){
+            viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier("language_" + theme.getLanguage(), "mipmap", mContext.getPackageName()));
+            String currentLanguage = Utils.getCurrentLanguage(mContext);
+            if (!currentLanguage.equals(theme.getLanguage())) {
+                viewHolder.imgcheck.setVisibility(View.INVISIBLE);
+            } else {
+                viewHolder.imgcheck.setVisibility(View.VISIBLE);
+            }
         }
+
+
 
         return convertView;
     }

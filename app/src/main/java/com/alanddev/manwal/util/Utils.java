@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -48,6 +50,17 @@ public class Utils {
 
     public static void setLocale(Locale locale) {
         Utils.locale = locale;
+    }
+
+    public static void setLanguage(Context context, String language){
+        Configuration configuration;
+        Resources res = context.getResources();
+        configuration = new Configuration(res.getConfiguration());
+
+        Locale locale = new Locale(language);
+        configuration.locale=locale;
+        setLocale(locale);
+        res.updateConfiguration(configuration,res.getDisplayMetrics());
     }
 
 
@@ -265,6 +278,8 @@ public class Utils {
     {
         sTheme = theme;
     }
+
+
     /** Set the theme of the activity, according to the configuration. */
     public static void onActivityCreateSetTheme(Activity activity)
     {
@@ -272,6 +287,9 @@ public class Utils {
             activity.setTheme(activity.getResources().getIdentifier(sTheme, "style", activity.getPackageName()));
         }
     }
+
+
+
 
 
     public static String getYear(){
@@ -311,9 +329,17 @@ public class Utils {
         SharedPreferences mshare = Utils.getSharedPreferences(context);
         return mshare.getString(Constant.THEME_CURRENT,"");
     }
+
     public static String getCurrentNavHeader(Context context){
         SharedPreferences mshare = Utils.getSharedPreferences(context);
         return mshare.getString(Constant.NAV_HEADER_CURRENT,"");
     }
+
+    public static String getCurrentLanguage(Context context){
+        SharedPreferences mshare = Utils.getSharedPreferences(context);
+        return mshare.getString(Constant.LANGUAGE_CURRENT,"");
+    }
+
+
 
 }

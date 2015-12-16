@@ -23,6 +23,7 @@ public class SettingActivity extends AppCompatActivity {
 
     private final int REQUEST_CHANGE_THEME = 1;
     private final int REQUEST_CHANGE_NAV = 2;
+    private final int REQUEST_CHANGE_LANGUAGE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,11 @@ public class SettingActivity extends AppCompatActivity {
                         intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
                         intent.putExtra("SETTING_EXTRA",Constant.CHANGE_NAV_ID);
                         startActivityForResult(intent, REQUEST_CHANGE_NAV);
+                        break;
+                    case Constant.CHANGE_LANGUAGE_ID:
+                        intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
+                        intent.putExtra("SETTING_EXTRA",Constant.CHANGE_LANGUAGE_ID);
+                        startActivityForResult(intent, REQUEST_CHANGE_LANGUAGE);
                         break;
                 }
             }
