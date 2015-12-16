@@ -79,4 +79,13 @@
     <string name="title_activity_trend">Báo cáo tổng hợp</string>
     <string name="title_activity_transaction_add">Thêm giao dịch</string>
     <string name="banner_ad_unit_id">ca-app-pub-6762857180801550/3342505427</string>
+    <string name="notify_afternoon">Chào buổi tối, Đừng quên cập nhật chi tiêu trong ngày của bạn nhé</string>
+    <string name="notify_morning">Chào buổi sáng, Chúc bạn một ngày mới nhiều niềm vui</string>
+    <string name="notify_noon">MW Chúc bạn ngủ ngon!</string>
+    <string name="notify_startmonth">Chúc bạn ngày đầu tháng làm việc hiệu quả và nhiều niềm vui</string>
+    <string name="notify_startweek">Chúc bạn một tuần mới làm việc hiệu quả và nhiều niềm vui</string>
+    <string name="notify_startyear">Chúc mừng năm mới</string>
+    <string name="notify_title">MW chào bạn</string>
+    <string name="yesterday">Hôm qua</string>
+    <string name="tomorrow">Ngày mai</string>
 </resources>
