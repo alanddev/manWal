@@ -359,4 +359,11 @@
     </string-array>
     <string name="navi_header_default">green_pentagonal_background</string>
 
+    <string name="notify_morning">Chào buổi sáng, Chúc bạn một ngày mới nhiều niềm vui</string>
+    <string name="notify_afternoon">Chào buổi tối, Đừng quên cập nhật chi tiêu trong ngày của bạn nhé</string>
+    <string name="notify_noon">MW Chúc bạn ngủ ngon!</string>
+    <string name="notify_startweek">Chúc bạn một tuần mới làm việc hiệu quả và nhiều niềm vui</string>
+    <string name="notify_startmonth">Chúc bạn ngày đầu tháng làm việc hiệu quả và nhiều niềm vui</string>
+    <string name="notify_startyear">Chúc mừng năm mới</string>
+    <string name="notify_title">MW chào bạn</string>
 </resources>

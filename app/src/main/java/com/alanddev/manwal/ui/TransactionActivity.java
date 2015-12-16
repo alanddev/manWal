@@ -1,16 +1,21 @@
 package com.alanddev.manwal.ui;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -60,7 +65,8 @@ public class TransactionActivity extends AppCompatActivity
     List<Transactions> transactionses;
 
     private final int REQUEST_SETTING = 100;
-
+    private final int REQUEST_WALLET_CHANGE = 101;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +102,7 @@ public class TransactionActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         setNavHeader(navigationView);
         /*navigationView.get
@@ -188,7 +194,7 @@ public class TransactionActivity extends AppCompatActivity
 
         if (id == R.id.nav_wallet) {
             Intent intent = new Intent(this, WalletsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent,REQUEST_WALLET_CHANGE);
         } else if (id == R.id.nav_slideshow) {
             Intent intent = new Intent(this, TrendActivity.class);
             startActivity(intent);
@@ -234,7 +240,7 @@ public class TransactionActivity extends AppCompatActivity
             notifyDataSetChanged();
         }
 
-        if(requestCode==REQUEST_SETTING){
+        if(requestCode==REQUEST_SETTING||requestCode==REQUEST_WALLET_CHANGE){
             Utils.onActivityCreateSetTheme(this);
             Utils.refresh(this);
         }
@@ -247,6 +253,7 @@ public class TransactionActivity extends AppCompatActivity
         if(transactionses.size()>0) {
             mViewPager.setCurrentItem(transactionses.size() - 2);
         }
+        updateNaviHeader(navigationView);
     }
 
     private void setNavHeader(NavigationView navigationView){
@@ -270,6 +277,32 @@ public class TransactionActivity extends AppCompatActivity
 
         header.setBackgroundResource(getResources().getIdentifier(naviheader,"mipmap",getPackageName()));
 
+        TextView textAmt = (TextView)header.findViewById(R.id.textAmt);
+        TransactionController transactionController = new TransactionController(this);
+        transactionController.open();
+        float fAmount = transactionController.getAmountByWallet(wallet.getId());
+        transactionController.close();
+        NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+        String sAmount =  formatter.format(fAmount) + "  " + wallet.getCurrency();
+        textAmt.setText(sAmount);
+    }
+
+    private void updateNaviHeader(NavigationView navigationView){
+        View header = navigationView.getHeaderView(0);
+        WalletController controller = new WalletController(this);
+        controller.open();
+        Wallet wallet = controller.getId(Utils.getWallet_id());
+        controller.close();
+
+        TextView txtWallet = (TextView) header.findViewById(R.id.txtWallet);
+        txtWallet.setText(wallet.getName());
+
+        ImageView imageView = (ImageView)header.findViewById(R.id.imageView);
+        if (!wallet.getImage().equals("")){
+            imageView.setImageBitmap(BitmapFactory.decodeFile(Constant.PATH_IMG + "/" + wallet.getImage()));
+        }else {
+            imageView.setImageResource(R.mipmap.wallet);
+        }
         TextView textAmt = (TextView)header.findViewById(R.id.textAmt);
         TransactionController transactionController = new TransactionController(this);
         transactionController.open();

@@ -38,7 +38,7 @@ import java.text.NumberFormat;
 public class WalletAddActivity extends AppCompatActivity {
 
     WalletController walletController;
-    TransactionController transactionController;
+    //TransactionController transactionController;
     Utils utils;
     // Full path of image
     String imagePath = "";
@@ -59,13 +59,12 @@ public class WalletAddActivity extends AppCompatActivity {
 
         walletController = new WalletController(this);
         walletController.open();
-        transactionController = new TransactionController(this);
-        transactionController.open();
         if (walletController.getCount() == 0){
             CheckBox chooseCB = (CheckBox)findViewById(R.id.choose);
             chooseCB.setChecked(true);
             chooseCB.setEnabled(false);
         }
+        walletController.close();
         utils = new Utils();
 
         amountEdit = (EditText)findViewById(R.id.txtAmount);
@@ -174,7 +173,6 @@ public class WalletAddActivity extends AppCompatActivity {
         }else {
             Wallet newWallet = new Wallet(nameWallet, amount, currency, imageFileName);
             //db.createWallet();
-            walletController = new WalletController(getApplicationContext());
             walletController.open();
 
             Wallet walletSaved = (Wallet)walletController.create(newWallet);
@@ -187,17 +185,21 @@ public class WalletAddActivity extends AppCompatActivity {
 
 
             // create Transaction
+            TransactionController transactionController = new TransactionController(this);
+            transactionController.open();
             if (amount >0 ) {
                 transactionController.createTransactionDefault(this,walletSaved.getId(), amount, Constant.CAT_WALLET_ADD_INCOME, getResources().getString(R.string.title_transaction_wallet_add));
             }else {
                 transactionController.createTransactionDefault(this,walletSaved.getId(), amount, Constant.CAT_WALLET_ADD_EXPENSE, getResources().getString(R.string.title_transaction_wallet_add));
             }
+            transactionController.close();
 
             if (walletController.getCount() == 1) {
                 Intent intent = new Intent(this, TransactionActivity.class);
                 //startActivity(intent);
                 startActivity(intent);
             }
+            walletController.close();
             finish();
 
         }
@@ -208,9 +210,6 @@ public class WalletAddActivity extends AppCompatActivity {
         if(walletController!=null) {
             walletController.open();
         }
-        if(transactionController!=null) {
-            transactionController.open();
-        }
         super.onResume();
     }
 
@@ -218,9 +217,6 @@ public class WalletAddActivity extends AppCompatActivity {
     protected void onPause() {
         if(walletController!=null) {
             walletController.close();
-        }
-        if(transactionController!=null) {
-            transactionController.close();
         }
         super.onPause();
     }

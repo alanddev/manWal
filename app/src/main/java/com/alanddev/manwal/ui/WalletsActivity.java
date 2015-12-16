@@ -30,7 +30,6 @@ import java.util.List;
 //import com.alanddev.manwal.helper.Constants;
 
 public class WalletsActivity extends AppCompatActivity {
-    WalletController walletController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +37,6 @@ public class WalletsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_currency);
 
         final ListView listWallet = (ListView)findViewById(R.id.list_currency);
-        walletController = new WalletController(this);
-        walletController.open();
         prepareData();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -86,21 +83,19 @@ public class WalletsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        walletController.open();
         prepareData();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        walletController.close();
         super.onPause();
     }
 
 
     public void prepareData(){
         final ListView listWallet = (ListView)findViewById(R.id.list_currency);
-        walletController = new WalletController(this);
+        WalletController walletController = new WalletController(this);
         walletController.open();
         List<Wallet> walletList = (List<Wallet>)(List<?>)walletController.getAll();
 
@@ -127,7 +122,7 @@ public class WalletsActivity extends AppCompatActivity {
             }
         });
 
-
+        walletController.close();
 
     }
 

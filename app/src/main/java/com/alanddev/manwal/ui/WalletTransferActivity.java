@@ -31,8 +31,8 @@ import java.util.List;
 
 public class WalletTransferActivity extends AppCompatActivity {
 
-    WalletController walletController;
-    TransactionController transactionController;
+    //WalletController walletController;
+    //TransactionController transactionController;
     Spinner spinnerFromWallet;
     Spinner spinnerToWallet;
     EditText amountEdit;
@@ -46,21 +46,17 @@ public class WalletTransferActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        walletController = new WalletController(this);
+        WalletController walletController = new WalletController(this);
         walletController.open();
         spinnerFromWallet = (Spinner) findViewById(R.id.from_wallet);
         spinnerToWallet = (Spinner) findViewById(R.id.to_wallet);
 
         List<Wallet> walletList = (List<Wallet>)(List<?>)walletController.getAll();
         WalletSpinnerAdapter walletAdapter = new WalletSpinnerAdapter(this,walletList);
-
+        walletController.close();
         spinnerFromWallet.setAdapter(walletAdapter);
         spinnerToWallet.setAdapter(walletAdapter);
         //int selectionPosition= walletAdapter.getPosition();
-
-
-        transactionController= new TransactionController(this);
-        transactionController.open();
 
         amountEdit = (EditText)findViewById(R.id.txtAmount);
         amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
@@ -106,8 +102,10 @@ public class WalletTransferActivity extends AppCompatActivity {
                 sAmount = sAmount.replaceAll(",", "");
                 amount = Float.valueOf(sAmount);
             }
-
-            transactionController.transferMoney(this,fromWallet, toWallet, amount);
+            TransactionController transactionController = new TransactionController(this);
+            transactionController.open();
+            transactionController.transferMoney(this, fromWallet, toWallet, amount);
+            transactionController.close();
             Intent intent = new Intent(this, TransactionActivity.class);
             startActivity(intent);
             finish();
