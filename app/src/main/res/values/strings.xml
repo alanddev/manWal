@@ -91,12 +91,15 @@
     <string name="title_activity_wallet_edit">Update wallet</string>
     <string name="action_add">Add wallet</string>
     <string-array name="day_view">
-        <item>Hôm qua</item>
-        <item>Hôm nay</item>
+        <item>@string/today</item>
+        <item>@string/yesterday</item>
         <item>Ngày mai</item>
     </string-array>
 
     <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
+
     <string name="check_amout_exist">No money, please check</string>
     <string name="check_category_exist">No transaction type, please check</string>
     <string name="amount">Amount</string>
@@ -366,11 +369,11 @@
     </string-array>
     <string name="navi_header_default">green_pentagonal_background</string>
 
-    <string name="notify_morning">Chào buổi sáng, Chúc bạn một ngày mới nhiều niềm vui</string>
-    <string name="notify_afternoon">Chào buổi tối, Đừng quên cập nhật chi tiêu trong ngày của bạn nhé</string>
-    <string name="notify_noon">MW Chúc bạn ngủ ngon!</string>
-    <string name="notify_startweek">Chúc bạn một tuần mới làm việc hiệu quả và nhiều niềm vui</string>
-    <string name="notify_startmonth">Chúc bạn ngày đầu tháng làm việc hiệu quả và nhiều niềm vui</string>
-    <string name="notify_startyear">Chúc mừng năm mới</string>
-    <string name="notify_title">MW chào bạn</string>
+    <string name="notify_morning">Happy morning and have a greate day</string>
+    <string name="notify_afternoon">Good evening, please do not forget update MW today</string>
+    <string name="notify_noon">Good night and have a good dream !</string>
+    <string name="notify_startweek">Good new week !</string>
+    <string name="notify_startmonth">Good new month !</string>
+    <string name="notify_startyear">Happy new year !</string>
+    <string name="notify_title">Say hi :)</string>
 </resources>
