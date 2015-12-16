@@ -62,8 +62,6 @@ public class TrendActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        transactionController = new TransactionController(this);
-        transactionController.open();
 
         listViewTrend = (ListView)findViewById(R.id.list_transaction_trend);
         listViewTrendPie = (ListView)findViewById(R.id.list_transaction_trend_pie);
@@ -83,11 +81,13 @@ public class TrendActivity extends AppCompatActivity {
         chart = (BarChart) findViewById(R.id.chart);
         chartPie = (PieChart) findViewById(R.id.chartPie);
 
-
+        transactionController = new TransactionController(this);
+        transactionController.open();
         getData(chart, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrend);
 
 
         getDataPie(chartPie, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrendPie);
+        transactionController.close();
         //Utils.ListUtils.setDynamicHeight(listViewTrendPie);
 
 //        BarChart chart2 = new BarChart(this);

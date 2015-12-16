@@ -8,11 +8,11 @@
     >
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_wallet" android:icon="@mipmap/wallet"
+        <item android:id="@+id/nav_wallet" android:icon="@mipmap/wallet_menu"
             android:title="@string/manage_wallet" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
+        <item android:id="@+id/nav_trend" android:icon="@mipmap/trend_menu"
             android:title="@string/trend" />
-        <item android:id="@+id/nav_budget" android:icon="@android:drawable/ic_menu_manage"
+        <item android:id="@+id/nav_budget" android:icon="@mipmap/budget_menu"
             android:title="@string/budget_menu" />
     </group>
 

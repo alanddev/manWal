@@ -148,6 +148,7 @@ public class WalletEditActivity extends AppCompatActivity {
                 transactionController.createTransactionDefault(this,walletId, amountWallet, Constant.CAT_WALLET_ADD_INCOME,getResources().getString(R.string.title_transaction_wallet_edit));
             }
             transactionController.close();
+            walletController.close();
             finish();
         }
     }

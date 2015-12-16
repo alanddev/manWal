@@ -195,7 +195,7 @@ public class TransactionActivity extends AppCompatActivity
         if (id == R.id.nav_wallet) {
             Intent intent = new Intent(this, WalletsActivity.class);
             startActivityForResult(intent,REQUEST_WALLET_CHANGE);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_trend) {
             Intent intent = new Intent(this, TrendActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_budget) {
