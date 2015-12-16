@@ -87,7 +87,6 @@ public class TrendActivity extends AppCompatActivity {
 
 
         getDataPie(chartPie, Constant.TREND_TYPE_EXPENSE, fromMonth, toMonth, year, listViewTrendPie);
-        transactionController.close();
         //Utils.ListUtils.setDynamicHeight(listViewTrendPie);
 
 //        BarChart chart2 = new BarChart(this);
@@ -209,7 +208,7 @@ public class TrendActivity extends AppCompatActivity {
 
         ArrayList<BarDataSet> dataSets = null;
         ArrayList<BarEntry> valueSetY = new ArrayList<>();
-        ArrayList<Trend> trends = transactionController.getAmountTrendByMonths(option,Utils.getWallet_id(),monthBegin,monthEnd,year);
+        ArrayList<Trend> trends = transactionController.getAmountTrendByMonths(option, Utils.getWallet_id(), monthBegin, monthEnd, year);
         listView.setAdapter(new TrendAdapter(this, trends));
         for (int i = 0; i<trends.size();i++){
             Trend trend = trends.get(i);
@@ -309,6 +308,19 @@ public class TrendActivity extends AppCompatActivity {
         l.setYEntrySpace(5);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(transactionController!=null){
+            transactionController.close();
+        }
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(transactionController!=null){
+            transactionController.open();
+        }
+    }
 }
