@@ -72,7 +72,7 @@
     <string name="pref_default_display_name">John Smith</string>
     <string name="title_activity_report">Report</string>
     <string name="title_activity_list_currency">Currency</string>
-    <string name="title_activity_category">Choose currency</string>
+    <string name="title_activity_category">Choose category</string>
     <string name="title_activity_budget">Budget</string>
     <string name="setting">Setting</string>
     <string name="select_category">Choose transaction type</string>
@@ -115,4 +115,6 @@
     <string name="exp_category_shopping">Shopping</string>
     <string name="exp_category_transporting">Transporting</string>
     <string name="exp_category_travelling">Travelling</string>
+    <string name="new_transaction">Touch this to create new Transaction</string>
+    <string name="new_transaction_title">Create New Transaction</string>
 </resources>

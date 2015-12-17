@@ -40,8 +40,12 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(getBaseContext(), TransactionActivity.class);
                     startActivity(i);
                 } else {
-                    Intent intent = new Intent(MainActivity.this, WalletAddActivity.class);
+                    Intent intent = new Intent(MainActivity.this, SelectThemeActivity.class);
+                    intent.putExtra("SETTING_EXTRA",Constant.CHANGE_LANGUAGE_ID);
+                    intent.putExtra("SETTING_FIRST",Constant.CHANGE_LANGUAGE_ID);
                     startActivity(intent);
+                    //Intent intent = new Intent(MainActivity.this, WalletAddActivity.class);
+                    //startActivity(intent);
                 }
                 finish();
             } catch (Exception e) {

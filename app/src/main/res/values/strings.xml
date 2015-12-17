@@ -17,7 +17,7 @@
     <string name="title_transaction_wallet_add">Balance amount</string>
 
     <string name="title_activity_list_currency">Currency</string>
-    <string name="title_activity_category">Choose currency</string>
+    <string name="title_activity_category">Choose category</string>
     <string name="action_view_day">View by day</string>
     <string name="action_view_week">View by week</string>
     <string name="action_view_month">View by month</string>
@@ -432,4 +432,7 @@
     <string name="notify_startmonth">Good new month !</string>
     <string name="notify_startyear">Happy new year !</string>
     <string name="notify_title">Say hi :)</string>
+
+    <string name="new_transaction_title">Create New Transaction </string>
+    <string name="new_transaction">Touch this to create new Transaction </string>
 </resources>

@@ -112,6 +112,11 @@ public class SettingActivity extends AppCompatActivity {
             Utils.onActivityCreateSetTheme(this);
             Utils.refresh(this);
         }
+        if(requestCode==REQUEST_CHANGE_LANGUAGE){
+            Utils.onActivityCreateSetTheme(this);
+            Utils.setLanguage(this);
+            Utils.refresh(this);
+        }
     }
 
     @Override

@@ -62,6 +62,11 @@ public class SelectThemeActivity extends AppCompatActivity {
                 }else if(theme.getLanguage()!=null&&!theme.getLanguage().equals("")) {
                     Utils.setSharedPreferencesValue(getApplicationContext(), Constant.LANGUAGE_CURRENT, theme.getLanguage());
                     Utils.setLanguage(getApplicationContext(),theme.getLanguage());
+                    int isSetup = getIntent().getExtras().getInt("SETTING_FIRST",0);
+                    if (isSetup > 0){
+                        Intent intent = new Intent(SelectThemeActivity.this, WalletAddActivity.class);
+                        startActivity(intent);
+                    }
                     //Utils.changeToLanguage(theme.getLanguage());
                 }
                 finish();

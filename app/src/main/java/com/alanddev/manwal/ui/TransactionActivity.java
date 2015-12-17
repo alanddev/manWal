@@ -117,8 +117,8 @@ public class TransactionActivity extends AppCompatActivity
         Target viewTarget = new ViewTarget(R.id.fab, this);
         new ShowcaseView.Builder(this)
                 .setTarget(viewTarget)
-                .setContentTitle("Khoi tao giao dich ")
-                .setContentText("Cham vao day de khoi tao giao dich moi :D")
+                .setContentTitle(getResources().getText(R.string.new_transaction_title))
+                .setContentText(getResources().getText(R.string.new_transaction))
                 .singleShot(42)
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .build();
