@@ -91,7 +91,7 @@ public class Utils {
         }
     }
 
-    public void createFolder(String folder){
+    public static void createFolder(String folder){
         File directory = new File(folder);
         directory.mkdirs();
     }
@@ -179,7 +179,7 @@ public class Utils {
         editor.commit();
     }
 
-    public int getSharedPreferencesValue(Context context,String name) {
+    public static int getSharedPreferencesValue(Context context,String name) {
         SharedPreferences sharedPref = getSharedPreferences(context);
         int defaultValue = 0;
         int getValue = sharedPref.getInt(name, defaultValue);
