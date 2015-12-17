@@ -46,6 +46,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_transaction_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

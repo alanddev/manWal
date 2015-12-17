@@ -25,21 +25,37 @@
     <string name="action_view_trans">View by transaction</string>
 
     <string-array name="exp_category_names">
-        <item>Ăn uống</item>
-        <item>Mua sắm</item>
-        <item>Di chuyển</item>
-        <item>Bạn bè </item>
-        <item>Người yêu </item>
-        <item>Giải trí</item>
-        <item>Giáo dục</item>
-        <item>Gia đình</item>
-        <item>Du lịch</item>
-        <item>Thuốc</item>
-        <item>Đầu tư</item>
-        <item>Nhậu nhẹt</item>
-        <item>Vay</item>
-        <item>Khác</item>
+        <item>@string/exp_category_eat</item>
+        <item>@string/exp_category_shopping</item>
+        <item>@string/exp_category_transporting</item>
+        <item>@string/exp_category_friend</item>
+        <item>@string/exp_category_love </item>
+        <item>@string/exp_category_relax </item>
+        <item>@string/exp_category_education</item>
+        <item>@string/exp_category_family</item>
+        <item>@string/exp_category_travelling</item>
+        <item>@string/exp_category_medicine</item>
+        <item>@string/exp_category_investment</item>
+        <item>@string/exp_category_drink</item>
+        <item>@string/exp_category_loan</item>
+        <item>@string/exp_category_other</item>
     </string-array>
+
+    <string name="exp_category_eat">Food/drink</string>
+    <string name="exp_category_shopping">Shopping</string>
+    <string name="exp_category_transporting">Transporting</string>
+    <string name="exp_category_friend">Friend</string>
+    <string name="exp_category_love">Love</string>
+    <string name="exp_category_relax">Relax</string>
+    <string name="exp_category_education">Education</string>
+    <string name="exp_category_family">Family</string>
+    <string name="exp_category_travelling">Travelling</string>
+    <string name="exp_category_medicine">Medicine</string>
+    <string name="exp_category_investment">Investment</string>
+    <string name="exp_category_drink">Drink</string>
+    <string name="exp_category_loan">Loan</string>
+    <string name="exp_category_other">Other</string>
+
     <string-array name="exp_category_image">
         <item>foodndrink</item>
         <item>shopping</item>
@@ -56,15 +72,31 @@
         <item>loan</item>
         <item>other_expense</item>
     </string-array>
+
+
     <string-array name="inc_category_names">
-        <item>Salary</item>
-        <item>Give</item>
-        <item>Interest Money</item>
-        <item>Selling</item>
-        <item>Debt</item>
-        <item>Award</item>
-        <item>Other</item>
+        <item>@string/inc_category_salary</item>
+        <item>@string/inc_category_give</item>
+        <item>@string/inc_category_interest</item>
+        <item>@string/inc_category_selling</item>
+        <item>@string/inc_category_debt</item>
+        <item>@string/inc_category_award</item>
+        <item>@string/inc_category_other</item>
     </string-array>
+
+
+    <string name="inc_category_salary">Salary</string>
+    <string name="inc_category_give">Give</string>
+    <string name="inc_category_interest">Interest Money</string>
+    <string name="inc_category_selling">Selling</string>
+    <string name="inc_category_debt">Debt</string>
+    <string name="inc_category_award">Award</string>
+    <string name="inc_category_other">Other</string>
+
+
+
+
+
     <string-array name="inc_category_image">
         <item>salary</item>
         <item>give</item>
@@ -74,6 +106,7 @@
         <item>award</item>
         <item>other_income</item>
     </string-array>
+
     <string name="all_category_name">All</string>
     <string name="all_category_image">all</string>
 
@@ -188,11 +221,13 @@
     <string name="pref_default_display_name">John Smith</string>
 
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+
     <string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>
         <item>Never</item>
     </string-array>
+
     <string-array name="pref_example_list_values">
         <item>1</item>
         <item>0</item>
@@ -211,6 +246,8 @@
         <item>6 hours</item>
         <item>Never</item>
     </string-array>
+
+
     <string-array name="pref_sync_frequency_values">
         <item>15</item>
         <item>30</item>
@@ -258,10 +295,15 @@
     </string-array>
 
     <string-array name="settings">
-        <item>Đổi Theme</item>
-        <item>Đổi hình nền menu</item>
-        <item>Chọn Ngôn Ngữ</item>
+        <item>@string/settings_themes</item>
+        <item>@string/settings_menu</item>
+        <item>@string/settings_language</item>
     </string-array>
+
+    <string name="settings_themes">Choose Theme</string>
+    <string name="settings_menu">Choose Menu theme</string>
+    <string name="settings_language">Choose Language</string>
+
     <string name="title_activity_select_theme">Choose Theme</string>
 
     <string-array name="theme_array">
@@ -351,6 +393,16 @@
         <item>vi</item>
         <item>en</item>
     </string-array>
+
+    <string-array name ="language_name">
+        <item>@string/language_vn</item>
+        <item>@string/language_en</item>
+    </string-array>
+
+    <string name="language_vn">Vietnamese</string>
+    <string name="language_en">English</string>
+
+
 
     <string name="title_activity_wallet_transfer">Remittance</string>
     <string name="tranfer_from">Transfer from wallet</string>

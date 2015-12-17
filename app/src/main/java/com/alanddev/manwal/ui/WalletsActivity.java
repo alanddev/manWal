@@ -34,6 +34,7 @@ public class WalletsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_list_currency);
 
         final ListView listWallet = (ListView)findViewById(R.id.list_currency);

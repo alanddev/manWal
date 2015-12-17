@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -73,6 +74,7 @@ public class TransactionActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_transaction);
+        //Utils.setLanguage(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -311,5 +313,11 @@ public class TransactionActivity extends AppCompatActivity
         NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
         String sAmount =  formatter.format(fAmount) + "  " + wallet.getCurrency();
         textAmt.setText(sAmount);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
     }
 }

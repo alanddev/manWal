@@ -23,6 +23,7 @@ public class SellectThemeAdapter extends BaseAdapter {
     private List<Theme> themes;
     private Context mContext;
 
+
     public SellectThemeAdapter(Context context, List<Theme> datas){
         this.themes = datas;
         this.mContext = context;
@@ -59,6 +60,8 @@ public class SellectThemeAdapter extends BaseAdapter {
                     .findViewById(R.id.img_theme));
             viewHolder.imgcheck = ((ImageView) convertView
                     .findViewById(R.id.img_check));
+            viewHolder.content = ((TextView)convertView.findViewById(R.id.content));
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (Viewholder) convertView.getTag();
@@ -81,6 +84,10 @@ public class SellectThemeAdapter extends BaseAdapter {
             }
         }else if(null!=theme.getLanguage()&&!"".equals(theme.getLanguage())){
             viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier("language_" + theme.getLanguage(), "mipmap", mContext.getPackageName()));
+            viewHolder.imgthemes.getLayoutParams().height = 80;
+            viewHolder.imgthemes.getLayoutParams().width = 80;
+            viewHolder.content.setEnabled(true);
+            viewHolder.content.setText(theme.getContent());
             String currentLanguage = Utils.getCurrentLanguage(mContext);
             if (!currentLanguage.equals(theme.getLanguage())) {
                 viewHolder.imgcheck.setVisibility(View.INVISIBLE);
@@ -97,6 +104,7 @@ public class SellectThemeAdapter extends BaseAdapter {
     class Viewholder {
         public ImageView imgthemes;
         public ImageView imgcheck;
+        public TextView content;
 
         Viewholder() {
         }

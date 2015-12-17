@@ -10,6 +10,10 @@ public class Theme {
     private String language;
 
 
+
+    private String content;
+
+
     public String getTheme() {
         return theme;
     }
@@ -42,4 +46,12 @@ public class Theme {
         this.language = language;
     }
 
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

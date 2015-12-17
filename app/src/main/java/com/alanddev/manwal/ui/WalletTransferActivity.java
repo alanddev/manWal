@@ -39,7 +39,8 @@ public class WalletTransferActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Utils.onActivityCreateSetTheme(this);
+        Utils.onActivityCreateSetTheme(this);
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_wallet_transfer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

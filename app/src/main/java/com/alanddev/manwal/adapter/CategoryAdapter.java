@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.model.Category;
+import com.alanddev.manwal.util.Utils;
 
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class CategoryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Category category = (Category)this.getItem(position);
         Viewholder viewHolder;
+
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_category,null);
             viewHolder = new Viewholder();

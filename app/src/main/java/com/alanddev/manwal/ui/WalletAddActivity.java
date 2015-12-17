@@ -51,6 +51,7 @@ public class WalletAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_wallet_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -168,8 +169,8 @@ public class WalletAddActivity extends AppCompatActivity {
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_name),Toast.LENGTH_LONG).show();
         } else if (currency.equals("")){
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_cur),Toast.LENGTH_LONG).show();
-        }else if (amount == 0.0){
-            Toast.makeText(this,getResources().getString(R.string.warning_wallet_amount),Toast.LENGTH_LONG).show();
+        //}else if (amount == 0.0){
+        //    Toast.makeText(this,getResources().getString(R.string.warning_wallet_amount),Toast.LENGTH_LONG).show();
         }else {
             Wallet newWallet = new Wallet(nameWallet, amount, currency, imageFileName);
             //db.createWallet();

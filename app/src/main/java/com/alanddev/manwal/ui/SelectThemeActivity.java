@@ -2,6 +2,7 @@ package com.alanddev.manwal.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,6 +31,7 @@ public class SelectThemeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_select_theme);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -119,16 +121,22 @@ public class SelectThemeActivity extends AppCompatActivity {
 
     private List<Theme> createLanguageData(){
         List<Theme> lstTheme = new ArrayList<Theme>();
-        String[] arrHeaders = getResources().getStringArray(R.array.language);
-        if(arrHeaders!=null&&arrHeaders.length>0) {
-            for (int i = 0; i < arrHeaders.length;i++) {
+        String[] arrLanguage = getResources().getStringArray(R.array.language);
+        String[] arrLanguageName = getResources().getStringArray(R.array.language_name);
+        if(arrLanguage!=null&&arrLanguage.length>0) {
+            for (int i = 0; i < arrLanguage.length;i++) {
                 Theme theme = new Theme();
-                theme.setLanguage(arrHeaders[i]);
+                theme.setLanguage(arrLanguage[i]);
+                theme.setContent(arrLanguageName[i]);
                 lstTheme.add(theme);
             }
         }
         return lstTheme;
     }
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+    }
 }

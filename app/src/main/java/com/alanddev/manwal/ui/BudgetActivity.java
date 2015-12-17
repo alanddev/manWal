@@ -57,6 +57,7 @@ public class BudgetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_budget);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

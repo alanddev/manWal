@@ -52,6 +52,15 @@ public class Utils {
         Utils.locale = locale;
     }
 
+    public static void setLanguage(Context context){
+        Configuration configuration;
+        Resources res = context.getResources();
+        configuration = new Configuration(res.getConfiguration());
+        configuration.locale=getLocale();
+        setLocale(locale);
+        res.updateConfiguration(configuration,res.getDisplayMetrics());
+    }
+
     public static void setLanguage(Context context, String language){
         Configuration configuration;
         Resources res = context.getResources();
