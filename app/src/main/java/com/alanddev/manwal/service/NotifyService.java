@@ -61,7 +61,7 @@ public class NotifyService extends Service {
         if(!contentText.equals("")) {
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.mipmap.ic_currency)
+                            .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle(contentTitle)
                             .setContentText(contentText);
             Intent notifyIntent =
