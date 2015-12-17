@@ -61,7 +61,6 @@
     <string name="inflow_txt">Income</string>
     <string name="manage_wallet">Manages wallet</string>
     <string name="name_wallet">Name</string>
-    <string name="navi_header_default">green_pentagonal_background</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="note">Note</string>

@@ -34,7 +34,6 @@
     <string name="inflow_txt">Tiền thu</string>
     <string name="manage_wallet">Quản lý ví</string>
     <string name="name_wallet">Tên</string>
-    <string name="navi_header_default">green_pentagonal_background</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="note">Ghi chú</string>
