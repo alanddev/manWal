@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.SellectThemeAdapter;
 import com.alanddev.manwal.adapter.SettingAdapter;
+import com.alanddev.manwal.controller.CategoryController;
 import com.alanddev.manwal.model.Setting;
 import com.alanddev.manwal.model.Theme;
 import com.alanddev.manwal.util.Constant;
@@ -63,10 +65,18 @@ public class SelectThemeActivity extends AppCompatActivity {
                     Utils.setSharedPreferencesValue(getApplicationContext(), Constant.LANGUAGE_CURRENT, theme.getLanguage());
                     Utils.setLanguage(getApplicationContext(),theme.getLanguage());
                     int isSetup = getIntent().getExtras().getInt("SETTING_FIRST",0);
+                    CategoryController categoryController = new CategoryController(getApplicationContext());
+                    categoryController.open();
                     if (isSetup > 0){
+                        categoryController.init(getApplicationContext());
+                        categoryController.close();
                         Intent intent = new Intent(SelectThemeActivity.this, WalletAddActivity.class);
                         startActivity(intent);
+                    }else{
+                        categoryController.delete();
+                        categoryController.init(getApplicationContext());
                     }
+                    categoryController.close();
                     //Utils.changeToLanguage(theme.getLanguage());
                 }
                 finish();

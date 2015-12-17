@@ -56,7 +56,31 @@
             android:textColor="@color/colorTextColor"
             android:textSize="16sp"
             android:layout_marginLeft="70dp"
-            android:text="Còn lại"
+            android:text="Đã chi"
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/txt_budget_amount0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorOutFlow"
+            android:textSize="12sp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="3dp"
+            android:text="200.000"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/txtAllIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColor"
+            android:textSize="16sp"
+            android:layout_marginLeft="70dp"
             android:textStyle="bold"
             android:layout_alignParentLeft="true"/>
         <TextView
@@ -66,7 +90,7 @@
             android:textColor="@color/colorTextColor"
             android:textSize="12sp"
             android:layout_marginRight="20dp"
-            android:text="200.000"
+            android:layout_marginTop="3dp"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
     <ProgressBar

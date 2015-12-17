@@ -69,11 +69,6 @@ public class MainActivity extends AppCompatActivity {
         currController.open();
         currController.init(this);
         currController.close();
-        //init category
-        CategoryController categoryController = new CategoryController(getApplicationContext());
-        categoryController.open();
-        categoryController.init(getApplicationContext());
-        categoryController.close();
         //start notification services
         Intent intent = new Intent();
         intent.setAction("com.alanddev.manwal.CUSTOM_INTENT");

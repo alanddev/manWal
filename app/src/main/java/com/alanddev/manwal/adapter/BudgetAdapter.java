@@ -72,6 +72,10 @@ public class BudgetAdapter extends BaseAdapter {
                     .findViewById(R.id.txt_budget_amount));
             viewHolder.budgetdate = ((TextView) convertView
                     .findViewById(R.id.txt_budget_date));
+            viewHolder.budgetamtIncome = ((TextView) convertView
+                    .findViewById(R.id.txt_budget_amount0));
+            viewHolder.budgetAllIncome = ((TextView) convertView
+                    .findViewById(R.id.txtAllIncome));
             viewHolder.budgetremain = ((TextView) convertView
                     .findViewById(R.id.txt_budget_amount1));
             viewHolder.progressBar = (ProgressBar)convertView
@@ -92,13 +96,18 @@ public class BudgetAdapter extends BaseAdapter {
         viewHolder.budgetdate.setText(Utils.changeDateStr2Str2(budget.getStartdate())+" - "+Utils.changeDateStr2Str2(budget.getEnddate()));
         if(budget.getAmount()>budget.getRealamt()){
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorInflow));
+            viewHolder.budgetAllIncome.setText("Còn lại");
+            viewHolder.budgetremain.setText(formatter.format(budget.getAmount()-budget.getRealamt()));
         }else{
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
+            viewHolder.budgetAllIncome.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
+            String sAmountRemain =  formatter.format(budget.getRealamt()- budget.getAmount());
+            viewHolder.budgetremain.setText(sAmountRemain);
+            viewHolder.budgetAllIncome.setText("Bạn đã chi tiêu vượt quá");
         }
 
+        viewHolder.budgetamtIncome.setText(formatter.format(budget.getRealamt()));
 
-        String sAmountRemain =  formatter.format(budget.getAmount()-budget.getRealamt());
-        viewHolder.budgetremain.setText(sAmountRemain);
 
 
         int progress =(int) (budget.getRealamt()*100/budget.getAmount());
@@ -122,7 +131,9 @@ public class BudgetAdapter extends BaseAdapter {
         public ImageView cateimg;
         public TextView catename;
         public TextView budgetamt;
+        public TextView budgetamtIncome;
         public TextView budgetremain;
+        public TextView budgetAllIncome;
         public TextView budgetdate;
         public ProgressBar progressBar;
 

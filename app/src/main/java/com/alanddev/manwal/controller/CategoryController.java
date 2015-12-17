@@ -174,4 +174,8 @@ public class CategoryController  implements IDataSource {
             create(lstCategories.get(j));
         }
     }
+
+    public Boolean delete(){
+        return database.delete(MwSQLiteHelper.TABLE_CATEGORY, null, null) > 0;
+    }
 }
