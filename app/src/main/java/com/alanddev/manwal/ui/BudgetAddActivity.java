@@ -200,6 +200,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             newBudget.setEnddate(Utils.changeDateStr2Str(txtEndDate.getText().toString()));
             newBudget.setWallet_id(Utils.getWallet_id());
             if(type==CREATE) {
+                Log.d("AAAAAAAAAAA",newBudget.getWallet_id()+"");
                 budgetController.create(newBudget);
             }else if(type==EDIT){
                 newBudget.setId(budget.getId());

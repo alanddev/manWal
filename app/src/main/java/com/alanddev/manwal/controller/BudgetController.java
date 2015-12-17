@@ -79,7 +79,7 @@ public class BudgetController implements IDataSource {
         values.put(MwSQLiteHelper.COLUMN_BUDGET_END_DATE, budget.getEnddate());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_AMOUNT, budget.getAmount());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_CATE_ID, budget.getCate_id());
-        values.put(MwSQLiteHelper.COLUMN_BUDGET_WALLET_ID, budget.getWallet_id());
+        //values.put(MwSQLiteHelper.COLUMN_BUDGET_WALLET_ID, budget.getWallet_id());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_RECURRING_NOTIFY, budget.getRecurring_notify());
         values.put(MwSQLiteHelper.COLUMN_BUDGET_IS_REAPEAT, budget.getIs_repeat());
         database.update(MwSQLiteHelper.TABLE_BUDGET, values, MwSQLiteHelper.COLUMN_BUDGET_ID + " = ?", new String[]{budget.getId()+""});

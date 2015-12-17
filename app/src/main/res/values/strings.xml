@@ -25,49 +25,53 @@
     <string name="action_view_trans">View by transaction</string>
 
     <string-array name="exp_category_names">
-        <item>Vay</item>
-        <item>Mua bán</item>
         <item>Ăn uống</item>
+        <item>Mua sắm</item>
         <item>Di chuyển</item>
-        <item>Giáo dục</item>
+        <item>Bạn bè </item>
+        <item>Người yêu </item>
         <item>Giải trí</item>
+        <item>Giáo dục</item>
         <item>Gia đình</item>
-        <item>Bạn bè \ Gấu </item>
-        <item>Đầu tư</item>
-        <item>Thuốc</item>
         <item>Du lịch</item>
+        <item>Thuốc</item>
+        <item>Đầu tư</item>
+        <item>Nhậu nhẹt</item>
+        <item>Vay</item>
         <item>Khác</item>
     </string-array>
     <string-array name="exp_category_image">
-        <item>loan</item>
-        <item>shopping</item>
         <item>foodndrink</item>
+        <item>shopping</item>
         <item>transport</item>
-        <item>education</item>
+        <item>friend</item>
+        <item>lover</item>
         <item>entertainment</item>
+        <item>education</item>
         <item>family</item>
-        <item>friendnlover</item>
-        <item>invest</item>
-        <item>medical</item>
         <item>travel</item>
+        <item>medical</item>
+        <item>invest</item>
+        <item>drink</item>
+        <item>loan</item>
         <item>other_expense</item>
     </string-array>
     <string-array name="inc_category_names">
-        <item>Debt</item>
-        <item>Give</item>
-        <item>Award</item>
-        <item>Interest Money</item>
         <item>Salary</item>
+        <item>Give</item>
+        <item>Interest Money</item>
         <item>Selling</item>
+        <item>Debt</item>
+        <item>Award</item>
         <item>Other</item>
     </string-array>
     <string-array name="inc_category_image">
-        <item>debt</item>
-        <item>give</item>
-        <item>award</item>
-        <item>interestmoney</item>
         <item>salary</item>
+        <item>give</item>
+        <item>interestmoney</item>
         <item>selling</item>
+        <item>debt</item>
+        <item>award</item>
         <item>other_income</item>
     </string-array>
     <string name="all_category_name">All</string>
@@ -91,9 +95,9 @@
     <string name="title_activity_wallet_edit">Update wallet</string>
     <string name="action_add">Add wallet</string>
     <string-array name="day_view">
-        <item>@string/today</item>
         <item>@string/yesterday</item>
-        <item>Ngày mai</item>
+        <item>@string/today</item>
+        <item>@string/tomorrow</item>
     </string-array>
 
     <string name="today">Today</string>
@@ -367,7 +371,7 @@
         <item>red_pentagonal_background</item>
         <item>teal_pentagonal_background</item>
     </string-array>
-    <string name="navi_header_default">green_pentagonal_background</string>
+    <string name="navi_header_default">indigo_pentagonal_background</string>
 
     <string name="notify_morning">Happy morning and have a greate day</string>
     <string name="notify_afternoon">Good evening, please do not forget update MW today</string>

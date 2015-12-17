@@ -85,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
             categoryController.init(getApplicationContext());
             categoryController.close();
             //utils.createFolder(Constant.PATH_IMG);
+            //start notification services
+            Intent intent = new Intent();
+            intent.setAction("com.alanddev.manwal.CUSTOM_INTENT");
+            sendBroadcast(intent);
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -93,11 +98,6 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
             }, Constant.SPLASH_DISPLAY_LENGTH);
-
-            //start notification services
-            Intent intent = new Intent();
-            intent.setAction("com.alanddev.manwal.CUSTOM_INTENT");
-            sendBroadcast(intent);
         }
 
     }
