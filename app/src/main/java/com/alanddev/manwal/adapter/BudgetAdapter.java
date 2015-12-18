@@ -92,25 +92,21 @@ public class BudgetAdapter extends BaseAdapter {
         NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
         String sAmount =  formatter.format(fAmount);
         viewHolder.budgetamt.setText(sAmount);
-
+        int progress =(int) (budget.getRealamt()*100/budget.getAmount());
         viewHolder.budgetdate.setText(Utils.changeDateStr2Str2(budget.getStartdate())+" - "+Utils.changeDateStr2Str2(budget.getEnddate()));
         if(budget.getAmount()>budget.getRealamt()){
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorInflow));
             viewHolder.budgetAllIncome.setText("Còn lại");
-            viewHolder.budgetremain.setText(formatter.format(budget.getAmount()-budget.getRealamt()));
+            viewHolder.budgetremain.setText(formatter.format(budget.getAmount()-budget.getRealamt())+" ("+(100-progress)+"%)");
         }else{
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
             viewHolder.budgetAllIncome.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
             String sAmountRemain =  formatter.format(budget.getRealamt()- budget.getAmount());
-            viewHolder.budgetremain.setText(sAmountRemain);
-            viewHolder.budgetAllIncome.setText("Bạn đã chi tiêu vượt quá");
+            viewHolder.budgetremain.setText(sAmountRemain+" ("+(progress-100)+"%)");
+            viewHolder.budgetAllIncome.setText("Đã chi vượt quá");
         }
 
-        viewHolder.budgetamtIncome.setText(formatter.format(budget.getRealamt()));
-
-
-
-        int progress =(int) (budget.getRealamt()*100/budget.getAmount());
+        viewHolder.budgetamtIncome.setText(formatter.format(budget.getRealamt())+" ("+progress+"%)");
         if(progress<25){
             viewHolder.progressBar.setProgressDrawable(mContext.getResources().getDrawable(R.drawable.progess_drawable_25));
         }else if(progress<50){
