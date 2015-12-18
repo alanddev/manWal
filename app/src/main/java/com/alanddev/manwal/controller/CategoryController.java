@@ -50,6 +50,7 @@ public class CategoryController  implements IDataSource {
     public Model create(Model data) {
         ContentValues values = new ContentValues();
         Category category  = (Category)data;
+        values.put(MwSQLiteHelper.COLUMN_CATE_ID, category.getId());
         values.put(MwSQLiteHelper.COLUMN_CATE_NAME, category.getName());
         values.put(MwSQLiteHelper.COLUMN_CATE_IMG, category.getImage());
         values.put(MwSQLiteHelper.COLUMN_CATE_TYPE, category.getType());
@@ -147,6 +148,7 @@ public class CategoryController  implements IDataSource {
         List<Category> lstCategories = new ArrayList<Category>();
         for(int j=0;j<i;j++){
             Category category = new Category();
+            category.setId(j+1);
             category.setName(arrayExCateName[j]);
             category.setImage(arrayExCateImg[j]);
             category.setType(Constant.EXPENSE_TYPE);
@@ -155,8 +157,10 @@ public class CategoryController  implements IDataSource {
         String[] arrayInCateName = context.getResources().getStringArray(R.array.inc_category_names);
         String[] arrayInCateImg = context.getResources().getStringArray(R.array.inc_category_image);
         i = Math.min(arrayInCateName.length,arrayInCateImg.length);
+        int k = lstCategories.size();
         for(int j=0;j<i;j++){
             Category category = new Category();
+            category.setId(k+j+1);
             category.setName(arrayInCateName[j]);
             category.setImage(arrayInCateImg[j]);
             category.setType(Constant.INCOME_TYPE);
@@ -165,6 +169,7 @@ public class CategoryController  implements IDataSource {
 
         //add category all
         Category category = new Category();
+        category.setId(lstCategories.size()+1);
         category.setType(Constant.ALL_CATEGORY_TYPE);
         category.setName(context.getString(R.string.all_category_name));
         category.setImage(context.getString(R.string.all_category_image));

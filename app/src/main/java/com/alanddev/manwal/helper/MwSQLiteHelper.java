@@ -90,7 +90,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String CATE_CREATE = "CREATE TABLE "
             + TABLE_CATEGORY + "("
-            + COLUMN_CATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_CATE_ID + " INTEGER PRIMARY KEY, "
             + COLUMN_CATE_NAME + " text not null, "
             + COLUMN_CATE_IMG + " text not null, "
             + COLUMN_CATE_TYPE + " integer not null"
