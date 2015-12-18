@@ -42,6 +42,7 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -300,7 +301,8 @@ public class TransactionActivity extends AppCompatActivity
         txtWallet.setText(wallet.getName());
 
         ImageView imageView = (ImageView)header.findViewById(R.id.imageView);
-        if (!wallet.getImage().equals("")){
+        File file = new File(Constant.PATH_IMG + "/" + wallet.getImage());
+        if (!wallet.getImage().equals("")&& file.exists()){
             imageView.setImageBitmap(BitmapFactory.decodeFile(Constant.PATH_IMG + "/" + wallet.getImage()));
         }else {
             imageView.setImageResource(R.mipmap.wallet);

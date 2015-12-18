@@ -6,10 +6,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -160,7 +162,7 @@ public class WalletAddActivity extends AppCompatActivity {
             imageFileName = image.getName();
             try {
                  utils.copyFile(imagePath, Constant.PATH_IMG + "/" + imageFileName);
-                }
+            }
             catch (IOException e){};
 
         }
@@ -202,7 +204,6 @@ public class WalletAddActivity extends AppCompatActivity {
             }
             walletController.close();
             finish();
-
         }
     }
 

@@ -1,5 +1,7 @@
 package com.alanddev.manwal.util;
 
+import android.os.Environment;
+
 /**
  * Created by ANLD on 23/11/2015.
  */
@@ -11,7 +13,7 @@ public class Constant {
     public static final String DATE_FORMAT_DB = "yyyy-MM-dd";
     public static final int CUR_WALLET_REQUEST = 2;
     public static final int GALLERY_WALLET_REQUEST = 3;
-    public static final String PATH_IMG="/sdcard/manwal/image";
+    public static final String PATH_IMG= Environment.getExternalStorageDirectory().getPath()+"/manwal/image";
     public static final int VIEW_TYPE_DAY = 0;
     public static final int VIEW_TYPE_WEEK = 1;
     public static final int VIEW_TYPE_MONTH = 2;

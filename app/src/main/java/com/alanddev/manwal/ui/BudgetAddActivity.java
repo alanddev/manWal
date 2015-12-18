@@ -26,6 +26,7 @@ import com.alanddev.manwal.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class BudgetAddActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
 
@@ -193,20 +194,26 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
         }else if(Float.valueOf(amount)<=0){
             Toast.makeText(this, getResources().getText(R.string.check_amount_zero), Toast.LENGTH_LONG).show();
         }else {
-            budgetController.open();
-            Budget newBudget = new Budget();
-            newBudget.setAmount(Float.valueOf(edtAmout.getText().toString()));
-            newBudget.setCate_id(category.getId());
-            newBudget.setStartdate(Utils.changeDateStr2Str(txtStartDate.getText().toString()));
-            newBudget.setEnddate(Utils.changeDateStr2Str(txtEndDate.getText().toString()));
-            newBudget.setWallet_id(Utils.getWallet_id());
-            if(type==CREATE) {
-                budgetController.create(newBudget);
-            }else if(type==EDIT){
-                newBudget.setId(budget.getId());
-                budgetController.update(newBudget);
+            Date startDt = Utils.changeStr2Date(txtStartDate.getText().toString(),Constant.DATE_FORMAT_PICKER);
+            Date endDt = Utils.changeStr2Date(txtEndDate.getText().toString(),Constant.DATE_FORMAT_PICKER);
+            if(endDt.compareTo(startDt)>0) {
+                budgetController.open();
+                Budget newBudget = new Budget();
+                newBudget.setAmount(Float.valueOf(edtAmout.getText().toString()));
+                newBudget.setCate_id(category.getId());
+                newBudget.setStartdate(Utils.changeDateStr2Str(txtStartDate.getText().toString()));
+                newBudget.setEnddate(Utils.changeDateStr2Str(txtEndDate.getText().toString()));
+                newBudget.setWallet_id(Utils.getWallet_id());
+                if (type == CREATE) {
+                    budgetController.create(newBudget);
+                } else if (type == EDIT) {
+                    newBudget.setId(budget.getId());
+                    budgetController.update(newBudget);
+                }
+                budgetController.close();
+            }else{
+                Toast.makeText(this, "Ngày bắt đầu trước ngày kết thúc", Toast.LENGTH_LONG).show();
             }
-            budgetController.close();
         }
         setResult(Constant.BUDGET_ADD_RESULT, new Intent());
         finish();
