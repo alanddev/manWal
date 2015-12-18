@@ -52,6 +52,7 @@ public class WalletEditActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_wallet_edit));
         transactionController = new TransactionController(this);
         transactionController.open();
         walletController = new WalletController(this);

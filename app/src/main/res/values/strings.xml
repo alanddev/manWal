@@ -435,4 +435,10 @@
 
     <string name="new_transaction_title">Create New Transaction </string>
     <string name="new_transaction">Touch this to create new Transaction </string>
+
+    <string name="new_wallet_title">Create New Wallet </string>
+    <string name="new_wallet_name">Touch this to input name of wallet</string>
+    <string name="new_wallet_amount">Touch this to input amount of wallet</string>
+
+    <string name="db_path">/data/data/com.alanddev.manwal/databases/</string>
 </resources>

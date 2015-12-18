@@ -63,6 +63,7 @@ public class TrendActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_trend));
 
         listViewTrend = (ListView)findViewById(R.id.list_transaction_trend);
         listViewTrendPie = (ListView)findViewById(R.id.list_transaction_trend_pie);

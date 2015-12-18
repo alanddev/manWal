@@ -74,10 +74,12 @@ public class TransactionActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_transaction);
-        //Utils.setLanguage(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_transaction));
 
         mShaPref = Utils.getSharedPreferences(this);
         int viewType = mShaPref.getInt(Constant.VIEW_TYPE, 0);
@@ -317,9 +319,10 @@ public class TransactionActivity extends AppCompatActivity
         textAmt.setText(sAmount);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
-    }
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+//        this.setTitle(getResources().getString(R.string.title_activity_transaction));
+//    }
 }

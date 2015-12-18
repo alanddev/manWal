@@ -51,6 +51,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_transaction_add));
         edtDate = (TextView) findViewById(R.id.edtdate);
         edtDate.setOnClickListener(this);
         edtCate = (TextView)findViewById(R.id.edtcate);

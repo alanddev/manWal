@@ -55,10 +55,11 @@ public class WalletAddActivity extends AppCompatActivity {
         Utils.onActivityCreateSetTheme(this);
         Utils.setLanguage(this);
         setContentView(R.layout.activity_wallet_add);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_wallet_add));
 
         walletController = new WalletController(this);
         walletController.open();
@@ -77,8 +78,8 @@ public class WalletAddActivity extends AppCompatActivity {
         Target viewTarget = new ViewTarget(R.id.txtName, this);
         showcaseView = new ShowcaseView.Builder(this)
                 .setTarget(viewTarget)
-                .setContentTitle("Tao vi")
-                .setContentText("Cham vao day de nhap ten vi")
+                .setContentTitle(getResources().getString(R.string.new_wallet_title))
+                .setContentText(getResources().getString(R.string.new_wallet_name))
                 //.singleShot(42)
                 .withMaterialShowcase()
                 //.useDecorViewAsParent()
@@ -90,7 +91,7 @@ public class WalletAddActivity extends AppCompatActivity {
                             case 0:
                                 showcaseView.setShowcase(new ViewTarget(amountEdit), true);
                                 //setAlpha(0.4f, txtName, amountEdit);
-                                showcaseView.setContentText("Cham vao day de nhap so tien");
+                                showcaseView.setContentText(getResources().getString(R.string.new_wallet_amount));
                                 break;
                             case 1:
                                 showcaseView.hide();

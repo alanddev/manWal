@@ -35,6 +35,7 @@ public class SettingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_settings));
         ListView lvSetting = (ListView)findViewById(R.id.lstSetting);
         final SettingAdapter adapter = new SettingAdapter(this,createData());
         lvSetting.setAdapter(adapter);

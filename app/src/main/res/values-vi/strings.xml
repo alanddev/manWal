@@ -116,4 +116,7 @@
     <string name="exp_category_travelling">Du lịch</string>
     <string name="new_transaction_title">Tạo Giao Dịch</string>
     <string name="new_transaction">Ấn vào đây để tạo giao dịch mới</string>
+    <string name="new_wallet_amount">Ấn vào đây để nhập số tiền trong ví</string>
+    <string name="new_wallet_name">Ấn vào đây để nhập tên ví</string>
+    <string name="new_wallet_title">Tạo Ví </string>
 </resources>

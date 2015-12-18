@@ -116,4 +116,8 @@
     <string name="exp_category_travelling">Travelling</string>
     <string name="new_transaction">Touch this to create new Transaction</string>
     <string name="new_transaction_title">Create New Transaction</string>
+    <string name="all_category_image">all</string>
+    <string name="new_wallet_amount">Touch this to input amount of wallet</string>
+    <string name="new_wallet_name">Touch this to input name of wallet</string>
+    <string name="new_wallet_title">Create New Wallet</string>
 </resources>

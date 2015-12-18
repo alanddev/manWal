@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private Boolean checkDB() {
-        File dbtest = new File("/data/data/com.alanddev.manwal/databases/" + MwSQLiteHelper.DATABASE_NAME);
+        File dbtest = new File(getResources().getString(R.string.db_path) + MwSQLiteHelper.DATABASE_NAME);
         return dbtest.exists();
     }
 
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_man_wal);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().get("NOTIFICATION") == 1) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().get("NOTIFICATION").toString().equals("1")) {
             NotificationManager mNotifyMgr =
                     (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             mNotifyMgr.cancel(NotifyService.GREETNG_ID);

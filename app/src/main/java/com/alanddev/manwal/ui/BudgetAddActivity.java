@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alanddev.manwal.R;
+import com.alanddev.manwal.adapter.CurrencyTextWatcher;
 import com.alanddev.manwal.controller.BudgetController;
 import com.alanddev.manwal.controller.CategoryController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
@@ -58,6 +59,8 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
         txtCate = (TextView)findViewById(R.id.txt_catename);
         txtCate.setOnClickListener(this);
         edtAmout = (EditText)findViewById(R.id.edt_amt);
+        edtAmout.addTextChangedListener(new CurrencyTextWatcher(edtAmout));
+
         imgCate = (ImageView)findViewById(R.id.img_cate);
         budgetController = new BudgetController(this);
         Bundle bundle = getIntent().getExtras();
@@ -189,6 +192,10 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
 
     private void saveBudget(int type) {
         String amount = edtAmout.getText().toString();
+        if (!amount.equals("")|| !amount.equals("0")) {
+            amount = amount.replaceAll(",", "");
+        }
+
         if(amount.equals("")){
             Toast.makeText(this, getResources().getText(R.string.check_amout_exist), Toast.LENGTH_LONG).show();
         }else if(Float.valueOf(amount)<=0){
@@ -199,7 +206,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             if(endDt.compareTo(startDt)>0) {
                 budgetController.open();
                 Budget newBudget = new Budget();
-                newBudget.setAmount(Float.valueOf(edtAmout.getText().toString()));
+                newBudget.setAmount(Float.valueOf(amount));
                 newBudget.setCate_id(category.getId());
                 newBudget.setStartdate(Utils.changeDateStr2Str(txtStartDate.getText().toString()));
                 newBudget.setEnddate(Utils.changeDateStr2Str(txtEndDate.getText().toString()));

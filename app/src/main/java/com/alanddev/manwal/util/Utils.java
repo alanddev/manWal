@@ -56,7 +56,11 @@ public class Utils {
         Configuration configuration;
         Resources res = context.getResources();
         configuration = new Configuration(res.getConfiguration());
-        configuration.locale=getLocale();
+        //configuration.locale=getLocale();
+        String lang = getCurrentLanguage(context);
+        if (lang ==""){lang="en";}
+        Locale locale = new Locale(lang);
+        configuration.locale = locale;
         setLocale(locale);
         res.updateConfiguration(configuration,res.getDisplayMetrics());
     }
@@ -348,7 +352,6 @@ public class Utils {
         SharedPreferences mshare = Utils.getSharedPreferences(context);
         return mshare.getString(Constant.LANGUAGE_CURRENT,"");
     }
-
 
 
 }
