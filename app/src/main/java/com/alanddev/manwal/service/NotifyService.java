@@ -55,8 +55,8 @@ public class NotifyService extends Service {
             }
         }else if(hour>=18&&hour<=20){
             contentText = getResources().getString(R.string.notify_afternoon);
-        }else if(hour>=22&hour<=23){
-            contentText = getResources().getString(R.string.notify_afternoon);
+        }else if(hour>=22&hour<=24){
+            contentText = getResources().getString(R.string.notify_noon);
         }
         if(!contentText.equals("")) {
             NotificationCompat.Builder mBuilder =

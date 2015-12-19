@@ -96,14 +96,14 @@ public class BudgetAdapter extends BaseAdapter {
         viewHolder.budgetdate.setText(Utils.changeDateStr2Str2(budget.getStartdate())+" - "+Utils.changeDateStr2Str2(budget.getEnddate()));
         if(budget.getAmount()>budget.getRealamt()){
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorInflow));
-            viewHolder.budgetAllIncome.setText("Còn lại");
+            viewHolder.budgetAllIncome.setText(mContext.getResources().getString(R.string.budget_letf_title));
             viewHolder.budgetremain.setText(formatter.format(budget.getAmount()-budget.getRealamt())+" ("+(100-progress)+"%)");
         }else{
             viewHolder.budgetremain.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
             viewHolder.budgetAllIncome.setTextColor(mContext.getResources().getColor(R.color.colorOutFlow));
             String sAmountRemain =  formatter.format(budget.getRealamt()- budget.getAmount());
             viewHolder.budgetremain.setText(sAmountRemain+" ("+(progress-100)+"%)");
-            viewHolder.budgetAllIncome.setText("Đã chi vượt quá");
+            viewHolder.budgetAllIncome.setText(mContext.getResources().getString(R.string.budget_spent_over));
         }
 
         viewHolder.budgetamtIncome.setText(formatter.format(budget.getRealamt())+" ("+progress+"%)");

@@ -75,7 +75,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.SelectThemeActivity"
-            android:label="@string/title_activity_select_theme"
+            android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.WalletTransferActivity"

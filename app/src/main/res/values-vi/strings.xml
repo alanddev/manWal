@@ -119,4 +119,7 @@
     <string name="new_wallet_amount">Ấn vào đây để nhập số tiền trong ví</string>
     <string name="new_wallet_name">Ấn vào đây để nhập tên ví</string>
     <string name="new_wallet_title">Tạo Ví </string>
+    <string name="budget_letf_title">Còn lại</string>
+    <string name="budget_spent_title">Đã chi</string>
+    <string name="budget_spent_over">Đã chi vượt quá</string>
 </resources>

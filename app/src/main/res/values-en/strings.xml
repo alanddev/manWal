@@ -120,4 +120,7 @@
     <string name="new_wallet_amount">Touch this to input amount of wallet</string>
     <string name="new_wallet_name">Touch this to input name of wallet</string>
     <string name="new_wallet_title">Create New Wallet</string>
+    <string name="budget_letf_title">Left</string>
+    <string name="budget_spent_title">Spent</string>
+    <string name="budget_spent_over">Spent Over</string>
 </resources>

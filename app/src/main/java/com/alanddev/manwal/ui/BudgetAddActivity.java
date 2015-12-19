@@ -257,7 +257,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
     }
 
     private Boolean changeData(){
-        Float amount = Float.valueOf(edtAmout.getText().toString());
+        Float amount = Float.valueOf(edtAmout.getText().toString().replaceAll(",", ""));
         String catename = txtCate.getText().toString();
         String startDt = Utils.changeDateStr2Str(txtStartDate.getText().toString());
         String endDt = Utils.changeDateStr2Str(txtEndDate.getText().toString());

@@ -276,6 +276,9 @@
         <item>JPY</item>
         <item>EUR</item>
         <item>GBP</item>
+        <item>INR</item>
+        <item>SGD</item>
+        <item>CAD</item>
     </string-array>
 
     <string-array name="name_currency_array">
@@ -284,6 +287,9 @@
         <item>Yen</item>
         <item>Euro</item>
         <item>Pound</item>
+        <item>Rupee</item>
+        <item>Singapore dollar</item>
+        <item>Canadian dollar</item>
     </string-array>
 
     <string-array name="symbol_currency_array">
@@ -292,6 +298,9 @@
         <item>¥</item>
         <item>€</item>
         <item>£</item>
+        <item>₹</item>
+        <item>S$</item>
+        <item>C$</item>
     </string-array>
 
     <string-array name="settings">
