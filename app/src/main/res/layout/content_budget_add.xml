@@ -36,7 +36,8 @@
             android:layout_toRightOf="@+id/img_cate"
             android:layout_below="@+id/txt_catename"
             android:layout_marginTop="15dp"
-            android:hint="@string/budget_amount"/>
+            android:hint="@string/budget_amount"
+            android:inputType="numberDecimal"/>
     </RelativeLayout>
 
     <RelativeLayout

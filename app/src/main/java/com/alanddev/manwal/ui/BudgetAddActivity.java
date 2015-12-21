@@ -26,6 +26,8 @@ import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -87,7 +89,9 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             txtStartDate.setText(Utils.changeDateStr2Str2(budget.getStartdate()));
             txtEndDate.setText(Utils.changeDateStr2Str2(budget.getEnddate()));
             txtCate.setText(budget.getCate_name());
-            edtAmout.setText(budget.getAmount()+"");
+            NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+            String sAmount =  formatter.format(budget.getAmount());
+            edtAmout.setText(sAmount);
             imgCate.setImageResource(getResources().getIdentifier("ic_category_" + budget.getCate_img(), "mipmap", getPackageName()));
             category = new Category();
             category.setId(budget.getCate_id());
