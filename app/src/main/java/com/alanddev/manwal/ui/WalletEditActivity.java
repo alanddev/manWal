@@ -103,7 +103,8 @@ public class WalletEditActivity extends AppCompatActivity {
         String sAmount = amountEdit.getText().toString();
 
         if (!sAmount.equals("")|| !sAmount.equals("0")) {
-            sAmount = sAmount.replaceAll(",", "");
+//            sAmount = sAmount.replaceAll(",", "");
+            sAmount = Utils.getFormatCurrency(sAmount);
             amount = Float.valueOf(sAmount);
         }
 

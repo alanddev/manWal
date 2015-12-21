@@ -100,7 +100,8 @@ public class WalletTransferActivity extends AppCompatActivity {
             String sAmount = amountEdit.getText().toString();
             float amount = 0;
             if (!sAmount.equals("")|| !sAmount.equals("0")) {
-                sAmount = sAmount.replaceAll(",", "");
+//                sAmount = sAmount.replaceAll(",", "");
+                sAmount = Utils.getFormatCurrency(sAmount);
                 amount = Float.valueOf(sAmount);
             }
             TransactionController transactionController = new TransactionController(this);

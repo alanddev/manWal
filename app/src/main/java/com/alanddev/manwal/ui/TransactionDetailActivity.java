@@ -178,7 +178,8 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
             TransactionDetail transaction = new TransactionDetail();
 
             if (!amount.equals("")|| !amount.equals("0")) {
-                amount = amount.replaceAll(",", "");
+//                amount = amount.replaceAll(",", "");
+                amount = Utils.getFormatCurrency(amount);
             }
             transaction.setAmountt(Float.valueOf(amount));
             transaction.setNote(edtDes.getText().toString());

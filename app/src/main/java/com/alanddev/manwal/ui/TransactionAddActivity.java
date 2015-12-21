@@ -121,7 +121,8 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
 
             String sAmount = edtAmout.getText().toString();
             if (!sAmount.equals("")|| !sAmount.equals("0")) {
-                sAmount = sAmount.replaceAll(",", "");
+//                sAmount = sAmount.replaceAll(",", "");
+                sAmount = Utils.getFormatCurrency(sAmount);
             }
             transaction.setAmountt(Float.valueOf(sAmount));
             transaction.setNote(edtDes.getText().toString());

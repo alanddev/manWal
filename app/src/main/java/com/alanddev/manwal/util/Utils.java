@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,6 +53,20 @@ public class Utils {
     public static void setLocale(Locale locale) {
         Utils.locale = locale;
     }
+
+    public static String getFormatCurrency(String sAmount){
+        DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance();
+        String separator = String.valueOf(format.getDecimalFormatSymbols().getDecimalSeparator());
+        DecimalFormat formatter;
+        String value;
+        if (separator.equals(",")){
+            value = sAmount.replaceAll("[.]", "");
+        }else{
+            value = sAmount.replaceAll(",", "");
+        }
+        return value;
+    }
+
 
     public static void setLanguage(Context context){
         Configuration configuration;
