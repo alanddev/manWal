@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.ui.MainActivity;
+import com.alanddev.manwal.util.Utils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class NotifyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Utils.setLanguage(this);
         makeNotificationComplete();
         return Service.START_STICKY;
     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ManWal</string>
     <string name="action_add">Thêm ví</string>
     <string name="action_save">Xong</string>
     <string name="action_settings">Thiết lập</string>
