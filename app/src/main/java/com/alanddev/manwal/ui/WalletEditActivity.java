@@ -113,8 +113,6 @@ public class WalletEditActivity extends AppCompatActivity {
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_name),Toast.LENGTH_LONG).show();
         } else if (currency.equals("")){
             Toast.makeText(this,getResources().getString(R.string.warning_wallet_cur),Toast.LENGTH_LONG).show();
-        }else if (amount == 0.0f){
-            Toast.makeText(this,getResources().getString(R.string.warning_wallet_amount),Toast.LENGTH_LONG).show();
         }else {
             //db.createWallet();
             walletController = new WalletController(getApplicationContext());
