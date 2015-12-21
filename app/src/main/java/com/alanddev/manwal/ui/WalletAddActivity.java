@@ -75,33 +75,33 @@ public class WalletAddActivity extends AppCompatActivity {
         amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
 
 
-        Target viewTarget = new ViewTarget(R.id.txtName, this);
-        showcaseView = new ShowcaseView.Builder(this)
-                .setTarget(viewTarget)
-                .setContentTitle(getResources().getString(R.string.new_wallet_title))
-                .setContentText(getResources().getString(R.string.new_wallet_name))
-                //.singleShot(42)
-                .withMaterialShowcase()
-                //.useDecorViewAsParent()
-                .setStyle(R.style.CustomShowcaseTheme3)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (counter) {
-                            case 0:
-                                showcaseView.setShowcase(new ViewTarget(amountEdit), true);
-                                //setAlpha(0.4f, txtName, amountEdit);
-                                showcaseView.setContentText(getResources().getString(R.string.new_wallet_amount));
-                                break;
-                            case 1:
-                                showcaseView.hide();
-                                break;
-                        }
-                        counter++;
-                    }
-                })
-                //.hideOnTouchOutside()
-                .build();
+//        Target viewTarget = new ViewTarget(R.id.txtName, this);
+//        showcaseView = new ShowcaseView.Builder(this)
+//                .setTarget(viewTarget)
+//                .setContentTitle(getResources().getString(R.string.new_wallet_title))
+//                .setContentText(getResources().getString(R.string.new_wallet_name))
+//                //.singleShot(42)
+//                .withMaterialShowcase()
+//                //.useDecorViewAsParent()
+//                .setStyle(R.style.CustomShowcaseTheme3)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        switch (counter) {
+//                            case 0:
+//                                showcaseView.setShowcase(new ViewTarget(amountEdit), true);
+//                                //setAlpha(0.4f, txtName, amountEdit);
+//                                showcaseView.setContentText(getResources().getString(R.string.new_wallet_amount));
+//                                break;
+//                            case 1:
+//                                showcaseView.hide();
+//                                break;
+//                        }
+//                        counter++;
+//                    }
+//                })
+//                //.hideOnTouchOutside()
+//                .build();
         //showcaseView.setButtonText("Test");
 
 
