@@ -195,7 +195,8 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
     private void saveBudget(int type) {
         String amount = edtAmout.getText().toString();
         if (!amount.equals("")|| !amount.equals("0")) {
-            amount = amount.replaceAll(",", "");
+            //amount = amount.replaceAll(",", "");
+            amount = Utils.getFormatCurrency(amount);
         }
 
         if(amount.equals("")){
@@ -208,6 +209,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             if(endDt.compareTo(startDt)>0) {
                 budgetController.open();
                 Budget newBudget = new Budget();
+
                 newBudget.setAmount(Float.valueOf(amount));
                 newBudget.setCate_id(category.getId());
                 newBudget.setStartdate(Utils.changeDateStr2Str(txtStartDate.getText().toString()));
