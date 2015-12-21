@@ -38,15 +38,17 @@ public class SelectThemeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_settings));
         ListView lvTheme = (ListView)findViewById(R.id.lstthemes);
         List<Theme> datas;
         int type = getIntent().getExtras().getInt("SETTING_EXTRA",0);
         if(type==Constant.CHANGE_THEME_ID){
             datas=createThemeData();
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_theme));
         }else if(type==Constant.CHANGE_NAV_ID) {
             datas = createHeaderData();
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_menu));
         }else if(type ==Constant.CHANGE_LANGUAGE_ID){
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_language));
             datas = createLanguageData();
         }else{
             datas= new ArrayList<>();

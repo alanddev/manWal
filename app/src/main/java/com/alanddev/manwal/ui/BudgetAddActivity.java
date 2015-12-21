@@ -69,6 +69,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             budgetId = bundle.getInt(MwSQLiteHelper.COLUMN_BUDGET_ID, 0);
         }
         if(budgetId==0){
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_budget_add));
             CategoryController categoryController = new CategoryController(this);
             categoryController.open();
             category = categoryController.getByName(txtCate.getText().toString());
@@ -79,6 +80,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
             txtEndDate.setText(Utils.changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_PICKER));
         }else{
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_budget_update));
             budgetController.open();
             budget = budgetController.getBudgetById(budgetId);
             budgetController.close();

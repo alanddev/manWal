@@ -47,12 +47,16 @@
     <string name="select_category">Chọn loại giao dịch</string>
     <string name="setting">Cài đặt</string>
     <string name="title_activity_budget">Ngân sách</string>
+    <string name="title_activity_budget_add">Thêm ngân sách</string>
+    <string name="title_activity_budget_update">Chỉnh sửa ngân sách</string>
     <string name="title_activity_category">Chọn nhóm</string>
     <string name="title_activity_list_currency">Đồng tiền</string>
     <string name="title_activity_report">Báo cáo</string>
     <string name="title_activity_report_expense">Chi tiêu</string>
     <string name="title_activity_report_income">Thu nhập</string>
     <string name="title_activity_select_theme">Lựa chọn Theme</string>
+    <string name="title_activity_select_menu">Lựa chọn hình nền menu</string>
+    <string name="title_activity_select_language">Lựa chọn ngôn ngữ</string>
     <string name="title_activity_settings">Cài đặt</string>
     <string name="title_activity_transaction">Giao dịch</string>
     <string name="warning_wallet_name">Chưa có tên ví</string>
@@ -76,6 +80,7 @@
     <string name="title_activity_wallet_add">Thêm ví</string>
     <string name="title_activity_trend">Báo cáo tổng hợp</string>
     <string name="title_activity_transaction_add">Thêm giao dịch</string>
+    <string name="title_activity_transaction_detail">Chi tiết giao dịch</string>
     <string name="banner_ad_unit_id">ca-app-pub-6762857180801550/3342505427</string>
     <string name="notify_afternoon">Chào buổi tối, Đừng quên cập nhật chi tiêu trong ngày của bạn nhé</string>
     <string name="notify_morning">Chào buổi sáng, Chúc bạn một ngày mới nhiều niềm vui</string>

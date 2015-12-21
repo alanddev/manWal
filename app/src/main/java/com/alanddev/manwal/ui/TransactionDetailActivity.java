@@ -49,6 +49,7 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_transaction_detail));
         long transId = getIntent().getExtras().getLong(MwSQLiteHelper.COLUMN_TRANS_ID, 0);
         controller = new TransactionController(this);
         transactionDetail = getTransaction(transId);
