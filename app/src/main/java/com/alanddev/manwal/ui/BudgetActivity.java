@@ -32,6 +32,8 @@ import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.model.Budgets;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,12 +80,16 @@ public class BudgetActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),BudgetAddActivity.class);
-                startActivityForResult(intent,Constant.BUDGET_ADD_REQUEST);
+                Intent intent = new Intent(getApplicationContext(), BudgetAddActivity.class);
+                startActivityForResult(intent, Constant.BUDGET_ADD_REQUEST);
             }
         });
 
         mViewPager.setCurrentItem(0);
+
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
     }
 

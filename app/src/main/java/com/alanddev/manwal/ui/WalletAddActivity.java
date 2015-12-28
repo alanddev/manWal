@@ -31,6 +31,8 @@ import com.alanddev.manwal.util.Utils;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,6 +75,10 @@ public class WalletAddActivity extends AppCompatActivity {
 
         amountEdit = (EditText)findViewById(R.id.txtAmount);
         amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
+
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 //        Target viewTarget = new ViewTarget(R.id.txtName, this);

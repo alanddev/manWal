@@ -39,8 +39,10 @@ import com.alanddev.manwal.util.Utils;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -69,6 +71,7 @@ public class TransactionActivity extends AppCompatActivity
     private final int REQUEST_SETTING = 100;
     private final int REQUEST_WALLET_CHANGE = 101;
     private NavigationView navigationView;
+    //InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,19 +116,28 @@ public class TransactionActivity extends AppCompatActivity
         /*navigationView.get
         ImageView imgView = (ImageView) findViewById(R.id.imageView);
         imgView.setImageResource(R.mipmap.ic_category_debt);*/
-        /*AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdView mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+        mAdView.loadAd(adRequest);
 
-        Target viewTarget = new ViewTarget(R.id.fab, this);
+        /*Target viewTarget = new ViewTarget(R.id.fab, this);
         new ShowcaseView.Builder(this)
                 .setTarget(viewTarget)
                 .setContentTitle(getResources().getText(R.string.new_transaction_title))
                 .setContentText(getResources().getText(R.string.new_transaction))
                 .singleShot(42)
                 .setStyle(R.style.CustomShowcaseTheme2)
-                .build();
+                .build();*/
 
+        /*mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.inters_ad_unit_id));
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+            }
+        });*/
     }
 
     @Override

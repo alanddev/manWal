@@ -21,6 +21,8 @@ import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -62,6 +64,10 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         edtDes = (EditText)findViewById(R.id.edtdes);
         imgCate = (ImageView)findViewById(R.id.imgcate);
         transController = new TransactionController(getApplicationContext());
+
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

@@ -24,6 +24,8 @@ import com.alanddev.manwal.model.Category;
 import com.alanddev.manwal.model.TransactionDetail;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.DecimalFormat;
@@ -73,6 +75,10 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
 
         imgCate = (ImageView)findViewById(R.id.imgcate);
         imgCate.setImageResource(getResources().getIdentifier("ic_category_"+transactionDetail.getCate_img(),"mipmap",getPackageName()));
+
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
     }
 

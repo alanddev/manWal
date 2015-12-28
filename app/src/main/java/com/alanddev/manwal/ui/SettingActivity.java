@@ -16,6 +16,8 @@ import com.alanddev.manwal.adapter.SettingAdapter;
 import com.alanddev.manwal.model.Setting;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,27 +44,31 @@ public class SettingActivity extends AppCompatActivity {
         lvSetting.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int itemId = (int)adapter.getItemId(position);
+                int itemId = (int) adapter.getItemId(position);
                 Intent intent;
-                switch (itemId){
+                switch (itemId) {
                     case Constant.CHANGE_THEME_ID:
-                        intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
-                        intent.putExtra("SETTING_EXTRA",Constant.CHANGE_THEME_ID);
+                        intent = new Intent(getApplicationContext(), SelectThemeActivity.class);
+                        intent.putExtra("SETTING_EXTRA", Constant.CHANGE_THEME_ID);
                         startActivityForResult(intent, REQUEST_CHANGE_THEME);
                         break;
                     case Constant.CHANGE_NAV_ID:
-                        intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
-                        intent.putExtra("SETTING_EXTRA",Constant.CHANGE_NAV_ID);
+                        intent = new Intent(getApplicationContext(), SelectThemeActivity.class);
+                        intent.putExtra("SETTING_EXTRA", Constant.CHANGE_NAV_ID);
                         startActivityForResult(intent, REQUEST_CHANGE_NAV);
                         break;
                     case Constant.CHANGE_LANGUAGE_ID:
-                        intent = new Intent(getApplicationContext(),SelectThemeActivity.class);
-                        intent.putExtra("SETTING_EXTRA",Constant.CHANGE_LANGUAGE_ID);
+                        intent = new Intent(getApplicationContext(), SelectThemeActivity.class);
+                        intent.putExtra("SETTING_EXTRA", Constant.CHANGE_LANGUAGE_ID);
                         startActivityForResult(intent, REQUEST_CHANGE_LANGUAGE);
                         break;
                 }
             }
         });
+
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
     }
 

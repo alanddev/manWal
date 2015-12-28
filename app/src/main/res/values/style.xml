@@ -10,9 +10,9 @@
 
     <style name="Default_Theme">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorDodgerBlue</item>
+        <item name="colorPrimaryDark">@color/colorDodgerBlue</item>
+        <item name="colorAccent">@color/colorDodgerBlue</item>
     </style>
 
     <style name="Tomato_Theme">

@@ -146,8 +146,6 @@
     <string name="overview_click_me">Touch to see full list</string>
     <string name="inflow_txt">Income</string>
     <string name="outflow_txt">Expense</string>
-
-    <string name="banner_ad_unit_id">ca-app-pub-6762857180801550/3342505427</string>
     <string name="future">Future</string>
     <string name="onweek">This week</string>
     <string name="preweek">Last week</string>
@@ -450,4 +448,7 @@
     <string name="new_wallet_amount">Touch this to input amount of wallet</string>
 
     <string name="db_path">/data/data/com.alanddev.manwal/databases/</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-6762857180801550/2923514625</string>
+    <string name="inters_ad_unit_id">ca-app-pub-6762857180801550/4400247823</string>
 </resources>

@@ -34,6 +34,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -84,6 +86,10 @@ public class ReportActivity extends AppCompatActivity {
 
         Utils.ListUtils.setDynamicHeight(listViewTransExpense);
         Utils.ListUtils.setDynamicHeight(listViewTransIncome);
+
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
     }
