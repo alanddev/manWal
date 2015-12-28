@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         if (!theme.equals("")) {
             Utils.changeToTheme(theme);
         } else {
-            Utils.changeToTheme("Default_Theme");
+            Utils.setSharedPreferencesValue(getApplicationContext(), Constant.THEME_CURRENT, "DodgerBlue_Theme");
+            Utils.changeToTheme("DodgerBlue_Theme");
         }
 
         String naviheader = Utils.getCurrentNavHeader(this);

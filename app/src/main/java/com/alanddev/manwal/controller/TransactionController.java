@@ -666,7 +666,6 @@ public class TransactionController implements IDataSource {
         Date dateEnd = dates.get(1);
         String sDateStart =  new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
         String sDateEnd =  new SimpleDateFormat("yyyy-MM-dd").format(dateEnd);
-
         StringBuffer sql = new StringBuffer("SELECT SUM( t." +dbHelper.COLUMN_TRANS_AMOUNT +")" + ",c."+ dbHelper.COLUMN_CATE_ID +
                 ",c."+ dbHelper.COLUMN_CATE_NAME +  ",c."+ dbHelper.COLUMN_CATE_IMG +
                 " FROM " + dbHelper.TABLE_TRANSACTION +" as t JOIN " +
@@ -675,7 +674,6 @@ public class TransactionController implements IDataSource {
                 " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " >= '"+ sDateStart +"'"+
                 " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " <= '"+ sDateEnd +"'"+
                 " and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type + " group by (c." + dbHelper.COLUMN_CATE_ID + ")" );
-
         Cursor cursor = database.rawQuery(sql.toString(), null);
 
         cursor.moveToFirst();
@@ -812,13 +810,15 @@ public class TransactionController implements IDataSource {
                 " and t." + dbHelper.COLUMN_TRANS_DISPLAY_DATE + " <= '"+ sDateEnd +"'"+
                 " and c." + dbHelper.COLUMN_CATE_TYPE +"=" + type + " group by (t." + dbHelper.COLUMN_WALLET_ID + ")" );
 
+        Log.d("DDDDDDDD",sql.toString());
+
         Cursor cursor = database.rawQuery(sql.toString(), null);
 
         cursor.moveToFirst();
         float amount = 0;
         ArrayList<Trend> trans = new ArrayList<Trend>();
         while (!cursor.isAfterLast()) {
-            amount = cursor.getFloat(0);
+            amount = amount + cursor.getFloat(0);
             cursor.moveToNext();
         }
 
