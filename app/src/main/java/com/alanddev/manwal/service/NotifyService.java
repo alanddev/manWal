@@ -45,7 +45,7 @@ public class NotifyService extends Service {
         int dayofweek = calendar.get(Calendar.DAY_OF_WEEK);
         int dayofmonth = calendar.get(Calendar.DAY_OF_MONTH);
         int dayofyear = calendar.get(Calendar.DAY_OF_YEAR);
-        if(hour>=7&&hour<=9){
+        if(hour>=7&&hour<=11){
             if(dayofyear==1){
                 contentText = getResources().getString(R.string.notify_startyear);
             }else if(dayofmonth==1){
@@ -55,10 +55,8 @@ public class NotifyService extends Service {
             }else {
                 contentTitle = getResources().getString(R.string.notify_morning);
             }
-        }else if(hour>=18&&hour<=20){
+        }else if(hour>=18&&hour<=22){
             contentText = getResources().getString(R.string.notify_afternoon);
-        }else if(hour>=22&hour<=24){
-            contentText = getResources().getString(R.string.notify_noon);
         }
         if(!contentText.equals("")) {
             NotificationCompat.Builder mBuilder =

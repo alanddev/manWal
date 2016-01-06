@@ -88,7 +88,6 @@ public class WalletController implements IDataSource {
         int count  = cursor.getCount();
         cursor.close();
         return count;
-
     }
     @Override
     public List<Model> getAll() {

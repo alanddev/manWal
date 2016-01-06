@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.controller.CategoryController;
@@ -31,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
                 init();
                 if (checkDB()) {
                     Utils.setWallet_id(Utils.getSharedPreferencesValue(getApplicationContext(), Constant.WALLET_ID));
-                    sleep(Constant.SPLASH_DISPLAY_LONG);
+                    sleep(Constant.SPLASH_DISPLAY_SHORT);
                 } else {
                     initfor1st();
-                    sleep(Constant.SPLASH_DISPLAY_SHORT);
+                    sleep(Constant.SPLASH_DISPLAY_LONG);
                 }
                 if (checkWallet()) {
-                    Intent i = new Intent(getBaseContext(), TransactionActivity.class);
+                    Intent i = new Intent(getApplicationContext(), TransactionActivity.class);
                     startActivity(i);
                 } else if(Utils.getCurrentLanguage(getApplicationContext()).equals("")){
                     Intent intent = new Intent(MainActivity.this, SelectThemeActivity.class);
@@ -62,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private Boolean checkWallet() {
         WalletController controller = new WalletController(this);
         controller.open();
-        return (controller.getCount() > 0);
+        Boolean isWallet = controller.getCount()>0;
+        controller.close();
+        return isWallet;
     }
 
     private void initfor1st() {
@@ -89,9 +92,7 @@ public class MainActivity extends AppCompatActivity {
         if (naviheader.equals("")) {
             Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_HEADER_CURRENT, getString(R.string.navi_header_default));
         }
-        setContentView(R.layout.activity_man_wal);
-
-        if (getIntent().getExtras() != null && getIntent().getExtras().get("NOTIFICATION").toString().equals("1")) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().get("NOTIFICATION")!=null && getIntent().getExtras().get("NOTIFICATION").toString().equals("1")) {
             NotificationManager mNotifyMgr =
                     (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             mNotifyMgr.cancel(NotifyService.GREETNG_ID);
