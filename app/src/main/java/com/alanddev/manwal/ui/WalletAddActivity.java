@@ -49,6 +49,7 @@ public class WalletAddActivity extends AppCompatActivity {
     EditText amountEdit;
     EditText txtName;
     private int counter = 0;
+    private AdView mAdView;
 
     private ShowcaseView showcaseView;
     @Override
@@ -76,7 +77,7 @@ public class WalletAddActivity extends AppCompatActivity {
         amountEdit = (EditText)findViewById(R.id.txtAmount);
         amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -220,6 +221,7 @@ public class WalletAddActivity extends AppCompatActivity {
         if(walletController!=null) {
             walletController.open();
         }
+        mAdView.resume();
         super.onResume();
     }
 
@@ -228,6 +230,7 @@ public class WalletAddActivity extends AppCompatActivity {
         if(walletController!=null) {
             walletController.close();
         }
+        mAdView.pause();
         super.onPause();
     }
 
@@ -283,6 +286,12 @@ public class WalletAddActivity extends AppCompatActivity {
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, Constant.GALLERY_WALLET_REQUEST);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 
 

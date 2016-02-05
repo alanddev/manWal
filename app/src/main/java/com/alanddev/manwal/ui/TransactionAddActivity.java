@@ -37,6 +37,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
 
     private Category category;
     private TransactionController transController;
+    AdView mAdView;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -65,7 +66,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         imgCate = (ImageView)findViewById(R.id.imgcate);
         transController = new TransactionController(getApplicationContext());
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -144,7 +145,7 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
 
     public void onDateSet(DatePickerDialog view, int year, int month, int day) {
         String dateStr = day + "/" + (month + 1) + "/" + year;
-        edtDate.setText(Utils.getDayView(this,Utils.changeStr2Date(dateStr,Constant.DATE_FORMAT_PICKER)));
+        edtDate.setText(Utils.getDayView(this, Utils.changeStr2Date(dateStr, Constant.DATE_FORMAT_PICKER)));
     }
 
     public void showDatePickerDialog(View v) {
@@ -169,5 +170,22 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         if(v.getId()==R.id.edtdate){
             showDatePickerDialog(v);
         }
+    }
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 }

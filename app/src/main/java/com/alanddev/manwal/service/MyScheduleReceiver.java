@@ -13,7 +13,7 @@ public class MyScheduleReceiver extends BroadcastReceiver {
     }
 
     // restart service every 30 seconds
-    private static final long REPEAT_TIME = 1000 * 60 * 60 * 5;
+    private static final long REPEAT_TIME = 1000 * 60 * 60 * 12;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -24,7 +24,7 @@ public class MyScheduleReceiver extends BroadcastReceiver {
                 PendingIntent.FLAG_CANCEL_CURRENT);
         Calendar cal = Calendar.getInstance();
         // start 5h seconds after boot completed
-        cal.add(Calendar.HOUR, 5);
+        cal.add(Calendar.HOUR, 12);
         service.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                 cal.getTimeInMillis(), REPEAT_TIME, pending);
     }

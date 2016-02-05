@@ -35,8 +35,10 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +57,8 @@ public class TrendActivity extends AppCompatActivity {
     int toMonth;
     int fromMonth;
     int option;
+    private InterstitialAd mInterstitialAd;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +107,19 @@ public class TrendActivity extends AppCompatActivity {
 //        viewGroup.removeView(chartPie);
         //viewGroup.addView(chart2);
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.inters_ad_unit_id));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+            }
+        });
 
     }
 
@@ -130,27 +144,25 @@ public class TrendActivity extends AppCompatActivity {
                 R.array.type_array, android.R.layout.simple_spinner_item);
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapterType);
-        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if (selectedItem.equals(getResources().getString(R.string.type_array_expense))) {
                     option = Constant.TREND_TYPE_EXPENSE;
-                    getData(chart, option, fromMonth,toMonth,  year,listViewTrend);
+                    getData(chart, option, fromMonth, toMonth, year, listViewTrend);
                     getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
-                }else if(selectedItem.equals(getResources().getString(R.string.type_array_income))){
+                } else if (selectedItem.equals(getResources().getString(R.string.type_array_income))) {
                     option = Constant.TREND_TYPE_INCOME;
-                    getData(chart, option, fromMonth,toMonth, year,listViewTrend);
+                    getData(chart, option, fromMonth, toMonth, year, listViewTrend);
                     getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
-                }else if(selectedItem.equals(getResources().getString(R.string.type_array_balance))){
+                } else if (selectedItem.equals(getResources().getString(R.string.type_array_balance))) {
                     option = Constant.TREND_TYPE_BALANCE;
-                    getData(chart, option, fromMonth,toMonth, year,listViewTrend);
+                    getData(chart, option, fromMonth, toMonth, year, listViewTrend);
                     getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
                 }
             }
 
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -177,7 +189,7 @@ public class TrendActivity extends AppCompatActivity {
                 String month = temps[0];
                 fromMonth = Integer.valueOf(month);
                 getData(chart, option, fromMonth, toMonth, year, listViewTrend);
-                getDataPie(chartPie,option,fromMonth,toMonth,year,listViewTrendPie);
+                getDataPie(chartPie, option, fromMonth, toMonth, year, listViewTrendPie);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -241,7 +253,7 @@ public class TrendActivity extends AppCompatActivity {
         if (option != Constant.TREND_TYPE_BALANCE) {
             trans = transactionController.getAmountCategoryTypeByMonths(option, Utils.getWallet_id(), monthBegin, monthEnd, year);
         }
-        setData(chart,trans);
+        setData(chart, trans);
         listView.setAdapter(new TransactionSumAdapter(this, trans));
         Utils.ListUtils.setDynamicHeight(listView);
     }
@@ -322,6 +334,7 @@ public class TrendActivity extends AppCompatActivity {
         if(transactionController!=null){
             transactionController.close();
         }
+        mAdView.pause();
     }
 
     @Override
@@ -330,5 +343,13 @@ public class TrendActivity extends AppCompatActivity {
         if(transactionController!=null){
             transactionController.open();
         }
+        mAdView.resume();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 }

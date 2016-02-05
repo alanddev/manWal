@@ -48,6 +48,7 @@ public class ReportActivity extends AppCompatActivity {
     private TransactionController transactionController;
     private Date dateReport;
     private int typeReport;
+    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class ReportActivity extends AppCompatActivity {
         Utils.ListUtils.setDynamicHeight(listViewTransExpense);
         Utils.ListUtils.setDynamicHeight(listViewTransIncome);
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -120,7 +121,6 @@ public class ReportActivity extends AppCompatActivity {
             typeReport = b.getInt(Constant.VIEW_TYPE, 0);
             String dateStr = b.getString(Constant.PUT_EXTRA_DATE);
             dateReport = Utils.changeStr2Date(dateStr, Constant.DATE_FORMAT_DB);
-            Log.d("AAAAAAAAA", typeReport + " " + dateStr);
         }else{
             typeReport = Constant.VIEW_TYPE_DAY;
             dateReport = new Date();
@@ -223,5 +223,22 @@ public class ReportActivity extends AppCompatActivity {
         l.setYEntrySpace(5);
     }
 
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
+    }
 
 }

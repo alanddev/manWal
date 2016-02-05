@@ -44,6 +44,7 @@ public class WalletEditActivity extends AppCompatActivity {
     // Full path of image
     String imagePath = "";
     int walletId;
+    AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class WalletEditActivity extends AppCompatActivity {
 
         getData();
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -168,6 +169,7 @@ public class WalletEditActivity extends AppCompatActivity {
         if(transactionController!=null) {
             transactionController.open();
         }
+        mAdView.resume();
         super.onResume();
     }
 
@@ -179,6 +181,7 @@ public class WalletEditActivity extends AppCompatActivity {
         if(transactionController!=null) {
             transactionController.close();
         }
+        mAdView.pause();
         super.onPause();
     }
 
@@ -277,6 +280,11 @@ public class WalletEditActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent , Constant.GALLERY_WALLET_REQUEST );
     }
 
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
+    }
 
 
 

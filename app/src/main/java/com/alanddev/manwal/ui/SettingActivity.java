@@ -27,7 +27,7 @@ public class SettingActivity extends AppCompatActivity {
     private final int REQUEST_CHANGE_THEME = 1;
     private final int REQUEST_CHANGE_NAV = 2;
     private final int REQUEST_CHANGE_LANGUAGE = 3;
-
+    private  AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -109,6 +109,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        mAdView.resume();
         super.onResume();
     }
 
@@ -130,5 +131,17 @@ public class SettingActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 }

@@ -46,6 +46,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
     private Budget budget;
     private final int CREATE = 0;
     private final int EDIT = 1;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             category.setName(budget.getCate_name());
         }
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -281,5 +282,23 @@ public class BudgetAddActivity extends AppCompatActivity implements View.OnClick
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 }

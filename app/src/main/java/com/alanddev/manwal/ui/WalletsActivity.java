@@ -32,6 +32,9 @@ import java.util.List;
 //import com.alanddev.manwal.helper.Constants;
 
 public class WalletsActivity extends AppCompatActivity {
+
+    AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,7 @@ public class WalletsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_wallets));
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -91,11 +94,13 @@ public class WalletsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         prepareData();
+        mAdView.resume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
+        mAdView.pause();
         super.onPause();
     }
 
@@ -131,6 +136,12 @@ public class WalletsActivity extends AppCompatActivity {
 
         walletController.close();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 
 }

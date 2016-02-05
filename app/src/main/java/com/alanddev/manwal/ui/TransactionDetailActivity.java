@@ -41,7 +41,7 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
     private EditText edtAmout;
     private EditText edtDes;
     private ImageView imgCate;
-
+    private AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +76,7 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
         imgCate = (ImageView)findViewById(R.id.imgcate);
         imgCate.setImageResource(getResources().getIdentifier("ic_category_"+transactionDetail.getCate_img(),"mipmap",getPackageName()));
 
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -209,6 +209,7 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
         if(controller!=null) {
             controller.close();
         }
+        mAdView.pause();
         super.onPause();
     }
 
@@ -250,5 +251,17 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
     }
 }

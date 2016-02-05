@@ -71,7 +71,8 @@ public class TransactionActivity extends AppCompatActivity
     private final int REQUEST_SETTING = 100;
     private final int REQUEST_WALLET_CHANGE = 101;
     private NavigationView navigationView;
-    //InterstitialAd mInterstitialAd;
+    private InterstitialAd mInterstitialAd;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class TransactionActivity extends AppCompatActivity
         /*navigationView.get
         ImageView imgView = (ImageView) findViewById(R.id.imageView);
         imgView.setImageResource(R.mipmap.ic_category_debt);*/
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+        mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -129,15 +130,16 @@ public class TransactionActivity extends AppCompatActivity
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .build();*/
 
-        /*mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.inters_ad_unit_id));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener() {
             public void onAdLoaded() {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                 }
             }
-        });*/
+        });
     }
 
     @Override
@@ -241,11 +243,6 @@ public class TransactionActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -337,4 +334,22 @@ public class TransactionActivity extends AppCompatActivity
 //        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
 //        this.setTitle(getResources().getString(R.string.title_activity_transaction));
 //    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
+    }
 }
