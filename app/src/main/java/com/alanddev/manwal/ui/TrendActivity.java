@@ -57,7 +57,7 @@ public class TrendActivity extends AppCompatActivity {
     int toMonth;
     int fromMonth;
     int option;
-    private InterstitialAd mInterstitialAd;
+    //private InterstitialAd mInterstitialAd;
     private AdView mAdView;
 
     @Override
@@ -110,7 +110,7 @@ public class TrendActivity extends AppCompatActivity {
         mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        mInterstitialAd = new InterstitialAd(this);
+        /*mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.inters_ad_unit_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener() {
@@ -119,7 +119,7 @@ public class TrendActivity extends AppCompatActivity {
                     mInterstitialAd.show();
                 }
             }
-        });
+        });*/
 
     }
 

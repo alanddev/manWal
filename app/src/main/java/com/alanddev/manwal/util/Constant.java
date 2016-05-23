@@ -49,9 +49,17 @@ public class Constant {
 
     public static final int CHANGE_THEME_ID =0;
     public static final int CHANGE_NAV_ID =1;
-    public static final int CHANGE_LANGUAGE_ID = 2;
+    public static final int CHANGE_BACK_ID =2;
+    public static final int CHANGE_LANGUAGE_ID = 3;
 
     public static final String THEME_CURRENT = "THEME_CURRENT";
     public static final String NAV_HEADER_CURRENT = "NAV_HEADER_CURRENT";
+    public static final String NAV_BACKGROUND_CURRENT = "NAV_BACKGROUND_CURRENT";
     public static final String LANGUAGE_CURRENT = "LANGUAGE_CURRENT";
+
+    public static final int SAVING_ADD_REQUEST = 1;
+    public static final int SAVING_ADD_RESULT = 2;
+
+    public static final int SAVING_DEPOSIT = 1;
+    public static final int SAVING_WITHDRAWL = 2;
 }

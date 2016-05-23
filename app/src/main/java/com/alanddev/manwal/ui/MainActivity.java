@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         currController.init(this);
         currController.close();
         //start notification services
-        Intent intent = new Intent();
+       /* Intent intent = new Intent();
         intent.setAction("com.alanddev.manwal.CUSTOM_INTENT");
-        sendBroadcast(intent);
+        sendBroadcast(intent);*/
     }
 
     private void init() {
@@ -92,11 +92,17 @@ public class MainActivity extends AppCompatActivity {
         if (naviheader.equals("")) {
             Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_HEADER_CURRENT, getString(R.string.navi_header_default));
         }
-        if (getIntent().getExtras() != null && getIntent().getExtras().get("NOTIFICATION")!=null && getIntent().getExtras().get("NOTIFICATION").toString().equals("1")) {
+
+        String background = Utils.getCurrentBackGround(this);
+        if (background.equals("")) {
+            Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_BACKGROUND_CURRENT, getString(R.string.navi_header_default));
+        }
+
+       /* if (getIntent().getExtras() != null && getIntent().getExtras().get("NOTIFICATION")!=null && getIntent().getExtras().get("NOTIFICATION").toString().equals("1")) {
             NotificationManager mNotifyMgr =
                     (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             mNotifyMgr.cancel(NotifyService.GREETNG_ID);
-        }
+        }*/
         Utils.createFolder(Constant.PATH_IMG);
     }
 

@@ -12,7 +12,8 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_CATEGORY = "category";
     public static final String TABLE_TRANSACTION = "transactions";
     public static final String TABLE_BUDGET = "budget";
-
+    public static final String TABLE_SAVING = "saving";
+    public static final String TABLE_SAVINGT = "saving_trans";
 
     // table Wallet
     public static final String COLUMN_WALLET_ID = "id";
@@ -64,8 +65,23 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUDGET_RECURRING_NOTIFY = "recurring_notify";
     public static final String COLUMN_BUDGET_IS_REAPEAT = "isrepeat";
 
+    public static final String COLUMN_SAVING_ID = "id";
+    public static final String COLUMN_SAVING_TITLE = "title";
+    public static final String COLUMN_SAVING_START_DATE = "start_date";
+    public static final String COLUMN_SAVING_END_DATE = "end_date";
+    public static final String COLUMN_SAVING_AMOUNT = "amount";
+    public static final String COLUMN_SAVING_AMOUNT_REAL = "amount_real";
+    public static final String COLUMN_SAVING_WALLET_ID = "wallet_id";
+    //public static final String COLUMN_SAVING_ISTRANS = "istrans";
+
+    public static final String COLUMN_SAVINGT_ID = "id";
+    public static final String COLUMN_SAVINGT_TYPE = "type";
+    public static final String COLUMN_SAVINGT_CREATE_DATE = "start_date";
+    public static final String COLUMN_SAVINGT_AMOUNT = "amount";
+    public static final String COLUMN_SAVINGT_SAVING_ID = "saving_id";
+
     public static final String DATABASE_NAME = "manwal.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
 
     public SQLiteDatabase sqLiteDatabase;
     // 20 fields
@@ -125,6 +141,26 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_BUDGET_IS_REAPEAT + " INTEGER DEFAULT 0"
             + ");";
 
+    private static final String SAVING_CREATE = "CREATE TABLE "
+            + TABLE_SAVING + "("
+            + COLUMN_SAVING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_SAVING_TITLE + " text not null,"
+            + COLUMN_SAVING_START_DATE + " DATETIME not null,"
+            + COLUMN_SAVING_END_DATE + " DATETIME not null,"
+            + COLUMN_SAVING_AMOUNT + " Float not null,"
+            + COLUMN_SAVING_AMOUNT_REAL + " integer not null,"
+            + COLUMN_SAVING_WALLET_ID + " integer not null"
+            + ");";
+
+    private static final String SAVINGT_CREATE = "CREATE TABLE "
+            + TABLE_SAVINGT + "("
+            + COLUMN_SAVINGT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_SAVINGT_TYPE + " integer not null,"
+            + COLUMN_SAVINGT_CREATE_DATE + " DATETIME not null,"
+            + COLUMN_SAVINGT_AMOUNT + " Float not null,"
+            + COLUMN_SAVINGT_SAVING_ID + " integer not null"
+            + ");";
+
 
     public MwSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -138,6 +174,8 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(CATE_CREATE);
         database.execSQL(TRANS_CREATE);
         database.execSQL(BUDGET_CREATE);
+        database.execSQL(SAVING_CREATE);
+        database.execSQL(SAVINGT_CREATE);
     }
 
 
@@ -147,12 +185,21 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 		        "Upgrading database from version " + oldVersion + " to "
 		            + newVersion + ", which will destroy all old data");*/
         //sqLiteDatabase = db;
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WALLET);
+        /*db.execSQL("DROP TABLE IF EXISTS " + TABLE_WALLET);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTION);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGET);
-        onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGET);*/
+        Log.d("AAAAA ",SAVING_CREATE + " "+oldVersion+" "+newVersion);
+        switch (oldVersion){
+            case 3:
+                //db.execSQL(SAVING_CREATE);
+                break;
+            case 4:
+                onCreate(db);
+                break;
+        }
+
     }
 
 }

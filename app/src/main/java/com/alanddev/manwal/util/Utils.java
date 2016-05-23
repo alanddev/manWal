@@ -364,6 +364,11 @@ public class Utils {
         return mshare.getString(Constant.NAV_HEADER_CURRENT,"");
     }
 
+    public static String getCurrentBackGround(Context context){
+        SharedPreferences mshare = Utils.getSharedPreferences(context);
+        return mshare.getString(Constant.NAV_BACKGROUND_CURRENT,"");
+    }
+
     public static String getCurrentLanguage(Context context){
         SharedPreferences mshare = Utils.getSharedPreferences(context);
         return mshare.getString(Constant.LANGUAGE_CURRENT,"");

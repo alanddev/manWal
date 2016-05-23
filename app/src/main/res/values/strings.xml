@@ -94,9 +94,6 @@
     <string name="inc_category_other">Other</string>
 
 
-
-
-
     <string-array name="inc_category_image">
         <item>salary</item>
         <item>give</item>
@@ -304,12 +301,14 @@
     <string-array name="settings">
         <item>@string/settings_themes</item>
         <item>@string/settings_menu</item>
+        <item>@string/settings_background</item>
         <item>@string/settings_language</item>
     </string-array>
 
     <string name="settings_themes">Choose Theme</string>
     <string name="settings_menu">Choose Menu theme</string>
     <string name="settings_language">Choose Language</string>
+    <string name="settings_background">Choose Language</string>
 
     <string name="title_activity_select_theme">Choose Theme</string>
 
@@ -396,19 +395,18 @@
         <item>colorCyan</item>
     </string-array>
 
-    <string-array  name ="language">
+    <string-array name="language">
         <item>vi</item>
         <item>en</item>
     </string-array>
 
-    <string-array name ="language_name">
+    <string-array name="language_name">
         <item>@string/language_vn</item>
         <item>@string/language_en</item>
     </string-array>
 
     <string name="language_vn">Vietnamese</string>
     <string name="language_en">English</string>
-
 
 
     <string name="title_activity_wallet_transfer">Remittance</string>
@@ -451,4 +449,5 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-6762857180801550/2923514625</string>
     <string name="inters_ad_unit_id">ca-app-pub-6762857180801550/4400247823</string>
+
 </resources>

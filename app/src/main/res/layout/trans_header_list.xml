@@ -22,7 +22,7 @@
             android:textStyle="bold"
             android:textColor="@color/colorTextColor"/>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/overview_smalltitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,16 +30,24 @@
             android:layout_marginLeft="15dp"
             android:text="@string/overview_click_me"
             android:textSize="11sp"
-            android:textColor="@color/colorTextColor"/>
+            android:textColor="@color/colorTextColor"/>-->
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/imageView1"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/ic_arrow_right" />
+            android:src="@mipmap/ic_arrow_right" />-->
+        <TextView
+            android:id="@+id/txtallAmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/colorNetAmount">
+        </TextView>
     </RelativeLayout>
 
     <TableRow
@@ -56,7 +64,7 @@
         android:id="@+id/layinflow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp" >
+        android:layout_marginTop="5dp" >
 
         <TextView
             android:id="@+id/txtinflow"
@@ -100,7 +108,7 @@
             android:textColor="@color/colorOutFlow"/>
     </RelativeLayout>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp" >
@@ -123,5 +131,5 @@
             android:layout_marginRight="10dp"
             android:textColor="@color/colorNetAmount">
         </TextView>
-    </RelativeLayout>
+    </RelativeLayout>-->
 </LinearLayout>

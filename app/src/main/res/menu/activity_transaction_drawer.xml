@@ -14,6 +14,8 @@
             android:title="@string/trend" />
         <item android:id="@+id/nav_budget" android:icon="@mipmap/budget_menu"
             android:title="@string/budget_menu" />
+        <item android:id="@+id/nav_saving" android:icon="@mipmap/saving_menu"
+            android:title="@string/saving_menu" />
     </group>
 
     <item android:title="Communicate">

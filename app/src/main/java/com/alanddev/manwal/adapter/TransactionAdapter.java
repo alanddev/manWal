@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class TransactionAdapter extends AmazingAdapter {
@@ -38,20 +39,24 @@ public class TransactionAdapter extends AmazingAdapter {
 	@Override
 	public int getCount() {
 		int res = 0;
-		for (int i = 0; i < datas.size(); i++) {
-			res += datas.get(i).getItems().size();
+		if(datas!=null&&datas.size()>0) {
+			for (int i = 0; i < datas.size(); i++) {
+				res += datas.get(i).getItems().size();
+			}
 		}
 		return res;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		int c = 0;
-		for (int i = 0; i < datas.size(); i++) {
-			if (position >= c && position < c + datas.get(i).getItems().size()) {
-				return datas.get(i).getItems().get(position - c);
+		if(datas!=null&&datas.size()>0) {
+			int c = 0;
+			for (int i = 0; i < datas.size(); i++) {
+				if (position >= c && position < c + datas.get(i).getItems().size()) {
+					return datas.get(i).getItems().get(position - c);
+				}
+				c += datas.get(i).getItems().size();
 			}
-			c += datas.get(i).getItems().size();
 		}
 		return null;
 	}
@@ -70,24 +75,26 @@ public class TransactionAdapter extends AmazingAdapter {
 		View header = view.findViewById(R.id.header);
 		if (displaySectionHeader) {
 			header.setVisibility(View.VISIBLE);
-			TransactionDay transactionDay = datas.get(getSectionForPosition(position));
-			Date date = transactionDay.getDisplay_date();
-			TextView txtDate = (TextView) header.findViewById(R.id.txtdate);
-			if(date!=null) {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				txtDate.setText(cal.get(Calendar.DATE) + "");
-				TextView txtDay = (TextView) header.findViewById(R.id.txtday);
-				txtDay.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Utils.getLocale()));
-				TextView txtyear = (TextView) header.findViewById(R.id.txtyear);
-				txtyear.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Utils.getLocale()) + " " + cal.get(Calendar.YEAR));
-			}else if(transactionDay.getDisplayStr()!=null){
-				txtDate.setText(transactionDay.getDisplayStr());
+			if(datas!=null) {
+				TransactionDay transactionDay = datas.get(getSectionForPosition(position));
+				Date date = transactionDay.getDisplay_date();
+				TextView txtDate = (TextView) header.findViewById(R.id.txtdate);
+				if (date != null) {
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					txtDate.setText(cal.get(Calendar.DATE) + "");
+					TextView txtDay = (TextView) header.findViewById(R.id.txtday);
+					txtDay.setText(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Utils.getLocale()));
+					TextView txtyear = (TextView) header.findViewById(R.id.txtyear);
+					txtyear.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Utils.getLocale()) + " " + cal.get(Calendar.YEAR));
+				} else if (transactionDay.getDisplayStr() != null) {
+					txtDate.setText(transactionDay.getDisplayStr());
+				}
+				TextView txtAmount = (TextView) header.findViewById(R.id.txtheadamout);
+				NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
+				String sAmount = formatter.format(transactionDay.getNetamount());
+				txtAmount.setText(sAmount);
 			}
-			TextView txtAmount = (TextView) header.findViewById(R.id.txtheadamout);
-			NumberFormat formatter = new DecimalFormat("###,###,###,###.##");
-			String sAmount =  formatter.format(transactionDay.getNetamount());
-			txtAmount.setText(sAmount);
 		} else {
 			header.setVisibility(View.GONE);
 		}
@@ -99,7 +106,8 @@ public class TransactionAdapter extends AmazingAdapter {
 		if (res == null){
 			res = inflate.inflate(R.layout.item_list_transaction, null);
 		}
-
+		LinearLayout lltrans = (LinearLayout)res.findViewById(R.id.lltrans);
+		lltrans.setBackgroundResource(R.mipmap.spring);
 		TextView txttype = (TextView) res.findViewById(R.id.txttitle);
 		TextView txtdes = (TextView) res.findViewById(R.id.txtdes);
 		TextView txtamout = (TextView) res.findViewById(R.id.txtamout);
@@ -128,28 +136,32 @@ public class TransactionAdapter extends AmazingAdapter {
 
 	@Override
 	public int getPositionForSection(int section) {
-		if (section < 0)
-			section = 0;
-		if (section >= datas.size())
-			section = datas.size() - 1;
-		int c = 0;
-		for (int i = 0; i < datas.size(); i++) {
-			if (section == i) {
-				return c;
+		if(datas!=null&&datas.size()>0) {
+			if (section < 0)
+				section = 0;
+			if (section >= datas.size())
+				section = datas.size() - 1;
+			int c = 0;
+			for (int i = 0; i < datas.size(); i++) {
+				if (section == i) {
+					return c;
+				}
+				c += datas.get(i).getItems().size();
 			}
-			c += datas.get(i).getItems().size();
 		}
 		return 0;
 	}
 
 	@Override
 	public int getSectionForPosition(int position) {
-		int c = 0;
-		for (int i = 0; i < datas.size(); i++) {
-			if (position >= c && position < c + datas.get(i).getItems().size()) {
-				return i;
+		if(datas!=null&&datas.size()>0){
+			int c = 0;
+			for (int i = 0; i < datas.size(); i++) {
+				if (position >= c && position < c + datas.get(i).getItems().size()) {
+					return i;
+				}
+				c += datas.get(i).getItems().size();
 			}
-			c += datas.get(i).getItems().size();
 		}
 		return -1;
 	}

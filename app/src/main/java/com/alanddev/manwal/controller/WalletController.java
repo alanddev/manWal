@@ -147,14 +147,21 @@ public class WalletController implements IDataSource {
 
     @Override
     public Model cursorTo(Cursor cursor) {
-        Wallet wallet = new Wallet();
-        wallet.setId(cursor.getInt(0));
-        wallet.setName(cursor.getString(1));
-        wallet.setAmount(cursor.getDouble(2));
-        wallet.setCurrency(cursor.getString(3));
-        wallet.setImage(cursor.getString(4));
+        if(cursor!=null) {
+            try {
+                Wallet wallet = new Wallet();
+                wallet.setId(cursor.getInt(0));
+                wallet.setName(cursor.getString(1));
+                wallet.setAmount(cursor.getDouble(2));
+                wallet.setCurrency(cursor.getString(3));
+                wallet.setImage(cursor.getString(4));
+                return wallet;
+            }catch (Exception ex){
+                //nothing to do
+            }
 
-        return wallet;
+        }
+        return new Wallet();
     }
 
 }

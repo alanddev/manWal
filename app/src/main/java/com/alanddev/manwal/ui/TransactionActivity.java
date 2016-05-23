@@ -130,7 +130,7 @@ public class TransactionActivity extends AppCompatActivity
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .build();*/
 
-        mInterstitialAd = new InterstitialAd(this);
+       /* mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.inters_ad_unit_id));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener() {
@@ -139,7 +139,7 @@ public class TransactionActivity extends AppCompatActivity
                     mInterstitialAd.show();
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -220,6 +220,9 @@ public class TransactionActivity extends AppCompatActivity
         } else if (id == R.id.nav_budget) {
             Intent intent = new Intent(this, BudgetActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_saving) {
+            Intent intent = new Intent(this, SavingActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_setting) {
             Intent intent = new Intent(this,SettingActivity.class);
             startActivityForResult(intent,REQUEST_SETTING);
@@ -229,10 +232,7 @@ public class TransactionActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void changeActivity(){
-        Intent intent = new Intent(this, WalletAddActivity.class);
-        startActivity(intent);
-    }
+
 
     private List<Transactions> getData(int viewType){
         TransactionController controller = new TransactionController(this);
@@ -281,7 +281,7 @@ public class TransactionActivity extends AppCompatActivity
         ImageView imageView = (ImageView)header.findViewById(R.id.imageView);
         txtWallet.setText(wallet.getName());
 
-        if (!wallet.getImage().equals("")){
+        if (wallet.getImage()!=null&&!wallet.getImage().equals("")){
             imageView.setImageBitmap(BitmapFactory.decodeFile(Constant.PATH_IMG + "/" + wallet.getImage()));
         }else {
             imageView.setImageResource(R.mipmap.wallet);

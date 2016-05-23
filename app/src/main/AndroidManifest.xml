@@ -81,18 +81,30 @@
             android:name=".ui.WalletTransferActivity"
             android:label="@string/title_activity_wallet_transfer"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.SavingAddActivity"
+            android:label="@string/title_activity_saving_add"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.SavingActivity"
+            android:label="@string/title_activity_saving"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".service.NotifyService"/>
+        <!--
+        <service android:name=".service.NotifyService" />
 
-        <receiver
-            android:name=".service.MyScheduleReceiver">
+        <receiver android:name=".service.MyScheduleReceiver">
             <intent-filter>
-                <action android:name="com.alanddev.manwal.CUSTOM_INTENT"></action>
+                <action android:name="com.alanddev.manwal.CUSTOM_INTENT" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name=".service.MyStartServiceReceiver"/>
+        <receiver android:name=".service.MyStartServiceReceiver" />
+        -->
+
+        <activity
+            android:name=".ui.SavingDetailActivity"
+            android:label="@string/title_activity_saving_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

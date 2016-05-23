@@ -8,6 +8,7 @@ public class Theme {
     private String color;
     private String header;
     private String language;
+    private String background;
 
 
 
@@ -53,5 +54,13 @@ public class Theme {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 }

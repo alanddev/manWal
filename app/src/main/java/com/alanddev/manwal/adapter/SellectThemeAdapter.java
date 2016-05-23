@@ -82,6 +82,14 @@ public class SellectThemeAdapter extends BaseAdapter {
             } else {
                 viewHolder.imgcheck.setVisibility(View.VISIBLE);
             }
+        }else if(null!=theme.getBackground()&&!"".equals(theme.getBackground())){
+            viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier(theme.getBackground() + "_s", "mipmap", mContext.getPackageName()));
+            String currentBackGround = Utils.getCurrentBackGround(mContext);
+            if (!currentBackGround.equals(theme.getBackground())) {
+                viewHolder.imgcheck.setVisibility(View.INVISIBLE);
+            } else {
+                viewHolder.imgcheck.setVisibility(View.VISIBLE);
+            }
         }else if(null!=theme.getLanguage()&&!"".equals(theme.getLanguage())){
             viewHolder.imgthemes.setImageResource(mContext.getResources().getIdentifier("language_" + theme.getLanguage(), "mipmap", mContext.getPackageName()));
             viewHolder.imgthemes.getLayoutParams().height = 80;

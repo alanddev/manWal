@@ -40,13 +40,16 @@ public class SelectThemeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ListView lvTheme = (ListView)findViewById(R.id.lstthemes);
         List<Theme> datas;
-        int type = getIntent().getExtras().getInt("SETTING_EXTRA",0);
+        final int type = getIntent().getExtras().getInt("SETTING_EXTRA",0);
         if(type==Constant.CHANGE_THEME_ID){
             datas=createThemeData();
             getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_theme));
         }else if(type==Constant.CHANGE_NAV_ID) {
             datas = createHeaderData();
             getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_menu));
+        }else if(type==Constant.CHANGE_BACK_ID) {
+            datas = createBackData();
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_back));
         }else if(type ==Constant.CHANGE_LANGUAGE_ID){
             getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_language));
             datas = createLanguageData();
@@ -61,7 +64,9 @@ public class SelectThemeActivity extends AppCompatActivity {
                 Theme theme = (Theme)parent.getAdapter().getItem(position);
                 if(theme.getHeader()!=null&&!theme.getHeader().equals("")){
                     Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_HEADER_CURRENT, theme.getHeader());
-                }else if(theme.getColor()!=null&&!theme.getColor().equals("")) {
+                }else if(theme.getBackground()!=null&&!theme.getBackground().equals("")){
+                    Utils.setSharedPreferencesValue(getApplicationContext(), Constant.NAV_BACKGROUND_CURRENT, theme.getBackground());
+                } if(theme.getColor()!=null&&!theme.getColor().equals("")) {
                     Utils.setSharedPreferencesValue(getApplicationContext(), Constant.THEME_CURRENT, theme.getTheme());
                     Utils.changeToTheme(theme.getTheme());
                 }else if(theme.getLanguage()!=null&&!theme.getLanguage().equals("")) {
@@ -131,6 +136,19 @@ public class SelectThemeActivity extends AppCompatActivity {
             for (int i = 0; i < arrHeaders.length;i++) {
                 Theme theme = new Theme();
                 theme.setHeader(arrHeaders[i]);
+                lstTheme.add(theme);
+            }
+        }
+        return lstTheme;
+    }
+
+    private List<Theme> createBackData(){
+        List<Theme> lstTheme = new ArrayList<Theme>();
+        String[] arrHeaders = getResources().getStringArray(R.array.header_images);
+        if(arrHeaders!=null&&arrHeaders.length>0) {
+            for (int i = 0; i < arrHeaders.length;i++) {
+                Theme theme = new Theme();
+                theme.setBackground(arrHeaders[i]);
                 lstTheme.add(theme);
             }
         }
