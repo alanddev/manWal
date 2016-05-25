@@ -114,4 +114,9 @@
             android:id="@+id/btnwithdrawn"
             android:text="@string/saving_withdrawal"/>
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnshowT"
+        android:text="@string/saving_showT"/>
 </LinearLayout>

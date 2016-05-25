@@ -301,7 +301,7 @@
     <string-array name="settings">
         <item>@string/settings_themes</item>
         <item>@string/settings_menu</item>
-        <item>@string/settings_background</item>
+        <!--<item>@string/settings_background</item>-->
         <item>@string/settings_language</item>
     </string-array>
 
@@ -449,5 +449,6 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-6762857180801550/2923514625</string>
     <string name="inters_ad_unit_id">ca-app-pub-6762857180801550/4400247823</string>
+
 
 </resources>

@@ -141,4 +141,7 @@
     <string name="saving_over">Save Over</string>
     <string name="saving_deposit">Deposit</string>
     <string name="saving_withdrawal">Withdrawal</string>
+    <string name="saving_showT">Show Transaction</string>
+    <string name="title_activity_saving_t">Saving Transaction</string>
+    <string name="check_withdrawn">Withdrawn more than you have</string>
 </resources>

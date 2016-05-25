@@ -140,4 +140,7 @@
     <string name="saving_withdrawal">Rút ra</string>
     <string name="dialog_cancel_button">Hủy</string>
     <string name="dialog_ok_button">Đồng ý</string>
+    <string name="saving_showT">Hiển thị các giao dịch</string>
+    <string name="title_activity_saving_t">Các giao dịch</string>
+    <string name="check_withdrawn">Bạn rút nhiều tiền hơn bạn có</string>
 </resources>
