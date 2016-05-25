@@ -81,7 +81,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SAVINGT_SAVING_ID = "saving_id";
 
     public static final String DATABASE_NAME = "manwal.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 2;
 
     public SQLiteDatabase sqLiteDatabase;
     // 20 fields
@@ -156,7 +156,7 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
             + TABLE_SAVINGT + "("
             + COLUMN_SAVINGT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_SAVINGT_TYPE + " integer not null,"
-            + COLUMN_SAVINGT_CREATE_DATE + " DATETIME not null,"
+            + COLUMN_SAVINGT_CREATE_DATE + "  DATETIME DEFAULT CURRENT_TIMESTAMP,"
             + COLUMN_SAVINGT_AMOUNT + " Float not null,"
             + COLUMN_SAVINGT_SAVING_ID + " integer not null"
             + ");";
@@ -181,21 +181,12 @@ public class MwSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            /*Log.w(MySQLiteHelper.class.getName(),
-		        "Upgrading database from version " + oldVersion + " to "
-		            + newVersion + ", which will destroy all old data");*/
-        //sqLiteDatabase = db;
-        /*db.execSQL("DROP TABLE IF EXISTS " + TABLE_WALLET);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUR);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTION);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGET);*/
-        Log.d("AAAAA ",SAVING_CREATE + " "+oldVersion+" "+newVersion);
         switch (oldVersion){
-            case 3:
-                //db.execSQL(SAVING_CREATE);
+            case 1:
+                db.execSQL(SAVING_CREATE);
+                db.execSQL(SAVINGT_CREATE);
                 break;
-            case 4:
+            case 2:
                 onCreate(db);
                 break;
         }

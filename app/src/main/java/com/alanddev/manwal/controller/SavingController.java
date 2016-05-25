@@ -11,6 +11,7 @@ import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.model.Model;
 import com.alanddev.manwal.model.Saving;
+import com.alanddev.manwal.model.SavingT;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 
@@ -100,7 +101,14 @@ public class SavingController implements IDataSource {
         return null;
     }
 
-    public Boolean delete(long savingId){
+    public Boolean delete(int savingId){
+        SavingTController controller = new SavingTController(mContext);
+        controller.open();
+        List<SavingT> savingTs = controller.getAllbySaving(savingId);
+        for (int i=0;i<savingTs.size();i++){
+            controller.delete(savingTs.get(i).getSaving_id());
+        }
+        controller.close();
         return database.delete(MwSQLiteHelper.TABLE_SAVING, MwSQLiteHelper.COLUMN_SAVING_ID + "=" + savingId, null) > 0;
     }
 
@@ -153,6 +161,5 @@ public class SavingController implements IDataSource {
         //saving.setIsTrans(cursor.getInt(7));
         return saving;
     }
-
 
 }

@@ -58,11 +58,11 @@ public class SettingActivity extends AppCompatActivity {
                         intent.putExtra("SETTING_EXTRA", Constant.CHANGE_NAV_ID);
                         startActivityForResult(intent, REQUEST_CHANGE_NAV);
                         break;
-                    case Constant.CHANGE_BACK_ID:
+                    /*case Constant.CHANGE_BACK_ID:
                         intent = new Intent(getApplicationContext(), SelectThemeActivity.class);
                         intent.putExtra("SETTING_EXTRA", Constant.CHANGE_BACK_ID);
                         startActivityForResult(intent, REQUEST_CHANGE_BACKGROUND);
-                        break;
+                        break;*/
                     case Constant.CHANGE_LANGUAGE_ID:
                         intent = new Intent(getApplicationContext(), SelectThemeActivity.class);
                         intent.putExtra("SETTING_EXTRA", Constant.CHANGE_LANGUAGE_ID);

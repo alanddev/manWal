@@ -104,6 +104,10 @@
         <activity
             android:name=".ui.SavingDetailActivity"
             android:label="@string/title_activity_saving_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.SavingTActivity"
+            android:label="@string/title_activity_saving_t"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

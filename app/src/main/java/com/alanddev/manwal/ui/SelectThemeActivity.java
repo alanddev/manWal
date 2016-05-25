@@ -47,10 +47,10 @@ public class SelectThemeActivity extends AppCompatActivity {
         }else if(type==Constant.CHANGE_NAV_ID) {
             datas = createHeaderData();
             getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_menu));
-        }else if(type==Constant.CHANGE_BACK_ID) {
+        }/*else if(type==Constant.CHANGE_BACK_ID) {
             datas = createBackData();
             getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_back));
-        }else if(type ==Constant.CHANGE_LANGUAGE_ID){
+        }*/else if(type ==Constant.CHANGE_LANGUAGE_ID){
             getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_select_language));
             datas = createLanguageData();
         }else{

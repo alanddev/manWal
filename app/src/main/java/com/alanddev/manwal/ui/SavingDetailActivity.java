@@ -22,9 +22,11 @@ import android.widget.Toast;
 import com.alanddev.manwal.R;
 import com.alanddev.manwal.adapter.CurrencyTextWatcher;
 import com.alanddev.manwal.controller.SavingController;
+import com.alanddev.manwal.controller.SavingTController;
 import com.alanddev.manwal.helper.MwSQLiteHelper;
 import com.alanddev.manwal.model.Budget;
 import com.alanddev.manwal.model.Saving;
+import com.alanddev.manwal.model.SavingT;
 import com.alanddev.manwal.util.Constant;
 import com.alanddev.manwal.util.Utils;
 import com.google.android.gms.ads.AdView;
@@ -44,6 +46,7 @@ public class SavingDetailActivity extends AppCompatActivity implements View.OnCl
     private AdView mAdView;
     private Button btndeposit;
     private Button btnwithdrawn;
+    private Button btnshowT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +85,11 @@ public class SavingDetailActivity extends AppCompatActivity implements View.OnCl
         edtStartAmout.setText(saving.getAmount_real()+"");
         btndeposit = (Button)findViewById(R.id.btndep);
         btnwithdrawn = (Button)findViewById(R.id.btnwithdrawn);
+        btnshowT = (Button)findViewById(R.id.btnshowT);
         btndeposit.setOnClickListener(this);
         btnwithdrawn.setOnClickListener(this);
+        btnshowT.setOnClickListener(this);
+
     }
 
     @Override
@@ -98,6 +104,12 @@ public class SavingDetailActivity extends AppCompatActivity implements View.OnCl
         if(v==txtStartDate||v==txtEndDate){
             choice=v.getId();
             showDatePickerDialog(v);
+        }
+
+        if(v==btnshowT){
+            Intent intent = new Intent(getApplicationContext(), SavingTActivity.class);
+            intent.putExtra(MwSQLiteHelper.COLUMN_SAVING_ID,saving.getId());
+            startActivity(intent);
         }
     }
 
@@ -127,6 +139,7 @@ public class SavingDetailActivity extends AppCompatActivity implements View.OnCl
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
+            setResult(Constant.BUDGET_ADD_RESULT, new Intent());
             finish();
         }
         if (id == R.id.action_delete) {
@@ -179,11 +192,12 @@ public class SavingDetailActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    public void openSavingDialog(int type) {
+    public void openSavingDialog(final int type) {
+        final int savingType = type;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if(type==Constant.SAVING_DEPOSIT){
+        if(savingType==Constant.SAVING_DEPOSIT){
             builder.setMessage(getString(R.string.saving_deposit));
-        }else if(type==Constant.SAVING_WITHDRAWL){
+        }else if(savingType==Constant.SAVING_WITHDRAWL){
             builder.setMessage(getString(R.string.saving_withdrawal));
         }
 
@@ -202,8 +216,34 @@ public class SavingDetailActivity extends AppCompatActivity implements View.OnCl
                         String samt = editText.getText().toString();
                         if ("".equals(samt)) {
                             samt = "0";
+                        } else {
+                            samt = Utils.getFormatCurrency(samt);
                         }
-
+                        Float amt = Float.valueOf(samt);
+                        if (savingType == Constant.SAVING_WITHDRAWL && amt > saving.getAmount_real()) {
+                            Toast.makeText(getApplicationContext(), getResources().getText(R.string.check_withdrawn), Toast.LENGTH_LONG).show();
+                        } else {
+                            SavingTController controller = new SavingTController(getApplicationContext());
+                            controller.open();
+                            SavingT savingT = new SavingT();
+                            savingT.setType(savingType);
+                            savingT.setAmount(amt);
+                            savingT.setSaving_id(saving.getId());
+                            controller.create(savingT);
+                            controller.close();
+                            SavingController savController = new SavingController(getApplicationContext());
+                            savController.open();
+                            Float amtb = saving.getAmount_real();
+                            if (savingType == Constant.SAVING_DEPOSIT) {
+                                amtb = amtb + amt;
+                            } else {
+                                amtb = amtb - amt;
+                            }
+                            saving.setAmount_real(amtb);
+                            savController.update(saving);
+                            savController.close();
+                            edtStartAmout.setText(amtb+"");
+                        }
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_no_button), new DialogInterface.OnClickListener() {
@@ -215,9 +255,9 @@ public class SavingDetailActivity extends AppCompatActivity implements View.OnCl
         alertDialog.show();
     }
 
-    private void delete(long budgetId){
+    private void delete(int savingId){
         savingController.open();
-        savingController.delete(budgetId);
+        savingController.delete(savingId);
         savingController.close();
     }
 

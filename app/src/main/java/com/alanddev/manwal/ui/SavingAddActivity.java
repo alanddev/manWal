@@ -32,7 +32,7 @@ public class SavingAddActivity extends AppCompatActivity implements View.OnClick
     private EditText edtDes;
     private int choice = 0;
     private SavingController savingController;
-    private Saving saving;
+    //private Saving saving;
     private AdView mAdView;
 
     @Override
@@ -74,11 +74,7 @@ public class SavingAddActivity extends AppCompatActivity implements View.OnClick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (saving == null) {
-            getMenuInflater().inflate(R.menu.menu_add, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.menu_trans_detail, menu);
-        }
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

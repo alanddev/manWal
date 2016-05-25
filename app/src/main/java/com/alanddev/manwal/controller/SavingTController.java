@@ -52,8 +52,7 @@ public class SavingTController implements IDataSource {
     public Model create(Model data) {
         ContentValues values = new ContentValues();
         SavingT saving  = (SavingT)data;
-        values.put(MwSQLiteHelper.COLUMN_SAVINGT_TYPE, saving.getTitle());
-        values.put(MwSQLiteHelper.COLUMN_SAVINGT_CREATE_DATE, saving.getCreatedDt());
+        values.put(MwSQLiteHelper.COLUMN_SAVINGT_TYPE, saving.getType());
         values.put(MwSQLiteHelper.COLUMN_SAVINGT_AMOUNT, saving.getAmount());
         values.put(MwSQLiteHelper.COLUMN_SAVINGT_SAVING_ID, saving.getSaving_id());
         database.insert(MwSQLiteHelper.TABLE_SAVINGT, null,
@@ -102,11 +101,15 @@ public class SavingTController implements IDataSource {
         return savings;
     }
 
+    public Boolean delete(int savingTId){
+        return database.delete(MwSQLiteHelper.TABLE_SAVINGT, MwSQLiteHelper.COLUMN_SAVINGT_ID + "=" + savingTId, null) > 0;
+    }
+
     @Override
     public Model cursorTo(Cursor cursor) {
         SavingT saving = new SavingT();
         saving.setId(cursor.getInt(0));
-        saving.setTitle(cursor.getInt(1));
+        saving.setType(cursor.getInt(1));
         saving.setCreatedDt(cursor.getString(2));
         saving.setAmount(cursor.getFloat(3));
         saving.setSaving_id(cursor.getInt(4));
