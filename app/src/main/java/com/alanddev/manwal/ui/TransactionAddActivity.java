@@ -66,9 +66,9 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
         imgCate = (ImageView)findViewById(R.id.imgcate);
         transController = new TransactionController(getApplicationContext());
 
-        mAdView = (AdView)findViewById(R.id.adView);
+       /* mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
     }
 
     @Override
@@ -173,19 +173,19 @@ public class TransactionAddActivity extends AppCompatActivity implements View.On
     }
     @Override
     protected void onPause() {
-        mAdView.pause();
+        //mAdView.pause();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mAdView.resume();
+        //mAdView.resume();
     }
 
     @Override
     protected void onDestroy() {
-        mAdView.destroy();
+        //mAdView.destroy();
         super.onDestroy();
     }
 }

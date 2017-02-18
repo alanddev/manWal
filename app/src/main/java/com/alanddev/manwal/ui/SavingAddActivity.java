@@ -64,9 +64,9 @@ public class SavingAddActivity extends AppCompatActivity implements View.OnClick
         txtEndDate.setText(Utils.changeDate2Str(calendar.getTime(), Constant.DATE_FORMAT_PICKER));
 
         edtDes = (EditText)findViewById(R.id.edtdes);
-        mAdView = (AdView) findViewById(R.id.adView);
+       /* mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
 
     }
@@ -168,19 +168,19 @@ public class SavingAddActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onPause() {
-        mAdView.pause();
+        //mAdView.pause();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mAdView.resume();
+        //mAdView.resume();
     }
 
     @Override
     protected void onDestroy() {
-        mAdView.destroy();
+        //mAdView.destroy();
         super.onDestroy();
     }
 }

@@ -77,9 +77,9 @@ public class WalletAddActivity extends AppCompatActivity {
         amountEdit = (EditText)findViewById(R.id.txtAmount);
         amountEdit.addTextChangedListener(new CurrencyTextWatcher(amountEdit));
 
-        mAdView = (AdView)findViewById(R.id.adView);
+       /* mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
 
 //        Target viewTarget = new ViewTarget(R.id.txtName, this);
@@ -221,7 +221,7 @@ public class WalletAddActivity extends AppCompatActivity {
         if(walletController!=null) {
             walletController.open();
         }
-        mAdView.resume();
+        //mAdView.resume();
         super.onResume();
     }
 
@@ -230,7 +230,7 @@ public class WalletAddActivity extends AppCompatActivity {
         if(walletController!=null) {
             walletController.close();
         }
-        mAdView.pause();
+        //mAdView.pause();
         super.onPause();
     }
 
@@ -290,7 +290,7 @@ public class WalletAddActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        mAdView.destroy();
+        //mAdView.destroy();
         super.onDestroy();
     }
 

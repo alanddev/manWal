@@ -66,9 +66,9 @@ public class WalletEditActivity extends AppCompatActivity {
 
         getData();
 
-        mAdView = (AdView)findViewById(R.id.adView);
+       /* mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
     }
 
@@ -169,7 +169,7 @@ public class WalletEditActivity extends AppCompatActivity {
         if(transactionController!=null) {
             transactionController.open();
         }
-        mAdView.resume();
+        //mAdView.resume();
         super.onResume();
     }
 
@@ -181,7 +181,7 @@ public class WalletEditActivity extends AppCompatActivity {
         if(transactionController!=null) {
             transactionController.close();
         }
-        mAdView.pause();
+        //mAdView.pause();
         super.onPause();
     }
 
@@ -282,7 +282,7 @@ public class WalletEditActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        mAdView.destroy();
+        //mAdView.destroy();
         super.onDestroy();
     }
 

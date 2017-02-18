@@ -106,8 +106,7 @@ public class TransactionAdapter extends AmazingAdapter {
 		if (res == null){
 			res = inflate.inflate(R.layout.item_list_transaction, null);
 		}
-		LinearLayout lltrans = (LinearLayout)res.findViewById(R.id.lltrans);
-		lltrans.setBackgroundResource(R.mipmap.spring);
+
 		TextView txttype = (TextView) res.findViewById(R.id.txttitle);
 		TextView txtdes = (TextView) res.findViewById(R.id.txtdes);
 		TextView txtamout = (TextView) res.findViewById(R.id.txtamout);

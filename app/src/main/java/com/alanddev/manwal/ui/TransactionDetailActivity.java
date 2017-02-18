@@ -76,9 +76,9 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
         imgCate = (ImageView)findViewById(R.id.imgcate);
         imgCate.setImageResource(getResources().getIdentifier("ic_category_"+transactionDetail.getCate_img(),"mipmap",getPackageName()));
 
-        mAdView = (AdView)findViewById(R.id.adView);
+       /* mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
     }
 
@@ -209,7 +209,7 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
         if(controller!=null) {
             controller.close();
         }
-        mAdView.pause();
+       // mAdView.pause();
         super.onPause();
     }
 
@@ -256,12 +256,12 @@ public class TransactionDetailActivity extends AppCompatActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
-        mAdView.resume();
+        //mAdView.resume();
     }
 
     @Override
     protected void onDestroy() {
-        mAdView.destroy();
+        //mAdView.destroy();
         super.onDestroy();
     }
 }

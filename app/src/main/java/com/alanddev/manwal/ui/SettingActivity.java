@@ -72,9 +72,9 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        mAdView = (AdView)findViewById(R.id.adView);
+       /* mAdView = (AdView)findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
     }
 
@@ -115,7 +115,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        mAdView.resume();
+        //mAdView.resume();
         super.onResume();
     }
 
@@ -147,13 +147,13 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        mAdView.pause();
+        //mAdView.pause();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        mAdView.destroy();
+        //mAdView.destroy();
         super.onDestroy();
     }
 }
