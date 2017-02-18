@@ -2,7 +2,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/lltrans">
+    android:id="@+id/lltrans"
+    android:background="@color/colorWhite">
     <include
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
